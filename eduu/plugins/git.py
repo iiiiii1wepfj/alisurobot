@@ -1,6 +1,3 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2021 Amano Team
-
 from urllib.parse import quote_plus
 
 from pyrogram import Client, filters
