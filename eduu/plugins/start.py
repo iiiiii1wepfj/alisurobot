@@ -14,7 +14,7 @@ from eduu.utils import commands
 from eduu.utils.localization import use_chat_lang
 
 
-bot_repo_link = "https://github.com/iiiiii1wepfj/test-eduu-based-bot"
+bot_repo_link = "https://github.com/iiiiii1wepfj/alisurobot"
 
 # Using a low priority group so deeplinks will run before this and stop the propagation.
 @Client.on_message(filters.command("start", prefix), group=2)
