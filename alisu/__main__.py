@@ -12,6 +12,7 @@ import alisu
 from alisu.config import API_HASH, API_ID, TOKEN, disabled_plugins, log_chat
 from alisu.utils import del_restarted, get_restarted, shell_exec
 from alisu.utils.consts import http
+from alisu.database.database_handler import init_database
 
 try:
     import uvloop
@@ -35,6 +36,7 @@ client = Client(
 
 
 async def main() -> None:
+    await init_database()
     await client.start()
 
     # Saving commit number
