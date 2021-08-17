@@ -13,7 +13,7 @@ import time
 import youtube_dl
 from pyrogram import Client, filters
 from pyrogram.errors import BadRequest
-from pyrogram.helpers import ikb
+from pyromod.helpers import ikb
 from pyrogram.types import CallbackQuery, Message
 
 from eduu.config import prefix
