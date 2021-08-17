@@ -16,7 +16,5 @@
   "bug_reported_success_to_bot_admins": "تم الإبلاغ عن الخطأ بنجاح.",
   "err_cant_send_bug_report_to_bot_admins": "خطأ، لم أستطع إرسال تقرير الخطأ إلى مشرفي البوت.",
   "err_no_bug_to_report": "يجب عليك تحديد الخطأ للتقرير، على سبيل المثال: <code>/bug (هنا الخطأ)</code>.",
-  "donate_description": "الحصول على معلومات حول التبرع.",
-  "donatecmdstring": "إذا أعجبك المشروع وتريده أن يستمر مجاناً وعلى قيد الحياة، يرجى إظهار دعمك بالتبرع عبر النقر على الرابط أدناه. أي مبلغ هو موضع تقدير. شكرا!\n\nhttps://amanoteam.com/donate",
   "report_admns": "{admins_list}{reported_user} تم تبليغه للمشرفين."
 }
