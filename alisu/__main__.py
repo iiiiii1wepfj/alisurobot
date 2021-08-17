@@ -10,7 +10,7 @@ from pyrogram.errors import BadRequest
 
 import alisu
 from alisu.config import API_HASH, API_ID, TOKEN, disabled_plugins, log_chat
-from alisu.utils import del_restarted, get_restarted, shell_exec
+from alisu.utils import shell_exec
 from alisu.utils.consts import http
 from alisu.database.database_handler import init_database
 
@@ -39,8 +39,6 @@ async def main() -> None:
     client.start_time = time.time()
     client.log_chat_errors = True
     if "test" not in sys.argv:
-        wr = await get_restarted()
-        await del_restarted()
 
         start_message = (
             "<b>The bot was started!</b>\n\n"
@@ -50,8 +48,6 @@ async def main() -> None:
 
         try:
             await client.send_message(chat_id=log_chat, text=start_message)
-            if wr:
-                await client.edit_message_text(wr.chat_id, wr.message_id, "Restarted successfully!")
         except BadRequest:
             logging.warning("Unable to send message to log_chat.")
             client.log_chat_errors = False
