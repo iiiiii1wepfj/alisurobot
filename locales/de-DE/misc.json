@@ -16,7 +16,5 @@
   "bug_reported_success_to_bot_admins": "Der Bug wurde erfolgreich gemeldet.",
   "err_cant_send_bug_report_to_bot_admins": "Fehler. Der Fehlerbericht konnte nicht an die Admins des Bots gesendet werden.",
   "err_no_bug_to_report": "Du musst den zu meldenden Bug angeben, z. B. <code>/bug (hier der Bug)</code>.",
-  "donate_description": "Informationen über Spenden erhalten.",
-  "donatecmdstring": "Wenn du das Projekt magst und möchtest, dass es weiterhin kostenlos und am Leben bleibt, dann zeige deine Unterstützung durch eine Spende, indem du auf den untenstehenden Link klickst. Jeder Wert wird geschätzt. Danke!\n\nhttps://amanoteam.com/donate",
   "report_admns": "{admins_list}{reported_user} Bei den Admins gemeldet."
 }
