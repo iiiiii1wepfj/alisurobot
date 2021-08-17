@@ -81,7 +81,7 @@ async def get_restarted() -> Tuple[int, int]:
 
 
 async def set_restarted(chat_id: int, message_id: int):
-    await channels.create(chat_id=chat_id, message_id=message_id)
+    await was_restarted_at.create(chat_id=chat_id, message_id=message_id)
 
 
 async def check_perms(
