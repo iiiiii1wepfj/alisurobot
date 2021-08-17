@@ -1,6 +1,3 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2021 Amano Team
-
 import re
 from html import escape
 from urllib.parse import quote, unquote
