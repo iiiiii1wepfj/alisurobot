@@ -41,11 +41,6 @@ class channels(Model):
     chat_lang = fields.TextField(null=True)
 
 
-class was_restarted_at(Model):
-    chat_id = fields.BigIntField(null=True)
-    message_id = fields.BigIntField(null=True)
-
-
 class user_warns(Model):
     user_id = fields.BigIntField(null=True)
     chat_id = fields.BigIntField(null=True)
