@@ -57,7 +57,7 @@ async def main() -> None:
         try:
             await client.send_message(chat_id=log_chat, text=start_message)
             if wr:
-                await client.edit_message_text(wr[0], wr[1], "Restarted successfully!")
+                await client.edit_message_text(wr.chat_id, wr.message_id, "Restarted successfully!")
         except BadRequest:
             logging.warning("Unable to send message to log_chat.")
             client.log_chat_errors = False
