@@ -12,6 +12,7 @@ from eduu.database import groups
 from eduu.utils import commands, require_admin, time_extract
 from eduu.utils.consts import admin_status
 from eduu.utils.localization import use_chat_lang
+from eduu.utils.bot_error_log import logging_errors
 
 
 async def get_reason_text(c: Client, m: Message) -> Message:
@@ -59,6 +60,7 @@ async def get_target_user(c: Client, m: Message) -> User:
 
 @Client.on_message(filters.command("pin", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@logging_errors
 async def pin(c: Client, m: Message):
     await c.pin_chat_message(
         m.chat.id,
@@ -70,6 +72,7 @@ async def pin(c: Client, m: Message):
 
 @Client.on_message(filters.command("pin loud", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@logging_errors
 async def pinloud(c: Client, m: Message):
     await c.pin_chat_message(
         m.chat.id,
@@ -81,12 +84,14 @@ async def pinloud(c: Client, m: Message):
 
 @Client.on_message(filters.command("unpin", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@logging_errors
 async def unpin(c: Client, m: Message):
     await c.unpin_chat_message(m.chat.id, m.reply_to_message.message_id)
 
 
 @Client.on_message(filters.command(["unpinall", "unpin all"], prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@logging_errors
 async def unpinall(c: Client, m: Message):
     await c.unpin_all_chat_messages(m.chat.id)
 
@@ -94,6 +99,7 @@ async def unpinall(c: Client, m: Message):
 @Client.on_message(filters.command("ban", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@logging_errors
 async def ban(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
     reason = await get_reason_text(c, m)
@@ -117,6 +123,7 @@ async def ban(c: Client, m: Message, strings):
 @Client.on_message(filters.command("kick", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@logging_errors
 async def kick(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
     reason = await get_reason_text(c, m)
@@ -141,6 +148,7 @@ async def kick(c: Client, m: Message, strings):
 @Client.on_message(filters.command("unban", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@logging_errors
 async def unban(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
     reason = await get_reason_text(c, m)
@@ -160,6 +168,7 @@ async def unban(c: Client, m: Message, strings):
 @Client.on_message(filters.command("mute", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@logging_errors
 async def mute(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
     reason = await get_reason_text(c, m)
@@ -185,6 +194,7 @@ async def mute(c: Client, m: Message, strings):
 @Client.on_message(filters.command("unmute", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@logging_errors
 async def unmute(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
     reason = await get_reason_text(c, m)
@@ -204,6 +214,7 @@ async def unmute(c: Client, m: Message, strings):
 @Client.on_message(filters.command("tmute", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@logging_errors
 async def tmute(c: Client, m: Message, strings):
     if len(m.command) == 1:
         return await m.reply_text(
@@ -231,6 +242,7 @@ async def tmute(c: Client, m: Message, strings):
 @Client.on_message(filters.command("tban", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@logging_errors
 async def tban(c: Client, m: Message, strings):
     if len(m.command) == 1:
         return await m.reply_text(
@@ -256,6 +268,7 @@ async def tban(c: Client, m: Message, strings):
 @Client.on_message(filters.command("purge", prefix))
 @require_admin(permissions=["can_delete_messages"], allow_in_private=True)
 @use_chat_lang()
+@logging_errors
 async def purge(c: Client, m: Message, strings):
     """Purge upto the replied message."""
     status_message = await m.reply_text(strings("purge_in_progress"), quote=True)
@@ -286,6 +299,7 @@ async def purge(c: Client, m: Message, strings):
 @Client.on_message(filters.command("antichannelpin", prefix))
 @require_admin(permissions=["can_pin_messages"])
 @use_chat_lang()
+@logging_errors
 async def setantichannelpin(c: Client, m: Message, strings):
     if len(m.text.split()) > 1:
         if m.command[1] == "on":
@@ -305,6 +319,7 @@ async def setantichannelpin(c: Client, m: Message, strings):
 
 
 @Client.on_message(filters.linked_channel, group=-1)
+@logging_errors
 async def acp_action(c: Client, m: Message):
     get_acp = await check_if_antichannelpin(m.chat.id)
     getmychatmember = await c.get_chat_member(m.chat.id, "me")
@@ -317,6 +332,7 @@ async def acp_action(c: Client, m: Message):
 @Client.on_message(filters.command("cleanservice", prefix))
 @require_admin(permissions=["can_delete_messages"])
 @use_chat_lang()
+@logging_errors
 async def delservice(c: Client, m: Message, strings):
     if len(m.text.split()) > 1:
         if m.command[1] == "on":
@@ -336,6 +352,7 @@ async def delservice(c: Client, m: Message, strings):
 
 
 @Client.on_message(filters.service, group=-1)
+@logging_errors
 async def delservice_action(c: Client, m: Message):
     get_delservice = await check_if_del_service(m.chat.id)
     getmychatmember = await c.get_chat_member(m.chat.id, "me")
