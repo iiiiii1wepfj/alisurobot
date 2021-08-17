@@ -16,7 +16,7 @@ from pyrogram.errors import RPCError
 from pyrogram.types import Message
 
 from alisu.database import groups, users, notes, filters as dbfilters
-from alisu.utils import set_restarted, sudofilter
+from alisu.utils import sudofilter
 from alisu.utils.localization import use_chat_lang
 
 prefix: Union[list, str] = "!"
@@ -69,7 +69,6 @@ async def upgrade(c: Client, m: Message, strings):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text(strings("restarting"))
-            await set_restarted(sm.chat.id, sm.message_id)
             args = [sys.executable, "-m", "alisu"]
             os.execv(sys.executable, args)  # skipcq: BAN-B606
     else:
@@ -145,7 +144,6 @@ async def test_speed(c: Client, m: Message, strings):
 @use_chat_lang()
 async def restart(c: Client, m: Message, strings):
     sent = await m.reply_text(strings("restarting"))
-    await set_restarted(sent.chat.id, sent.message_id)
     args = [sys.executable, "-m", "alisu"]
     os.execv(sys.executable, args)  # skipcq: BAN-B606
 
