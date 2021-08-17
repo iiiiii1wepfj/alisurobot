@@ -45,8 +45,8 @@ async def main() -> None:
     client.start_time = time.time()
     client.log_chat_errors = True
     if "test" not in sys.argv:
-        wr = get_restarted()
-        del_restarted()
+        wr = await get_restarted()
+        await del_restarted()
 
         start_message = (
             "<b>The bot was started!</b>\n\n"
