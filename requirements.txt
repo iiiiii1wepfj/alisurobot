@@ -1,21 +1,15 @@
-# Using AmanoTeam Pyrogram's
-git+https://github.com/AmanoTeam/pyrogram.git#egg=Pyrogram
-tgcrypto  # To increase Pyrogram speed
-
-# Using async-lru from git for Python3.10 compatibility
+git+https://github.com/pyrogram/pyrogram.git
+tgcrypto
 git+https://github.com/aio-libs/async-lru.git#egg=async_lru
-
-# Tortoise ORM dependency
-tortoise-orm==0.15.24; python_version <= '3.6'
-tortoise-orm>=0.16.0,<0.18.0; python_version >= '3.7'
-
-# Plugins Deps
-gpytranslate==1.2.0
-meval==2.5
+uvloop
+gpytranslate
+meval
 speedtest-cli
-httpx[http2]>=0.18.1,<1.0.0
+httpx[http2]
 regex
 telegraph
-Pillow==8.2.0
+Pillow
 pytio
 youtube-dl
+humanfriendly
+yarl
