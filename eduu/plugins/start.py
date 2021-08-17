@@ -17,6 +17,8 @@ from eduu.utils import commands
 from eduu.utils.localization import use_chat_lang
 
 
+bot_repo_link = "https://github.com/iiiiii1wepfj/test-eduu-based-bot"
+
 # Using a low priority group so deeplinks will run before this and stop the propagation.
 @Client.on_message(filters.command("start", prefix), group=2)
 @Client.on_callback_query(filters.regex("^start_back$"))
@@ -68,7 +70,7 @@ async def start(c: Client, m: Union[Message, CallbackQuery], strings):
 @use_chat_lang()
 async def infos(c: Client, m: CallbackQuery, strings):
     res = strings("info_page").format(
-        version=eduu.__version__, version_code=c.version_code
+        myname=c.me.first_name, version=eduu.__version__, version_code=c.version_code, codelink=bot_repo_link
     )
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
