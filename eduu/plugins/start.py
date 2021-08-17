@@ -51,7 +51,9 @@ async def start(c: Client, m: Union[Message, CallbackQuery], strings):
                 ],
             ]
         )
-        await method(strings("private").format(myname=c.me.first_name), reply_markup=keyboard)
+        await method(
+            strings("private").format(myname=c.me.first_name), reply_markup=keyboard
+        )
     else:
         keyboard = InlineKeyboardMarkup(
             inline_keyboard=[
@@ -63,14 +65,19 @@ async def start(c: Client, m: Union[Message, CallbackQuery], strings):
                 ]
             ]
         )
-        await method(strings("group").format(myname=c.me.first_name), reply_markup=keyboard)
+        await method(
+            strings("group").format(myname=c.me.first_name), reply_markup=keyboard
+        )
 
 
 @Client.on_callback_query(filters.regex("^infos$"))
 @use_chat_lang()
 async def infos(c: Client, m: CallbackQuery, strings):
     res = strings("info_page").format(
-        myname=c.me.first_name, version=eduu.__version__, version_code=c.version_code, codelink=bot_repo_link
+        myname=c.me.first_name,
+        version=eduu.__version__,
+        version_code=c.version_code,
+        codelink=bot_repo_link,
     )
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
