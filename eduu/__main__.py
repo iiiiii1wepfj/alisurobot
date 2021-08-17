@@ -27,7 +27,7 @@ except ImportError:
 
 client = Client(
     session_name="bot",
-    app_version=f"EduuRobot v{eduu.__version__}",
+    app_version=f"v{eduu.__version__}",
     api_id=API_ID,
     api_hash=API_HASH,
     bot_token=TOKEN,
