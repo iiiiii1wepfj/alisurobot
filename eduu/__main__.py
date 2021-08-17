@@ -1,63 +1,39 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2021 Amano Team
-
-import logging
-import sys
-
-import pyrogram
-from pyrogram import Client, idle
-from pyrogram.errors import BadRequest
-
-import eduu
-from eduu.config import API_HASH, API_ID, TOKEN, disabled_plugins, log_chat
-from eduu.utils import del_restarted, get_restarted, shell_exec
+from pyrogram import Client
+from pyrogram.types import Message
+from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
+from eduu.config import nekobin_error_paste_url, log_chat
 from eduu.utils.consts import http
-from eduu.database import init_database
-
-from tortoise import run_async
-
-
-client = Client(
-    session_name="bot",
-    app_version=f"EduuRobot v{eduu.__version__}",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=TOKEN,
-    workers=24,
-    parse_mode="html",
-    plugins=dict(root="eduu.plugins", exclude=disabled_plugins),
-)
+from functools import wraps
+import traceback, html
 
 
-async def main() -> None:
-    await client.start()
-    await init_database()
-    # Saving commit number
-    client.version_code = int((await shell_exec("git rev-list --count HEAD"))[0])
-
-    client.me = await client.get_me()
-
-    if "test" not in sys.argv:
-        wr = await get_restarted()
-        await del_restarted()
-
-        start_message = (
-            "<b>EduuRobot started!</b>\n\n"
-            f"<b>Version:</b> <code>v{eduu.__version__} ({client.version_code})</code>\n"
-            f"<b>Pyrogram:</b> <code>v{pyrogram.__version__}</code>"
-        )
-
+def logging_errors(f):
+    @wraps(f)
+    async def err_log(c: Client, m: Message, *args, **kwargs):
         try:
-            await client.send_message(chat_id=log_chat, text=start_message)
-            if wr:
-                await client.edit_message_text(wr[0], wr[1], "Restarted successfully!")
-        except BadRequest:
-            logging.warning("Unable to send message to log_chat.")
+            return await f(c, m, *args, **kwargs)
+        except ChatWriteForbidden:
+            return await m.chat.leave()
+        except Exception as e:
+            if c.log_chat_errors:
+                full_trace = traceback.format_exc()
+                try:
+                    paste_err = await http.post(
+                        f"{nekobin_error_paste_url}/api/documents",
+                        json={"content": full_trace},
+                    )
+                    pastereqjson = paste_err.json()["result"]
+                    paste_url = f"{nekobin_error_paste_url}/{pastereqjson['key']}"
+                    thefulltrace = f"{paste_url}"
+                except:
+                    thefulltrace = "error has occurred in the paste"
+                try:
+                    await c.send_message(
+                        log_chat,
+                        f"<b>An error has occurred:</b>\n<code>{type(e).__name__}: {html.escape(str(e))}</code>\n\nFile <code>{f.__module__}</code> in <code>{f.__name__}</code>\n<b>Full traceback:</b> {thefulltrace}",
+                        disable_web_page_preview=True,
+                    )
+                except:
+                    pass
 
-        await idle()
-
-    await http.aclose()
-    await client.stop()
-
-
-run_async(main())
+    return err_log
