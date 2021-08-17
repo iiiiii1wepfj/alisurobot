@@ -14,14 +14,6 @@ from alisu.utils import del_restarted, get_restarted, shell_exec
 from alisu.utils.consts import http
 from alisu.database.database_handler import init_database
 
-try:
-    import uvloop
-
-    uvloop.install()
-except ImportError:
-    if platform.system() != "Windows":
-        logging.warning("uvloop is not installed and therefore will be disabled.")
-
 
 client = Client(
     session_name="bot",
