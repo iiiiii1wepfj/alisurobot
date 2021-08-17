@@ -14,10 +14,12 @@ from pyrogram.types import (
 from eduu.config import prefix
 from eduu.utils.consts import http
 from eduu.utils.localization import use_chat_lang
+from eduu.utils.bot_error_log import logging_errors
 
 
 @Client.on_message(filters.command("ip", prefix))
 @use_chat_lang()
+@logging_errors
 async def ip_cmd(c: Client, m: Message, strings):
     if len(m.text.split()) > 1:
         text = m.text.split(maxsplit=1)[1]
