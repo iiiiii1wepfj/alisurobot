@@ -195,17 +195,6 @@ async def del_message(c: Client, m: Message):
         print(e)
 
 
-@Client.on_message(
-    filters.command("backup", prefix)
-    & sudofilter
-    & ~filters.forwarded
-    & ~filters.group
-    & ~filters.edited
-    & ~filters.via_bot
-)
-async def backupcmd(c: Client, m: Message):
-    await m.reply_document("eduu.db")
-
 
 @Client.on_message(filters.command("upload", prefix) & sudofilter)
 async def uploadfile(c: Client, m: Message):
