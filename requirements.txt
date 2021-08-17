@@ -13,3 +13,4 @@ pytio
 youtube-dl
 humanfriendly
 yarl
+pyromod
