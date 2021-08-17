@@ -3,7 +3,7 @@ from tortoise.models import Model
 
 
 class groups(Model):
-    chat_id = fields.IntField(pk=True)
+    chat_id = fields.BigIntField(pk=True)
     welcome = fields.TextField(null=True)
     welcome_enabled = fields.BooleanField(null=True)
     rules = fields.TextField(null=True)
@@ -16,12 +16,12 @@ class groups(Model):
 
 
 class users(Model):
-    user_id = fields.IntField(pk=True)
+    user_id = fields.BigIntField(pk=True)
     chat_lang = fields.TextField(null=True)
 
 
 class filters(Model):
-    chat_id = fields.IntField()
+    chat_id = fields.BigIntField()
     filter_name = fields.TextField()
     raw_data = fields.TextField(null=True)
     file_id = fields.TextField(null=True)
@@ -29,7 +29,7 @@ class filters(Model):
 
 
 class notes(Model):
-    chat_id = fields.IntField()
+    chat_id = fields.BigIntField()
     note_name = fields.TextField()
     raw_data = fields.TextField(null=True)
     file_id = fields.TextField(null=True)
@@ -37,18 +37,18 @@ class notes(Model):
 
 
 class channels(Model):
-    chat_id = fields.IntField(pk=True)
+    chat_id = fields.BigIntField(pk=True)
     chat_lang = fields.TextField(null=True)
 
 
 class was_restarted_at(Model):
-    chat_id = fields.IntField(null=True)
-    message_id = fields.IntField(null=True)
+    chat_id = fields.BigIntField(null=True)
+    message_id = fields.BigIntField(null=True)
 
 
 class user_warns(Model):
-    user_id = fields.IntField(null=True)
-    chat_id = fields.IntField(null=True)
+    user_id = fields.BigIntField(null=True)
+    chat_id = fields.BigIntField(null=True)
     count = fields.IntField(null=True)
 
 
