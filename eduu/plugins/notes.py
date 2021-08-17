@@ -14,7 +14,6 @@ from eduu.utils.localization import use_chat_lang
 from eduu.utils.bot_error_log import logging_errors
 
 
-
 async def add_note(
     chat_id: int,
     trigger,
