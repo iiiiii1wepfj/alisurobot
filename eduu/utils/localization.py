@@ -14,7 +14,6 @@ from eduu.database import groups, users, channels
 from eduu.utils.consts import group_types
 
 enabled_locales: List[str] = [
-    "ar-SA",  # Arabic
     "ckb-IR",  # Sorani (Kurdish)
     "de-DE",  # German
     "en-GB",  # English
@@ -24,7 +23,6 @@ enabled_locales: List[str] = [
     "it-IT",  # Italian
     "nl-NL",  # Dutch
     "pt-BR",  # Portuguese (Brazil)
-    "ru-RU",  # Russian
 ]
 
 default_language: str = "en-GB"
