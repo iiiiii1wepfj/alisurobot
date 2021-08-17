@@ -21,7 +21,7 @@ async def prints(c: Client, m: Message, strings):
         )
     sent = await m.reply_text(strings("taking_screenshot"))
     text = m.text.split(maxsplit=1)[1]
-    r = await http.get("https://webshot.amanoteam.com/print", params=dict(q=text))
+    r = await http.get("https://api.itayki.com/print", params=dict(url=text))
     bio = BytesIO(r.read())
     bio.name = "screenshot.png"
     await m.reply_photo(bio)
