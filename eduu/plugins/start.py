@@ -61,7 +61,7 @@ async def start(c: Client, m: Union[Message, CallbackQuery], strings):
                 ]
             ]
         )
-        await method(strings("group"), reply_markup=keyboard)
+        await method(strings("group").format(myname=c.me.first_name), reply_markup=keyboard)
 
 
 @Client.on_callback_query(filters.regex("^infos$"))
