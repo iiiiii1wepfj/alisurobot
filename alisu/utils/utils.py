@@ -12,7 +12,7 @@ from pyrogram import Client, emoji, filters
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, Message
 
 from alisu.config import sudoers
-from alisu.database import groups, users, channels, was_restarted_at
+from alisu.database import groups, users, channels
 from alisu.utils.consts import group_types
 from alisu.utils.localization import (
     default_language,
@@ -71,17 +71,6 @@ async def chat_exists(chat_id, chat_type):
         return await channels.exists(chat_id=chat_id)
     raise TypeError("Unknown chat type '%s'." % chat_type)
 
-
-async def del_restarted():
-    await was_restarted_at.all().delete()
-
-
-async def get_restarted() -> Tuple[int, int]:
-    return await was_restarted_at.all()
-
-
-async def set_restarted(chat_id: int, message_id: int):
-    await was_restarted_at.create(chat_id=chat_id, message_id=message_id)
 
 
 async def check_perms(
