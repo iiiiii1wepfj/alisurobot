@@ -70,7 +70,7 @@ async def upgrade(c: Client, m: Message, strings):
         else:
             await sm.edit_text(strings("restarting"))
             await set_restarted(sm.chat.id, sm.message_id)
-            args = [sys.executable, "-m", "eduu"]
+            args = [sys.executable, "-m", "alisu"]
             os.execv(sys.executable, args)  # skipcq: BAN-B606
     else:
         await sm.edit_text(
@@ -146,7 +146,7 @@ async def test_speed(c: Client, m: Message, strings):
 async def restart(c: Client, m: Message, strings):
     sent = await m.reply_text(strings("restarting"))
     await set_restarted(sent.chat.id, sent.message_id)
-    args = [sys.executable, "-m", "eduu"]
+    args = [sys.executable, "-m", "alisu"]
     os.execv(sys.executable, args)  # skipcq: BAN-B606
 
 
