@@ -11,6 +11,7 @@ from eduu.database import user_warns, groups
 from eduu.utils import commands, require_admin
 from eduu.utils.consts import admin_status
 from eduu.utils.localization import use_chat_lang
+from eduu.utils.bot_error_log import logging_errors
 
 from .admin import get_target_user
 
@@ -73,6 +74,7 @@ async def set_warns_limit(chat_id: int, warns_limit: int):
 @Client.on_message(filters.command("warn", prefix) & filters.group)
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
+@logging_errors
 async def warn_user(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
     warns_limit = await get_warns_limit(m.chat.id)
@@ -123,6 +125,7 @@ async def warn_user(c: Client, m: Message, strings):
 @Client.on_message(filters.command("setwarnslimit", prefix) & filters.group)
 @require_admin(permissions=["can_restrict_members", "can_change_info"])
 @use_chat_lang()
+@logging_errors
 async def on_set_warns_limit(c: Client, m: Message, strings):
     if len(m.command) == 1:
         return await m.reply_text(strings("warn_limit_help"))
@@ -138,6 +141,7 @@ async def on_set_warns_limit(c: Client, m: Message, strings):
 @Client.on_message(filters.command(["resetwarns", "unwarn"], prefix) & filters.group)
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
+@logging_errors
 async def unwarn_user(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
     await reset_warns(m.chat.id, target_user.id)
@@ -147,6 +151,7 @@ async def unwarn_user(c: Client, m: Message, strings):
 @Client.on_message(filters.command("warns", prefix) & filters.group)
 @require_admin()
 @use_chat_lang()
+@logging_errors
 async def get_user_warns_cmd(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
     user_warns = await get_warns(m.chat.id, target_user.id)
@@ -162,6 +167,7 @@ async def get_user_warns_cmd(c: Client, m: Message, strings):
 )
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
+@logging_errors
 async def set_warns_action_cmd(c: Client, m: Message, strings):
     if len(m.text.split()) > 1:
         if not m.command[1] in ("ban", "mute", "kick"):
