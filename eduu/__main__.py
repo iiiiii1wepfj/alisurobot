@@ -52,7 +52,7 @@ async def main() -> None:
         del_restarted()
 
         start_message = (
-            "<b>EduuRobot started!</b>\n\n"
+            "<b>The bot was started!</b>\n\n"
             f"<b>Version:</b> <code>v{eduu.__version__} ({client.version_code})</code>\n"
             f"<b>Pyrogram:</b> <code>v{pyrogram.__version__}</code>"
         )
