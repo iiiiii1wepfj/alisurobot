@@ -3,8 +3,8 @@
   "infos_btn": "ℹ️ À propos",
   "language_btn": "🌐 Langue",
   "add_chat_btn": "➕ Ajouter à un chat",
-  "private": "Bonjour! Je suis EduuRobot. Pour en savoir plus sur mes fonctions, cliquez sur les boutons ci-dessous.",
+  "private": "Bonjour! Je suis {myname}. Pour en savoir plus sur mes fonctions, cliquez sur les boutons ci-dessous.",
   "start_chat": "🤖 Démarrer un chat",
-  "group": "Bonjour! Je suis EduuRobot. Pour découvrir mes fonctions, commencez une conversation avec moi.",
+  "group": "Bonjour! Je suis {myname}. Pour découvrir mes fonctions, commencez une conversation avec moi.",
   "start_description": "Démarrer le bot."
 }
