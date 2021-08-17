@@ -3,6 +3,7 @@ from pyrogram.types import Message
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from alisu.config import nekobin_error_paste_url, log_chat
 from alisu.utils.consts import http
+from tortoise.exceptions import DoesNotExist
 from functools import wraps
 import traceback, html
 
@@ -14,6 +15,8 @@ def logging_errors(f):
             return await f(c, m, *args, **kwargs)
         except ChatWriteForbidden:
             return await m.chat.leave()
+        except DoesNotExist:
+            pass
         except Exception as e:
             if c.log_chat_errors:
                 full_trace = traceback.format_exc()
