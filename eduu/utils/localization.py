@@ -21,8 +21,6 @@ enabled_locales: List[str] = [
     "fr-FR",  # French
     "he-IL",  # Hebrew
     "it-IT",  # Italian
-    "nl-NL",  # Dutch
-    "pt-BR",  # Portuguese (Brazil)
 ]
 
 default_language: str = "en-GB"
