@@ -418,9 +418,12 @@ async def delservice_action(c: Client, m: Message):
 
 commands.add_command("antichannelpin", "admin")
 commands.add_command("ban", "admin")
+commands.add_command("dban", "admin")
 commands.add_command("cleanservice", "admin")
 commands.add_command("kick", "admin")
+commands.add_command("dkick", "admin")
 commands.add_command("mute", "admin")
+commands.add_command("dmute", "admin")
 commands.add_command("pin", "admin")
 commands.add_command("purge", "admin")
 commands.add_command("tban", "admin")
