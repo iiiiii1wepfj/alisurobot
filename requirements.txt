@@ -1,7 +1,6 @@
 git+https://github.com/pyrogram/pyrogram.git
 tgcrypto
 git+https://github.com/aio-libs/async-lru.git#egg=async_lru
-uvloop
 gpytranslate
 meval
 speedtest-cli
