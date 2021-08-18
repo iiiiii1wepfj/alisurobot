@@ -6,6 +6,7 @@ import re
 import sys
 import traceback
 import humanfriendly
+import time
 from contextlib import redirect_stdout
 from typing import Union
 
