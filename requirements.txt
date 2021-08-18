@@ -12,5 +12,4 @@ Pillow
 pytio
 youtube-dl
 humanfriendly
-yarl
 pyromod
