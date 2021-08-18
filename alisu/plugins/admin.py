@@ -117,6 +117,21 @@ async def ban(c: Client, m: Message, strings):
         await m.reply_text(strings("i_cant_ban_admins"))
 
 
+@Client.on_message(filters.command("dban", prefix))
+@use_chat_lang()
+@require_admin(permissions=["can_restrict_members"])
+@logging_errors
+async def dban(c: Client, m: Message, strings):
+    if m.reply_to_message:
+        check_admin = await c.get_chat_member(m.chat.id, m.reply_to_message.id)
+        if check_admin.status not in admin_status:
+            await c.kick_chat_member(m.chat.id, m.reply_to_message.id)
+            await m.reply_to_message.delete()
+            await m.delete()
+        else:
+            await m.reply_text(strings("i_cant_ban_admins"))
+
+
 @Client.on_message(filters.command("kick", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
@@ -140,6 +155,22 @@ async def kick(c: Client, m: Message, strings):
             await m.reply_text(text)
     else:
         await m.reply_text(strings("i_cant_kick_admins"))
+
+
+@Client.on_message(filters.command("dkick", prefix))
+@use_chat_lang()
+@require_admin(permissions=["can_restrict_members"])
+@logging_errors
+async def dkick(c: Client, m: Message, strings):
+    if m.reply_to_message:
+        check_admin = await c.get_chat_member(m.chat.id, m.reply_to_message.id)
+        if check_admin.status not in admin_status:
+            await c.kick_chat_member(m.chat.id, m.reply_to_message.id)
+            await m.chat.unban_member(m.reply_to_message.id)
+            await m.reply_to_message.delete()
+            await m.delete()
+        else:
+            await m.reply_text(strings("i_cant_kick_admins"))
 
 
 @Client.on_message(filters.command("unban", prefix))
@@ -186,6 +217,26 @@ async def mute(c: Client, m: Message, strings):
             await m.reply_text(text)
     else:
         await m.reply_text(strings("i_cant_mute_admins"))
+
+
+@Client.on_message(filters.command("dmute", prefix))
+@use_chat_lang()
+@require_admin(permissions=["can_restrict_members"])
+@logging_errors
+async def dmute(c: Client, m: Message, strings):
+    if m.reply_to_message:
+        check_admin = await c.get_chat_member(m.chat.id, m.reply_to_message.id)
+        if check_admin.status not in admin_status:
+            await c.restrict_chat_member(
+                m.chat.id,
+                m.reply_to_message.id,
+                ChatPermissions(can_send_messages=False),
+            )
+            await m.reply_to_message.delete()
+            await m.delete()
+
+        else:
+            await m.reply_text(strings("i_cant_mute_admins"))
 
 
 @Client.on_message(filters.command("unmute", prefix))
