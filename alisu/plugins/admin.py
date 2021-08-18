@@ -59,31 +59,34 @@ async def get_target_user(c: Client, m: Message) -> User:
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
 @logging_errors
 async def pin(c: Client, m: Message):
-    await c.pin_chat_message(
-        m.chat.id,
-        m.reply_to_message.message_id,
-        disable_notification=True,
-        both_sides=True,
-    )
+    if m.reply_to_message:
+        await c.pin_chat_message(
+            m.chat.id,
+            m.reply_to_message.message_id,
+            disable_notification=True,
+            both_sides=True,
+        )
 
 
 @Client.on_message(filters.command("pin loud", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
 @logging_errors
 async def pinloud(c: Client, m: Message):
-    await c.pin_chat_message(
-        m.chat.id,
-        m.reply_to_message.message_id,
-        disable_notification=False,
-        both_sides=True,
-    )
+    if m.reply_to_message:
+        await c.pin_chat_message(
+            m.chat.id,
+            m.reply_to_message.message_id,
+            disable_notification=False,
+            both_sides=True,
+        )
 
 
 @Client.on_message(filters.command("unpin", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
 @logging_errors
 async def unpin(c: Client, m: Message):
-    await c.unpin_chat_message(m.chat.id, m.reply_to_message.message_id)
+    if m.reply_to_message:
+        await c.unpin_chat_message(m.chat.id, m.reply_to_message.message_id)
 
 
 @Client.on_message(filters.command(["unpinall", "unpin all"], prefix))
