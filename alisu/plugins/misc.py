@@ -203,6 +203,10 @@ async def button_parse_helper(c: Client, m: Message, strings):
     else:
         await m.reply_text(strings("parsebtn_err"))
 
+@Client.on_message(filters.command("donate"))
+@logging_errors
+async def donate_to_owner_cmd(c: Client, m: Message):
+    await m.reply_text("https://paypal.me/itayki")
 
 commands.add_command("mark", "general")
 commands.add_command("html", "general")
@@ -211,3 +215,4 @@ commands.add_command("token", "general")
 commands.add_command("urlencode", "general")
 commands.add_command("urldecode", "general")
 commands.add_command("parsebutton", "general")
+commands.add_command("donate", "general")
