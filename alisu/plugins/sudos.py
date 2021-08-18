@@ -165,10 +165,10 @@ async def leave_chat(c: Client, m: Message):
 
 @Client.on_message(filters.command(["bot_stats", "stats"], prefix) & sudofilter)
 async def getbotstats(c: Client, m: Message):
-    users_count = await users.count()
-    groups_count = await groups.count()
-    filters_count = await dbfilters.count()
-    notes_count = await notes.count()
+    users_count = await users.all().count()
+    groups_count = await groups.all().count()
+    filters_count = await dbfilters.all().count()
+    notes_count = await notes.all().count()
     bot_uptime = round(time.time() - c.start_time)
     bot_uptime = humanfriendly.format_timespan(bot_uptime)
 
