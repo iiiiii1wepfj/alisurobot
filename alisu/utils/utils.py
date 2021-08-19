@@ -29,6 +29,10 @@ START_CHAR = ("'", '"', SMART_OPEN)
 _EMOJI_REGEXP = None
 
 
+class InvalidTimeUnitStringSpecifiedError(Exception):
+    pass
+
+
 def pretty_size(size_bytes):
     if size_bytes == 0:
         return "0B"
@@ -168,7 +172,6 @@ sudofilter = filters.user(sudoers)
 
 async def time_extract(m: Message, t: str) -> int:
     if t[-1] in ["m", "h", "d"]:
-        print(True)
         unit = t[-1]
         num = t[:-1]
         if not num.isdigit():
@@ -183,8 +186,7 @@ async def time_extract(m: Message, t: str) -> int:
         else:
             return 0
         return int(time.time() + t_time)
-    await m.reply_text("Invalid time format. Use 'h'/'m'/'d' ")
-    return 0
+    raise InvalidTimeUnitStringSpecifiedError("Invalid time format. Use 'h'/'m'/'d' ")
 
 
 def remove_escapes(text: str) -> str:

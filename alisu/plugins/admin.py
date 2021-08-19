@@ -7,6 +7,7 @@ from pyrogram.types import ChatPermissions, Message, User
 from alisu.config import prefix
 from alisu.database import groups
 from alisu.utils import commands, require_admin, time_extract
+from alisu.utils.utils import InvalidTimeUnitStringSpecifiedError
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
@@ -53,6 +54,51 @@ async def get_target_user(c: Client, m: Message) -> User:
             else m.command[1]
         )
     return target_user
+
+
+async def get_target_user_and_time_and_reason(c: Client, m: Message, strings):
+    reason = None
+    if m.reply_to_message:
+        target_user = m.reply_to_message.from_user
+        if len(m.text.split()) > 1:
+            the_time_string = m.command[1]
+        else:
+            the_time_string = None
+        if len(m.text.split()) > 2:
+            reason = m.text.split(None, 2)[2]
+        else:
+            reason = None
+    else:
+        try:
+            msg_entities = m.entities[1] if m.text.startswith("/") else m.entities[0]
+        except:
+            return
+        target_user = await c.get_users(
+            msg_entities.user.id
+            if msg_entities.type == "text_mention"
+            else int(m.command[1])
+            if m.command[1].isdecimal()
+            else m.command[1]
+        )
+        if len(m.text.split()) > 2:
+            the_time_string = m.command[2]
+        else:
+            the_time_string = None
+        if len(m.text.split()) > 3:
+            reason = m.text.split(None, 3)[3]
+        else:
+            reason = None
+    if not the_time_string:
+        return await m.reply_text(
+            strings("error_must_specify_time").format(command=m.command[0])
+        )
+    else:
+        try:
+            the_time = await time_extract(m, the_time_string)
+        except InvalidTimeUnitStringSpecifiedError as invalidtimeerrmsg:
+            await m.reply_text(invalidtimeerrmsg)
+            return
+    return target_user, the_time, the_time_string, reason
 
 
 @Client.on_message(filters.command("pin", prefix))
@@ -273,27 +319,30 @@ async def unmute(c: Client, m: Message, strings):
 @require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def tmute(c: Client, m: Message, strings):
-    if len(m.command) == 1:
-        return await m.reply_text(
-            strings("error_must_specify_time").format(command=m.command[0])
-        )
-    split_time = m.text.split(None, 1)
-    mute_time = await time_extract(m, split_time[1])
-    if not mute_time:
+    get_tmute_info = await get_target_user_and_time_and_reason(c, m, strings)
+    if not get_tmute_info:
         return
+    else:
+        target_user, mute_time, mute_time_str, the_reason = get_tmute_info
     await c.restrict_chat_member(
         m.chat.id,
-        m.reply_to_message.from_user.id,
+        target_user.id,
         ChatPermissions(can_send_messages=False),
         until_date=mute_time,
     )
-    await m.reply_text(
-        strings("tmute_success").format(
-            user=m.reply_to_message.from_user.mention,
-            admin=m.from_user.mention,
-            time=split_time[1],
-        )
+    the_tmute_message_text = strings("tmute_success").format(
+        user=target_user.mention,
+        admin=m.from_user.mention,
+        time=mute_time_str,
     )
+    if the_reason:
+        await m.reply_text(
+            the_tmute_message_text
+            + "\n"
+            + strings("reason_string").format(reason_text=the_reason)
+        )
+    else:
+        await m.reply_text(the_tmute_message_text)
 
 
 @Client.on_message(filters.command("tban", prefix))
@@ -301,25 +350,25 @@ async def tmute(c: Client, m: Message, strings):
 @require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def tban(c: Client, m: Message, strings):
-    if len(m.command) == 1:
-        return await m.reply_text(
-            strings("error_must_specify_time").format(command=m.command[0])
-        )
-    split_time = m.text.split(None, 1)
-    ban_time = await time_extract(m, split_time[1])
-    if not ban_time:
+    get_tban_info = await get_target_user_and_time_and_reason(c, m, strings)
+    if not get_tban_info:
         return
-    await c.kick_chat_member(
-        m.chat.id, m.reply_to_message.from_user.id, until_date=ban_time
+    else:
+        target_user, ban_time, ban_time_str, the_reason = get_tban_info
+    await c.kick_chat_member(m.chat.id, target_user.id, until_date=ban_time)
+    the_tban_message_text = strings("tban_success").format(
+        user=target_user.mention,
+        admin=m.from_user.mention,
+        time=ban_time_str,
     )
-
-    await m.reply_text(
-        strings("tban_success").format(
-            user=m.reply_to_message.from_user.mention,
-            admin=m.from_user.mention,
-            time=split_time[1],
+    if the_reason:
+        await m.reply_text(
+            the_tban_message_text
+            + "\n"
+            + strings("reason_string").format(reason_text=the_reason)
         )
-    )
+    else:
+        await m.reply_text(the_tban_message_text)
 
 
 @Client.on_message(filters.command("purge", prefix))
