@@ -72,7 +72,6 @@ async def chat_exists(chat_id, chat_type):
     raise TypeError("Unknown chat type '%s'." % chat_type)
 
 
-
 async def check_perms(
     client: Client,
     message: Union[CallbackQuery, Message],
