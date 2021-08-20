@@ -330,7 +330,7 @@ async def tmute(c: Client, m: Message, strings):
         m.chat.id,
         target_user.id,
         ChatPermissions(can_send_messages=False),
-        until_date=mute_time,
+        mute_time=mute_time,
     )
     the_tmute_message_text = strings("tmute_success").format(
         user=target_user.mention,
