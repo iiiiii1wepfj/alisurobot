@@ -2,6 +2,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram import StopPropagation
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
+from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from alisu.config import nekobin_error_paste_url, log_chat
 from alisu.utils.consts import http
 from tortoise.exceptions import DoesNotExist
@@ -16,9 +17,7 @@ def logging_errors(f):
             return await f(c, m, *args, **kwargs)
         except ChatWriteForbidden:
             return await m.chat.leave()
-        except DoesNotExist:
-            pass
-        except StopPropagation:
+        except (DoesNotExist, ChatAdminRequired, StopPropagation):
             pass
         except Exception as e:
             if c.log_chat_errors:
