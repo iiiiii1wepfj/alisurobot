@@ -5,6 +5,7 @@ from pyrogram import Client, filters
 from pyrogram.types import ChatPermissions, Message, User
 
 from alisu.config import prefix
+from alisu.custom_core.custom_methods import mute_chat_member_custom
 from alisu.database import groups
 from alisu.utils import commands, require_admin, time_extract
 from alisu.utils.utils import InvalidTimeUnitStringSpecifiedError
@@ -255,8 +256,8 @@ async def mute(c: Client, m: Message, strings):
     reason = await get_reason_text(c, m)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     if check_admin.status not in admin_status:
-        await c.restrict_chat_member(
-            m.chat.id, target_user.id, ChatPermissions(can_send_messages=False)
+        await mute_chat_member_custom(
+            c, m.chat.id, target_user.id, ChatPermissions(can_send_messages=False)
         )
         text = strings("mute_success").format(
             user=target_user.mention,
@@ -324,7 +325,8 @@ async def tmute(c: Client, m: Message, strings):
         return
     else:
         target_user, mute_time, mute_time_str, the_reason = get_tmute_info
-    await c.restrict_chat_member(
+    await mute_chat_member_custom(
+        c,
         m.chat.id,
         target_user.id,
         ChatPermissions(can_send_messages=False),
