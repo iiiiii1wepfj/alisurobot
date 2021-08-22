@@ -14,6 +14,7 @@
   "cleanservice_invalid_arg": "משתנה לא חוקי. תשתמש ב <code>/cleanservice off/on</code>.",
   "cleanservice_status_disabled": "מחיקת הודעות שירות מושבתת כעת בצ'אט זה.",
   "cleanservice_status_enabled": "מחיקת הודעות שירות מופעלת כעת בצ'אט זה.",
+  "click_here_anon_admin_btn": "לחץ כאן",
   "error_must_specify_time": "אתה צריך לציין זמן אחרי הפקודה. לדוגמה.: <code>/{command} 7d</code>.",
   "kick_description": "בועט את המשתמש מהקבוצה.",
   "dkick_description": "בועט את המשתמש מהקבוצה ומוחק את ההודעה.",
