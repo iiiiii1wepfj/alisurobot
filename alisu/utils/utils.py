@@ -188,13 +188,16 @@ def require_admin(
             if msg.chat.type == "channel":
                 return await func(client, message, *args, *kwargs)
             anon_admin_check = await check_if_is_from_anon_admin(message)
+            check_anon_perms_msg_send = None
             if anon_admin_check:
                 get_my_chat_member = await client.get_chat_member(msg.chat.id, "me")
                 if get_my_chat_member.status not in pyro_admin_types_chat_member:
                     await message.reply_text(strings("bot_not_admin_error"))
                     return
                 the_callback_data = f"{msg.chat.id}|{msg.message_id}"
-                await send_anon_admin_button(msg, the_callback_data, strings)
+                check_anon_perms_msg_send = await send_anon_admin_button(
+                    msg, the_callback_data, strings
+                )
                 try:
                     anon_callback_listen = await client.listen.CallbackQuery(
                         id=str(msg.chat.id),
@@ -210,6 +213,8 @@ def require_admin(
                 client, msg_to_check_perm, permissions, complain_missing_perms, strings
             )
             if has_perms:
+                if check_anon_perms_msg_send:
+                    await check_anon_perms_msg_send.delete()
                 return await func(client, message, *args, *kwargs)
 
         return wrapper
