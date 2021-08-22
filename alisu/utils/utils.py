@@ -190,8 +190,9 @@ def require_admin(
             anon_admin_check = await check_if_is_from_anon_admin(message)
             if anon_admin_check:
                 get_my_chat_member = await client.get_chat_member(msg.chat.id, "me")
-                if pyro_admin_types_chat_member not in get_my_chat_member.status:
-                    await m.reply_text(strings("bot_not_admin_error"))
+                if get_my_chat_member.status not in pyro_admin_types_chat_member:
+                    await message.reply_text(strings("bot_not_admin_error"))
+                    return
                 the_callback_data = f"{msg.chat.id}|{msg.message_id}"
                 await send_anon_admin_button(msg, the_callback_data, strings)
                 try:
