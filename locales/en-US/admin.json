@@ -25,6 +25,7 @@
   "unban_success": "{user} was unbanned by {admin}.",
   "unmute_description": "Unmutes a user in the chat.",
   "unmute_success": "{user} was unmuted by {admin}.",
+  "del_description": "Delete the message from the chat.",
   "unpin_description": "Unpins the replied message in chat.",
   "unpinall_description": "Unpins all messages in chat."
 }
