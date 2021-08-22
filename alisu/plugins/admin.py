@@ -102,6 +102,16 @@ async def get_target_user_and_time_and_reason(c: Client, m: Message, strings):
     return target_user, the_time, the_time_string, reason
 
 
+@Client.on_message(filters.command("echo", prefix))
+@require_admin(allow_in_private=True)
+async def admin_echo_cmd(c: Client, m: Message):
+    if len(m.command) == 1:
+        try:
+            await m.reply_text(m.text.split(None, 1)[1])
+        except:
+            pass
+
+
 @Client.on_message(filters.command("del", prefix))
 @require_admin(permissions=["can_delete_messages"], allow_in_private=True)
 @bot_require_admin(permissions=["can_delete_messages"], allow_in_private=True)
