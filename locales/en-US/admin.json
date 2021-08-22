@@ -1,6 +1,7 @@
 {
   "ban_description": "Bans a user from chat.",
   "ban_success": "{user} was banned by {admin}.",
+  "click_here_anon_admin_btn": "Click Here",
   "error_must_specify_time": "You must specify a time after the command. E.g.: <code>/{command} 7d</code>.",
   "kick_description": "Kicks a user from chat.",
   "kick_success": "{user} was kicked by {admin}.",
