@@ -90,7 +90,7 @@ async def check_if_is_from_anon_admin(m: Message):
 
 async def send_anon_admin_button(m: Message, callbackdatatext: str, strings):
     return await m.reply_text(
-        "seems like anonymous admin, click on the button bellow to check your permissions (you have only 2 minutes to click on the button bellow)",
+        strings("anon_admin_check_msg_txt"),
         reply_markup=InlineKeyboardMarkup(
             [
                 [
