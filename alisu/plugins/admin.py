@@ -7,7 +7,7 @@ from pyrogram.types import ChatPermissions, Message, User
 from alisu.config import prefix
 from alisu.custom_core.custom_methods import mute_chat_member_custom
 from alisu.database import groups
-from alisu.utils import commands, require_admin, time_extract
+from alisu.utils import commands, require_admin, bot_require_admin, time_extract
 from alisu.utils.utils import InvalidTimeUnitStringSpecifiedError
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
@@ -104,6 +104,7 @@ async def get_target_user_and_time_and_reason(c: Client, m: Message, strings):
 
 @Client.on_message(filters.command("pin", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
 @logging_errors
 async def pin(c: Client, m: Message):
     if m.reply_to_message:
@@ -117,6 +118,7 @@ async def pin(c: Client, m: Message):
 
 @Client.on_message(filters.command("pin loud", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
 @logging_errors
 async def pinloud(c: Client, m: Message):
     if m.reply_to_message:
@@ -130,6 +132,7 @@ async def pinloud(c: Client, m: Message):
 
 @Client.on_message(filters.command("unpin", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
 @logging_errors
 async def unpin(c: Client, m: Message):
     if m.reply_to_message:
@@ -138,6 +141,7 @@ async def unpin(c: Client, m: Message):
 
 @Client.on_message(filters.command(["unpinall", "unpin all"], prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
 @logging_errors
 async def unpinall(c: Client, m: Message):
     await c.unpin_all_chat_messages(m.chat.id)
@@ -146,6 +150,7 @@ async def unpinall(c: Client, m: Message):
 @Client.on_message(filters.command("ban", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def ban(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
@@ -170,6 +175,7 @@ async def ban(c: Client, m: Message, strings):
 @Client.on_message(filters.command("dban", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def dban(c: Client, m: Message, strings):
     if m.reply_to_message:
@@ -187,6 +193,7 @@ async def dban(c: Client, m: Message, strings):
 @Client.on_message(filters.command("kick", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def kick(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
@@ -212,6 +219,7 @@ async def kick(c: Client, m: Message, strings):
 @Client.on_message(filters.command("dkick", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def dkick(c: Client, m: Message, strings):
     if m.reply_to_message:
@@ -230,6 +238,7 @@ async def dkick(c: Client, m: Message, strings):
 @Client.on_message(filters.command("unban", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def unban(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
@@ -250,6 +259,7 @@ async def unban(c: Client, m: Message, strings):
 @Client.on_message(filters.command("mute", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def mute(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
@@ -276,6 +286,7 @@ async def mute(c: Client, m: Message, strings):
 @Client.on_message(filters.command("dmute", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def dmute(c: Client, m: Message, strings):
     if m.reply_to_message:
@@ -298,6 +309,7 @@ async def dmute(c: Client, m: Message, strings):
 @Client.on_message(filters.command("unmute", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def unmute(c: Client, m: Message, strings):
     target_user = await get_target_user(c, m)
@@ -318,6 +330,7 @@ async def unmute(c: Client, m: Message, strings):
 @Client.on_message(filters.command("tmute", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def tmute(c: Client, m: Message, strings):
     get_tmute_info = await get_target_user_and_time_and_reason(c, m, strings)
@@ -350,6 +363,7 @@ async def tmute(c: Client, m: Message, strings):
 @Client.on_message(filters.command("tban", prefix))
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def tban(c: Client, m: Message, strings):
     get_tban_info = await get_target_user_and_time_and_reason(c, m, strings)
@@ -375,6 +389,7 @@ async def tban(c: Client, m: Message, strings):
 
 @Client.on_message(filters.command("purge", prefix))
 @require_admin(permissions=["can_delete_messages"], allow_in_private=True)
+@bot_require_admin(permissions=["can_delete_messages"], allow_in_private=True)
 @use_chat_lang()
 @logging_errors
 async def purge(c: Client, m: Message, strings):

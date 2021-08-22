@@ -5,7 +5,7 @@ from pyrogram.types import ChatPermissions, Message
 
 from alisu.config import prefix
 from alisu.database import user_warns, groups
-from alisu.utils import commands, require_admin
+from alisu.utils import commands, require_admin, bot_require_admin
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
@@ -70,6 +70,7 @@ async def set_warns_limit(chat_id: int, warns_limit: int):
 
 @Client.on_message(filters.command("warn", prefix) & filters.group)
 @require_admin(permissions=["can_restrict_members"])
+@bot_require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
 async def warn_user(c: Client, m: Message, strings):
@@ -168,7 +169,7 @@ async def get_user_warns_cmd(c: Client, m: Message, strings):
 async def set_warns_action_cmd(c: Client, m: Message, strings):
     if len(m.text.split()) > 1:
         if not m.command[1] in ("ban", "mute", "kick"):
-            return await m.reply_text(strings("warns_action_set_invlaid"))
+            return await m.reply_text(strings("warns_action_set_invalid"))
 
         warn_action_txt = m.command[1]
 
