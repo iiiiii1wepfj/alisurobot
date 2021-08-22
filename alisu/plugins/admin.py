@@ -102,6 +102,20 @@ async def get_target_user_and_time_and_reason(c: Client, m: Message, strings):
     return target_user, the_time, the_time_string, reason
 
 
+@Client.on_message(filters.command("del", prefix))
+@require_admin(permissions=["can_delete_messages"], allow_in_private=True)
+@bot_require_admin(permissions=["can_delete_messages"], allow_in_private=True)
+async def del_message(c: Client, m: Message):
+    try:
+        await c.delete_messages(m.chat.id, m.reply_to_message.message_id)
+    except:
+        pass
+    try:
+        await c.delete_messages(m.chat.id, m.message_id)
+    except:
+        pass
+
+
 @Client.on_message(filters.command("pin", prefix))
 @require_admin(permissions=["can_pin_messages"], allow_in_private=True)
 @bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
@@ -174,8 +188,8 @@ async def ban(c: Client, m: Message, strings):
 
 @Client.on_message(filters.command("dban", prefix))
 @use_chat_lang()
-@require_admin(permissions=["can_restrict_members"])
-@bot_require_admin(permissions=["can_restrict_members"])
+@require_admin(permissions=["can_restrict_members", "can_delete_messages"])
+@bot_require_admin(permissions=["can_restrict_members", "can_delete_messages"])
 @logging_errors
 async def dban(c: Client, m: Message, strings):
     if m.reply_to_message:
@@ -218,8 +232,8 @@ async def kick(c: Client, m: Message, strings):
 
 @Client.on_message(filters.command("dkick", prefix))
 @use_chat_lang()
-@require_admin(permissions=["can_restrict_members"])
-@bot_require_admin(permissions=["can_restrict_members"])
+@require_admin(permissions=["can_restrict_members", "can_delete_messages"])
+@bot_require_admin(permissions=["can_restrict_members", "can_delete_messages"])
 @logging_errors
 async def dkick(c: Client, m: Message, strings):
     if m.reply_to_message:
@@ -285,8 +299,8 @@ async def mute(c: Client, m: Message, strings):
 
 @Client.on_message(filters.command("dmute", prefix))
 @use_chat_lang()
-@require_admin(permissions=["can_restrict_members"])
-@bot_require_admin(permissions=["can_restrict_members"])
+@require_admin(permissions=["can_restrict_members", "can_delete_messages"])
+@bot_require_admin(permissions=["can_restrict_members", "can_delete_messages"])
 @logging_errors
 async def dmute(c: Client, m: Message, strings):
     if m.reply_to_message:
