@@ -14,6 +14,7 @@
   "cleanservice_invalid_arg": "Invalid argument. Use <code>/cleanservice off/on</code>.",
   "cleanservice_status_disabled": "Delete service messages is currently disabled in this chat.",
   "cleanservice_status_enabled": "Delete service messages is currently enabled in this chat.",
+  "click_here_anon_admin_btn": "Click Here",
   "error_must_specify_time": "You must specify a time after the command. E.g.: <code>/{command} 7d</code>.",
   "kick_description": "Kicks a user from chat.",
   "dkick_description": "Kicks a user from chat and delete the message.",
