@@ -183,18 +183,6 @@ async def getbotstats(c: Client, m: Message):
     )
 
 
-@Client.on_message(filters.command("del", prefix) & sudofilter)
-async def del_message(c: Client, m: Message):
-    try:
-        await c.delete_messages(m.chat.id, m.reply_to_message.message_id)
-    except RPCError as e:
-        print(e)
-    try:
-        await c.delete_messages(m.chat.id, m.message_id)
-    except RPCError as e:
-        print(e)
-
-
 @Client.on_message(filters.command("upload", prefix) & sudofilter)
 async def uploadfile(c: Client, m: Message):
     await m.reply_to_message.reply_text("Uploading the Document.")
