@@ -10,6 +10,7 @@ from pyrogram.errors import BadRequest
 
 import alisu
 from alisu.config import API_HASH, API_ID, TOKEN, disabled_plugins, log_chat
+from alisu.custom_core.conv_handler import Conversation
 from alisu.utils import shell_exec
 from alisu.utils.consts import http
 from alisu.database.database_handler import init_database
@@ -25,6 +26,7 @@ client = Client(
     parse_mode="html",
     plugins=dict(root="alisu.plugins", exclude=disabled_plugins),
 )
+Conversation(client)
 
 
 async def main() -> None:
