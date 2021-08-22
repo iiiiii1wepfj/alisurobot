@@ -105,7 +105,7 @@ async def get_target_user_and_time_and_reason(c: Client, m: Message, strings):
 @Client.on_message(filters.command("echo", prefix))
 @require_admin(allow_in_private=True)
 async def admin_echo_cmd(c: Client, m: Message):
-    if len(m.command) == > 1:
+    if len(m.text.split()) > 1:
         await m.reply_text(m.text.split(None, 1)[1])
 
 
