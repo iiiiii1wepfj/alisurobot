@@ -9,11 +9,19 @@ from string import Formatter
 from typing import Callable, Coroutine, List, Optional, Tuple, Union
 
 from pyrogram import Client, emoji, filters
-from pyrogram.types import CallbackQuery, InlineKeyboardButton, Message
+from pyrogram.types import (
+    CallbackQuery,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    Message,
+)
+from pyrogram.errors.exceptions.bad_request_400 import (
+    UserNotParticipant as PyroUserNotParticipantError,
+)
 
 from alisu.config import sudoers
 from alisu.database import groups, users, channels
-from alisu.utils.consts import group_types
+from alisu.utils.consts import group_types, admin_status as pyro_admin_types_chat_member
 from alisu.utils.localization import (
     default_language,
     get_lang,
@@ -76,6 +84,26 @@ async def chat_exists(chat_id, chat_type):
     raise TypeError("Unknown chat type '%s'." % chat_type)
 
 
+async def check_if_is_from_anon_admin(m: Message):
+    return bool(m.sender_chat and not m.forward_from_chat and not m.from_user)
+
+
+async def send_anon_admin_button(m: Message, callbackdatatext: str, strings):
+    return await m.reply_text(
+        "seems like anonymous admin, click on the button bellow to check your permissions (you have only 2 minutes to click on the button bellow)",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        strings("click_here_anon_admin_btn"),
+                        callback_data=f"{callbackdatatext}",
+                    )
+                ],
+            ]
+        ),
+    )
+
+
 async def check_perms(
     client: Client,
     message: Union[CallbackQuery, Message],
@@ -89,8 +117,10 @@ async def check_perms(
     else:
         sender = message.reply_text
         chat = message.chat
-
-    user = await client.get_chat_member(chat.id, message.from_user.id)
+    try:
+        user = await client.get_chat_member(chat.id, message.from_user.id)
+    except PyroUserNotParticipantError:
+        return False
     if user.status == "creator":
         return True
 
@@ -148,6 +178,7 @@ def require_admin(
                 raise NotImplementedError(
                     f"require_admin can't process updates with the type '{message.__name__}' yet."
                 )
+            msg_to_check_perm = message
 
             # We don't actually check private and channel chats.
             if msg.chat.type == "private":
@@ -156,10 +187,34 @@ def require_admin(
                 return await sender(strings("private_not_allowed"))
             if msg.chat.type == "channel":
                 return await func(client, message, *args, *kwargs)
+            anon_admin_check = await check_if_is_from_anon_admin(message)
+            check_anon_perms_msg_send = None
+            if anon_admin_check:
+                get_my_chat_member = await client.get_chat_member(msg.chat.id, "me")
+                if get_my_chat_member.status not in pyro_admin_types_chat_member:
+                    await message.reply_text(strings("bot_not_admin_error"))
+                    return
+                the_callback_data = f"{msg.chat.id}|{msg.message_id}"
+                check_anon_perms_msg_send = await send_anon_admin_button(
+                    msg, the_callback_data, strings
+                )
+                try:
+                    anon_callback_listen = await client.listen.CallbackQuery(
+                        id=str(msg.chat.id),
+                        filters=(filters.regex(f"^{the_callback_data}$")),
+                        timeout=120,
+                    )
+                    sender = partial(anon_callback_listen.answer, show_alert=True)
+                    msg = anon_callback_listen.message
+                    msg_to_check_perm = anon_callback_listen
+                except asyncio.exceptions.TimeoutError:
+                    return
             has_perms = await check_perms(
-                client, message, permissions, complain_missing_perms, strings
+                client, msg_to_check_perm, permissions, complain_missing_perms, strings
             )
             if has_perms:
+                if check_anon_perms_msg_send:
+                    await check_anon_perms_msg_send.delete()
                 return await func(client, message, *args, *kwargs)
 
         return wrapper
