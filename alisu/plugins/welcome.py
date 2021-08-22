@@ -86,7 +86,7 @@ async def set_welcome_message(c: Client, m: Message, strings):
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
-async def invlaid_welcome_status_arg(c: Client, m: Message, strings):
+async def invalid_welcome_status_arg(c: Client, m: Message, strings):
     await m.reply_text(strings("welcome_mode_invalid"))
 
 
