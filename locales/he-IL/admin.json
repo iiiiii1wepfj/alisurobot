@@ -42,6 +42,7 @@
   "unmute_success": "{user} כבר לא מושתק על ידי {admin}.",
   "unpin_description": "מבטל את הנעיצה בהשב על ההודעה.",
   "unpinall_description": "מבטל את נעיצת כל ההודעות בצ'אט.",
+  "del_description": "מוחק את ההודעה מהצ'אט.",
   "reason_string": "סיבה: {reason_text}",
   "i_cant_ban_admins": "אני לא יכול להעיף מנהלים.",
   "i_cant_mute_admins": "אני לא יכול להשתיק מנהלים.",
