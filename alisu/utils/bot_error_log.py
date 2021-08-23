@@ -12,7 +12,12 @@ import traceback, html
 
 def logging_errors(f):
     @wraps(f)
-    async def err_log(c: Client, m: Message, *args, **kwargs):
+    async def err_log(
+        c: Client,
+        m: Message,
+        *args,
+        **kwargs,
+    ):
         try:
             return await f(c, m, *args, **kwargs)
         except ChatWriteForbidden:
@@ -27,7 +32,8 @@ def logging_errors(f):
                         f"{nekobin_error_paste_url}/api/documents",
                         json={"content": full_trace},
                     )
-                    pastereqjson = paste_err.json()["result"]
+                    pastereqjson_one = paste_err.json()
+                    pastereqjson = pastereqjson_one.json()["result"]
                     paste_url = f"{nekobin_error_paste_url}/{pastereqjson['key']}"
                     thefulltrace = f"{paste_url}"
                 except:
