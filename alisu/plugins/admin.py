@@ -429,13 +429,17 @@ async def purge(c: Client, m: Message, strings):
             message_ids.append(a_s_message_id)
             if len(message_ids) == 100:
                 await c.delete_messages(
-                    chat_id=m.chat.id, message_ids=message_ids, revoke=True
+                    chat_id=m.chat.id,
+                    message_ids=message_ids,
+                    revoke=True,
                 )
                 count_del_etion_s += len(message_ids)
                 message_ids = []
         if len(message_ids) > 0:
             await c.delete_messages(
-                chat_id=m.chat.id, message_ids=message_ids, revoke=True
+                chat_id=m.chat.id,
+                message_ids=message_ids,
+                revoke=True,
             )
             count_del_etion_s += len(message_ids)
     await status_message.edit_text(
