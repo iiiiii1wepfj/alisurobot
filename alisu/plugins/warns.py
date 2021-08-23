@@ -53,7 +53,11 @@ async def add_warns(chat_id: int, user_id: int, number: int):
             count=user_warns_number_after_the_warn
         )
     else:
-        await user_warns.create(user_id=user_id, chat_id=chat_id, count=number)
+        await user_warns.create(
+            user_id=user_id,
+            chat_id=chat_id,
+            count=number,
+        )
 
 
 async def reset_warns(chat_id: int, user_id: int):
