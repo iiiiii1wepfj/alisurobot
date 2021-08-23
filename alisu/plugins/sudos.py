@@ -16,7 +16,12 @@ from pyrogram import Client, filters
 from pyrogram.errors import RPCError
 from pyrogram.types import Message
 
-from alisu.database import groups, users, notes, filters as dbfilters
+from alisu.database import (
+    groups,
+    users,
+    notes,
+    filters as dbfilters,
+)
 from alisu.utils import sudofilter
 from alisu.utils.localization import use_chat_lang
 
