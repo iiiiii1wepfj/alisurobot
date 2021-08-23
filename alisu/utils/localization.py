@@ -23,7 +23,11 @@ enabled_locales: List[str] = [
 default_language: str = "en-GB"
 
 
-async def set_db_lang(chat_id: int, chat_type: str, lang_code: str):
+async def set_db_lang(
+    chat_id: int,
+    chat_type: str,
+    lang_code: str,
+):
     if chat_type == "private":
         await users.filter(user_id=chat_id).update(chat_lang=lang_code)
     elif chat_type in group_types:  # groups and supergroups share the same table
@@ -66,7 +70,11 @@ langdict = cache_localizations(jsons)
 
 
 def get_locale_string(
-    dic: dict, language: str, default_context: str, key: str, context: str = None
+    dic: dict,
+    language: str,
+    default_context: str,
+    key: str,
+    context: str = None,
 ) -> str:
     if context:
         default_context = context
