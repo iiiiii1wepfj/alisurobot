@@ -141,7 +141,6 @@ async def reset_welcome_message(c: Client, m: Message, strings):
 
 @Client.on_message(filters.new_chat_members & filters.group)
 @use_chat_lang()
-@logging_errors
 async def greet_new_members(c: Client, m: Message, strings):
     members = m.new_chat_members
     chat_title = m.chat.title
@@ -160,12 +159,14 @@ async def greet_new_members(c: Client, m: Message, strings):
             welcome = await get_welcome(m.chat.id)
             if welcome is None:
                 welcome = strings("welcome_default")
-
             if "count" in get_format_keys(welcome):
                 count = await c.get_chat_members_count(m.chat.id)
             else:
                 count = 0
-
+            if "preview" in get_format_keys(welcome):
+                check_if_disable_preview = False
+            else:
+                check_if_disable_preview = True
             welcome = welcome.format(
                 id=user_id,
                 username=username,
@@ -178,11 +179,12 @@ async def greet_new_members(c: Client, m: Message, strings):
                 title=chat_title,
                 chat_title=chat_title,
                 count=count,
+                preview="",
             )
             welcome, welcome_buttons = button_parser(welcome)
             await m.reply_text(
                 welcome,
-                disable_web_page_preview=True,
+                disable_web_page_preview=check_if_disable_preview,
                 reply_markup=(
                     InlineKeyboardMarkup(welcome_buttons)
                     if len(welcome_buttons) != 0
