@@ -366,7 +366,7 @@ async def time_extract(m: Message, t: str) -> int:
         else:
             return 0
         return int(time.time() + t_time)
-    raise InvalidTimeUnitStringSpecifiedError("Invalid time format. Use 'h'/'m'/'d' ")
+    raise InvalidTimeUnitStringSpecifiedError("Invalid time format. Use 'm'/'h'/'d' ")
 
 
 def remove_escapes(text: str) -> str:
