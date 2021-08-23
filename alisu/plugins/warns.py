@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.types import ChatPermissions, Message
 
 from alisu.config import prefix
+from alisu.custom_core.custom_methods import mute_chat_member_custom
 from alisu.database import user_warns, groups
 from alisu.utils import commands, require_admin, bot_require_admin
 from alisu.utils.consts import admin_status
@@ -87,8 +88,11 @@ async def warn_user(c: Client, m: Message, strings):
                 await c.kick_chat_member(m.chat.id, target_user.id)
                 warn_string = strings("warn_banned")
             elif warn_action == "mute":
-                await c.restrict_chat_member(
-                    m.chat.id, target_user.id, ChatPermissions(can_send_messages=False)
+                await mute_chat_member_custom(
+                    c,
+                    m.chat.id,
+                    target_user.id,
+                    ChatPermissions(can_send_messages=False),
                 )
                 warn_string = strings("warn_muted")
             elif warn_action == "kick":
