@@ -6,7 +6,14 @@ import re
 import time
 from functools import partial, wraps
 from string import Formatter
-from typing import Callable, Coroutine, List, Optional, Tuple, Union
+from typing import (
+    Callable,
+    Coroutine,
+    List,
+    Optional,
+    Tuple,
+    Union,
+)
 
 from pyrogram import Client, emoji, filters
 from pyrogram.types import (
@@ -21,7 +28,10 @@ from pyrogram.errors.exceptions.bad_request_400 import (
 
 from alisu.config import sudoers
 from alisu.database import groups, users, channels
-from alisu.utils.consts import group_types, admin_status as pyro_admin_types_chat_member
+from alisu.utils.consts import (
+    group_types,
+    admin_status as pyro_admin_types_chat_member,
+)
 from alisu.utils.localization import (
     default_language,
     get_lang,
