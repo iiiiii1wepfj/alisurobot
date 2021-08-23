@@ -168,7 +168,10 @@ def require_admin(
     def decorator(func):
         @wraps(func)
         async def wrapper(
-            client: Client, message: Union[CallbackQuery, Message], *args, **kwargs
+            client: Client,
+            message: Union[CallbackQuery, Message],
+            *args,
+            **kwargs,
         ):
             lang = await get_lang(message)
             strings = partial(
@@ -220,12 +223,21 @@ def require_admin(
                 except asyncio.exceptions.TimeoutError:
                     return
             has_perms = await check_perms(
-                client, msg_to_check_perm, permissions, complain_missing_perms, strings
+                client,
+                msg_to_check_perm,
+                permissions,
+                complain_missing_perms,
+                strings,
             )
             if has_perms:
                 if check_anon_perms_msg_send:
                     await check_anon_perms_msg_send.delete()
-                return await func(client, message, *args, *kwargs)
+                return await func(
+                    client,
+                    message,
+                    *args,
+                    *kwargs,
+                )
 
         return wrapper
 
@@ -286,7 +298,10 @@ def bot_require_admin(
     def decorator(func):
         @wraps(func)
         async def wrapper(
-            client: Client, message: Union[CallbackQuery, Message], *args, **kwargs
+            client: Client,
+            message: Union[CallbackQuery, Message],
+            *args,
+            **kwargs,
         ):
             lang = await get_lang(message)
             strings = partial(
@@ -313,10 +328,19 @@ def bot_require_admin(
                     return await func(client, message, *args, *kwargs)
                 return await sender(strings("private_not_allowed"))
             has_perms = await bot_check_perms(
-                client, message, permissions, complain_missing_perms, strings
+                client,
+                message,
+                permissions,
+                complain_missing_perms,
+                strings,
             )
             if has_perms:
-                return await func(client, message, *args, *kwargs)
+                return await func(
+                    client,
+                    message,
+                    *args,
+                    *kwargs,
+                )
 
         return wrapper
 
