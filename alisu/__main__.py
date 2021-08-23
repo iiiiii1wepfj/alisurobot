@@ -9,7 +9,13 @@ from pyrogram import Client, idle
 from pyrogram.errors import BadRequest
 
 import alisu
-from alisu.config import API_HASH, API_ID, TOKEN, disabled_plugins, log_chat
+from alisu.config import (
+    API_HASH,
+    API_ID,
+    TOKEN,
+    disabled_plugins,
+    log_chat,
+)
 from alisu.custom_core.conv_handler import Conversation
 from alisu.utils import shell_exec
 from alisu.utils.consts import http
