@@ -6,7 +6,12 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 
 from alisu.config import prefix
 from alisu.database import notes
-from alisu.utils import button_parser, commands, require_admin, split_quotes
+from alisu.utils import (
+    button_parser,
+    commands,
+    require_admin,
+    split_quotes,
+)
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
