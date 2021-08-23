@@ -351,14 +351,12 @@ sudofilter = filters.user(sudoers)
 
 
 async def time_extract(m: Message, t: str) -> int:
-    if t[-1] in ["s", "h", "m", "d"]:
+    if t[-1] in ["m", "h", "d"]:
         unit = t[-1]
         num = t[:-1]
         if not num.isdigit():
             return await m.reply_text("Invalid Amount specified")
 
-        if unit == "s":
-            t_time = int(num)
         if unit == "m":
             t_time = int(num) * 60
         elif unit == "h":
@@ -368,9 +366,7 @@ async def time_extract(m: Message, t: str) -> int:
         else:
             return 0
         return int(time.time() + t_time)
-    raise InvalidTimeUnitStringSpecifiedError(
-        "Invalid time format. Use 's'/'m'/'h'/'d' "
-    )
+    raise InvalidTimeUnitStringSpecifiedError("Invalid time format. Use 'h'/'m'/'d' ")
 
 
 def remove_escapes(text: str) -> str:
