@@ -102,7 +102,9 @@ async def tr_inline(c: Client, q: InlineQuery, strings):
         source_language = await tr.detect(q.query.split(None, 2)[2])
         to_language = q.query.lower().split()[1]
         translation = await tr(
-            to_tr, sourcelang=source_language, targetlang=to_language
+            to_tr,
+            sourcelang=source_language,
+            targetlang=to_language,
         )
         await q.answer(
             [
