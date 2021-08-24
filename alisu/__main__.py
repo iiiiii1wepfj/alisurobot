@@ -45,7 +45,7 @@ async def main() -> None:
     client.me = await client.get_me()
 
     client.start_time = time.time()
-    client.log_chat_errors = True
+    client.log_chat_errors: bool = True
     if "test" not in sys.argv:
 
         start_message = (
@@ -58,7 +58,7 @@ async def main() -> None:
             await client.send_message(chat_id=log_chat, text=start_message)
         except BadRequest:
             logging.warning("Unable to send message to log_chat.")
-            client.log_chat_errors = False
+            client.log_chat_errors: bool = False
 
         await idle()
 
