@@ -33,7 +33,7 @@ def logging_errors(f):
                         json={"content": full_trace},
                     )
                     pastereqjson_one = paste_err.json()
-                    pastereqjson = pastereqjson_one.json()["result"]
+                    pastereqjson = pastereqjson_one["result"]
                     paste_url = f"{nekobin_error_paste_url}/{pastereqjson['key']}"
                     thefulltrace = f"{paste_url}"
                 except:
