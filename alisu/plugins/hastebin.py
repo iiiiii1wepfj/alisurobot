@@ -23,7 +23,7 @@ async def hastebin(c: Client, m: Message, strings):
 
         url: str = "https://hastebin.com/documents"
         r = await http.post(url, data=mean.encode("UTF-8"))
-        url = f"https://hastebin.com/{r.json()['key']}"
+        url: str = f"https://hastebin.com/{r.json()['key']}"
         await m.reply_text(url, disable_web_page_preview=True)
     else:
         await m.reply_text(strings("reply_to_document_or_text"))
