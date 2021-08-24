@@ -14,7 +14,7 @@ from alisu.utils import commands
 from alisu.utils.localization import use_chat_lang
 
 
-bot_repo_link = "https://github.com/iiiiii1wepfj/alisurobot"
+bot_repo_link: str = "https://github.com/iiiiii1wepfj/alisurobot"
 
 # Using a low priority group so deeplinks will run before this and stop the propagation.
 @Client.on_message(
