@@ -22,7 +22,7 @@ async def prints(c: Client, m: Message, strings):
     text = m.text.split(maxsplit=1)[1]
     r = await http.get("https://api.itayki.com/print", params=dict(url=text))
     bio = BytesIO(r.read())
-    bio.name = "screenshot.png"
+    bio.name: str = "screenshot.png"
     await m.reply_photo(bio)
     await sent.delete()
 
