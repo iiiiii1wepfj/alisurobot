@@ -191,7 +191,7 @@ async def cli_ytdl(c: Client, cq: CallbackQuery, strings):
     await cq.message.edit(strings("ytdl_sending"))
     filename = ydl.prepare_filename(yt)
     thumb = io.BytesIO((await http.get(yt["thumbnail"])).content)
-    thumb.name = "thumbnail.png"
+    thumb.name: str = "thumbnail.png"
     if "vid" in data:
         try:
             await c.send_video(
