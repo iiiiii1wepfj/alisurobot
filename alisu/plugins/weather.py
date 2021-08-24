@@ -8,12 +8,12 @@ from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
 # Api key used in weather.com's mobile app.
-weather_apikey = "8de2d8b3a93542c9a2d8b3a935a2c909"
+weather_apikey: str = "8de2d8b3a93542c9a2d8b3a935a2c909"
 
-get_coords = "https://api.weather.com/v3/location/search"
-url = "https://api.weather.com/v3/aggcommon/v3-wx-observations-current"
+get_coords: str = "https://api.weather.com/v3/location/search"
+url: str = "https://api.weather.com/v3/aggcommon/v3-wx-observations-current"
 
-headers = {"User-Agent": "curl/7.72.0"}
+headers: dict = {"User-Agent": "curl/7.72.0"}
 
 
 @Client.on_message(filters.command(["clima", "weather"], prefix))
