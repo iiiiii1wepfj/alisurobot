@@ -111,7 +111,10 @@ async def get_target_user_and_time_and_reason(c: Client, m: Message, strings):
 @require_admin(allow_in_private=True)
 async def admin_echo_cmd(c: Client, m: Message):
     if len(m.text.split()) > 1:
-        await m.reply_text(m.text.split(None, 1)[1])
+        if m.reply_to_message:
+            await m.reply_to_message.reply_text(m.text.split(None, 1)[1])
+        else:
+            await m.reply_text(m.text.split(None, 1)[1])
 
 
 @Client.on_message(filters.command("del", prefix))
