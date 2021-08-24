@@ -34,7 +34,8 @@ def logging_errors(f):
                     )
                     pastereqjson_one = paste_err.json()
                     pastereqjson = pastereqjson_one["result"]
-                    paste_url = f"{nekobin_error_paste_url}/{pastereqjson['key']}"
+                    paste_json_key = pastereqjson["key"]
+                    paste_url = f"{nekobin_error_paste_url}/{paste_json_key}"
                     thefulltrace = f"{paste_url}"
                 except:
                     thefulltrace = "error has occurred in the paste"
