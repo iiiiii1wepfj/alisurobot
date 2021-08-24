@@ -114,7 +114,7 @@ async def admin_echo_cmd(c: Client, m: Message):
         if m.reply_to_message:
             await m.reply_to_message.reply_text(m.text.split(None, 1)[1])
         else:
-            await m.reply_text(m.text.split(None, 1)[1])
+            await m.reply_text(m.text.split(None, 1)[1], quote=False)
 
 
 @Client.on_message(filters.command("del", prefix))
