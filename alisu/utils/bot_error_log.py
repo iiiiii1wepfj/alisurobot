@@ -38,7 +38,7 @@ def logging_errors(f):
                     paste_url = f"{nekobin_error_paste_url}/{paste_json_key}"
                     thefulltrace = f"{paste_url}"
                 except:
-                    thefulltrace = "error has occurred in the paste"
+                    thefulltrace: str = "error has occurred in the paste"
                 try:
                     await c.send_message(
                         log_chat,
