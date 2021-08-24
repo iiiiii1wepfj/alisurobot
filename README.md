@@ -3,7 +3,7 @@
 
 # how to run
 
-1. git clone https://github.com/iiiiii1wepfj/alisurobot.git
+1. ```git clone https://github.com/iiiiii1wepfj/alisurobot.git```
 2. cd alisurobot
 3. pip3 install -U -r requirements.txt
 4. cd alisu
