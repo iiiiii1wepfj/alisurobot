@@ -3,7 +3,7 @@ from pytio import Tio
 tio = Tio()
 langslist = sorted(tio.query_languages())
 
-langs_html_string_one = """
+langs_html_string_one: str = """
 <html>
 
 <head>
@@ -17,7 +17,7 @@ langs_html_string_one = """
 
     <ul>
 """
-langs_html_string_two = """
+langs_html_string_two: str = """
     </ul>
 </body>
 
