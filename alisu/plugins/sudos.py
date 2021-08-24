@@ -188,20 +188,6 @@ async def getbotstats(c: Client, m: Message):
     )
 
 
-@Client.on_message(filters.command("upload", prefix) & sudofilter)
-async def uploadfile(c: Client, m: Message):
-    await m.reply_to_message.reply_text("Uploading the Document.")
-    await m.reply_to_message.download()
-
-
-@Client.on_message(filters.command("doc", prefix) & sudofilter)
-async def downloadfile(c: Client, m: Message):
-    if len(m.text.split()) > 1:
-        await m.reply_document(f"downloads/{m.command[1]}")
-    else:
-        await m.reply_text("You must specify the document.")
-
-
 @Client.on_message(filters.command("chat", prefix) & sudofilter)
 async def getchatcmd(c: Client, m: Message):
     if len(m.text.split()) > 1:
