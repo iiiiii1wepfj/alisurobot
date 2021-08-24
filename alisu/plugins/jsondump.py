@@ -38,7 +38,7 @@ async def jsondump(c: Client, m: Message):
 
     if send_as_file:
         bio = io.BytesIO(obj.encode())
-        bio.name = f"dump-{m.chat.id}.json"
+        bio.name: str = f"dump-{m.chat.id}.json"
         await m.reply_document(bio)
     else:
         await m.reply_text(f"<code>{html.escape(obj)}</code>")
