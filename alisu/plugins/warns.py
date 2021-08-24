@@ -129,7 +129,7 @@ async def warn_user(c: Client, m: Message, strings):
 
 
 @Client.on_message(filters.command("setwarnslimit", prefix) & filters.group)
-@require_admin(permissions=["can_restrict_members", "can_change_info"])
+@require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
 async def on_set_warns_limit(c: Client, m: Message, strings):
