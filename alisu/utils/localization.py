@@ -69,6 +69,18 @@ for locale in enabled_locales:
 langdict = cache_localizations(jsons)
 
 
+def update_bot_locales_categories_names_list():
+    bot_locales_categories_names_temp_dict = {}
+    bot_locales_categories_names_temp_dict += glob(
+        os.path.join("locales", default_language, "*.json")
+    )
+    for file in files:
+        bot_locales_categories_names_list.append(file)
+
+
+bot_locales_categories_names_list: List[str] = []
+
+
 def get_locale_string(
     dic: dict,
     language: str,

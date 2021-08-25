@@ -20,6 +20,7 @@ from alisu.config import (
 from alisu.custom_core.conv_handler import Conversation
 from alisu.utils import shell_exec
 from alisu.utils.consts import http
+from alisu.utils.localization import update_bot_locales_categories_names_list
 from alisu.database.database_handler import init_database
 
 
