@@ -26,7 +26,7 @@ async def ip_cmd(c: Client, m: Message, strings):
             url = text
         r = await http.get("http://ip-api.com/json/" + url)
         req = r.json()
-        x = ""
+        x: str = ""
         for i in req:
             x += "<b>{}</b>: <code>{}</code>\n".format(i.title(), req[i])
         await m.reply_text(x, parse_mode="html")
