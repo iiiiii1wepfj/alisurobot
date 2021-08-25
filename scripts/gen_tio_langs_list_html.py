@@ -2,7 +2,8 @@
 from pytio import Tio
 
 tio = Tio()
-langslist = sorted(tio.query_languages())
+tiolangslist_one = tio.query_languages()
+langslist = sorted(tiolangslist_one)
 
 langs_html_string_one: str = """
 <html>
