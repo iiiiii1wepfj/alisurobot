@@ -7,12 +7,10 @@ from pyrogram.types import Message
 from alisu.config import prefix
 from alisu.utils import commands
 from alisu.utils.localization import use_chat_lang
-from alisu.utils.bot_error_log import logging_errors
 
 
 @Client.on_message(filters.command("info", prefix))
 @use_chat_lang()
-@logging_errors
 async def user_info(c: Client, m: Message, strings):
     if len(m.command) == 2:
         try:
