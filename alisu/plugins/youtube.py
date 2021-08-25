@@ -140,7 +140,7 @@ async def cli_ytdl(c: Client, cq: CallbackQuery, strings):
             cache_time=60,
         )
     vid = re.sub(r"^\_(vid|aud)\.", "", data)
-    url = "https://www.youtube.com/watch?v=" + vid
+    url = f"https://www.youtube.com/watch?v={vid}"
     await cq.message.edit(strings("ytdl_downloading"))
     with tempfile.TemporaryDirectory() as tempdir:
         path = os.path.join(tempdir, "ytdl")
