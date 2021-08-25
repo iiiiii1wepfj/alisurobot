@@ -4,6 +4,7 @@ import os.path
 from functools import partial, wraps
 from glob import glob
 from typing import Dict, List
+from pathlib import Path as pypathlibpath
 
 from pyrogram.types import CallbackQuery, InlineQuery, Message
 
@@ -67,6 +68,12 @@ for locale in enabled_locales:
     jsons += glob(os.path.join("locales", locale, "*.json"))
 
 langdict = cache_localizations(jsons)
+
+
+bot_locales_categories_names_list: List[str] = [
+    pypathlibpath(x).stem
+    for x in glob(os.path.join("locales", default_language, "*.json"))
+]
 
 
 def get_locale_string(
