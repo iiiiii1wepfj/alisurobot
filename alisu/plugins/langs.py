@@ -22,7 +22,7 @@ from alisu.utils.localization import (
 
 def gen_langs_kb():
     langs = list(langdict)
-    kb = []
+    kb: list = []
     while langs:
         lang = langdict[langs[0]]["main"]
         a = [
