@@ -10,7 +10,7 @@ def get_bot_locale_string_simple(
 ):
     strings = partial(
         get_locale_string,
-        langdict[lang].get(category, langdict[default_language][category]),
+        langdict[language].get(category, langdict[default_language][category]),
         language,
         category,
     )
