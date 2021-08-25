@@ -7,6 +7,7 @@ import time
 import pyrogram
 from pyrogram import Client, idle
 from pyrogram.errors import BadRequest
+from pyrogram.raw.functions.help import GetConfig as pyrogetclientconfraw
 
 import alisu
 from alisu.config import (
@@ -45,6 +46,13 @@ async def main() -> None:
     client.me = await client.get_me()
 
     client.start_time = time.time()
+    try:
+        getpyroclientconfraw = await client.send(pyrogetclientconfraw())
+        client.tg_max_text_msg_len = int(getpyroclientconfraw.message_length_max)
+        client.tg_max_caption_msg_len = int(getpyroclientconfraw.caption_length_max)
+    except:
+        client.tg_max_text_msg_len = 4096
+        client.tg_max_caption_msg_len = 1024
     client.log_chat_errors: bool = True
     if "test" not in sys.argv:
 
