@@ -47,7 +47,7 @@ async def html(c: Client, m: Message, strings):
 @use_chat_lang()
 @logging_errors
 async def mentionadmins(c: Client, m: Message, strings):
-    mention = ""
+    mention: str = ""
     async for i in c.iter_chat_members(m.chat.id, filter="administrators"):
         if not (i.user.is_deleted or i.is_anonymous):
             mention += f"{i.user.mention}\n"
@@ -118,7 +118,7 @@ async def rtcommand(c: Client, m: Message):
         return
 
     if not re.match("🔃 .* retweeted:\n\n👤 .*", rt_text):
-        text = f"🔃 <b>{escape(m.from_user.first_name)}</b> retweeted:\n\n"
+        text: str = f"🔃 <b>{escape(m.from_user.first_name)}</b> retweeted:\n\n"
         text += f"👤 <b>{escape(m.reply_to_message.from_user.first_name)}</b>:"
         text += f" <i>{escape(rt_text)}</i>"
 
