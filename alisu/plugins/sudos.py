@@ -94,9 +94,7 @@ async def evals(c: Client, m: Message):
         ev = traceback.format_exc()
         output_eval_one = f"<code>{html.escape(ev)}</code>"
         if len(output_eval_one) > c.tg_max_text_msg_len:
-            with io.BytesIO(
-                str.encode(output_eval_one)
-            ) as the_msg_eval_output_file_one:
+            with io.BytesIO(output_eval_one) as the_msg_eval_output_file_one:
                 the_msg_eval_output_file_one.name = "eval.text"
                 await m.reply_document(document=the_msg_eval_output_file_one)
         else:
@@ -106,7 +104,7 @@ async def evals(c: Client, m: Message):
             output_eval_msg_two_txt = f"<code>{html.escape(str(res))}</code>"
             if len(output_eval_msg_two_txt) > c.tg_max_text_msg_len:
                 with io.BytesIO(
-                    str.encode(output_eval_msg_two_txt)
+                    output_eval_msg_two_txt
                 ) as the_msg_eval_output_file_two:
                     the_msg_eval_output_file_two.name = "eval.text"
                     await m.reply_document(document=the_msg_eval_output_file_two)
@@ -115,9 +113,7 @@ async def evals(c: Client, m: Message):
         except Exception as e:  # skipcq
             output_eval_e = str(e)
             if len(output_eval_e) > c.tg_max_text_msg_len:
-                with io.BytesIO(
-                    str.encode(output_eval_e)
-                ) as the_msg_eval_output_file_e:
+                with io.BytesIO(output_eval_e) as the_msg_eval_output_file_e:
                     the_msg_eval_output_file_e.name = "eval.text"
                     await m.reply_document(document=the_msg_eval_output_file_e)
             else:
