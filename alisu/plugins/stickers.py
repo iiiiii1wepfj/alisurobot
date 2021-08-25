@@ -230,7 +230,7 @@ async def kang_sticker(c: Client, m: Message, strings):
 
 def resize_image(filename: str) -> str:
     im = Image.open(filename)
-    maxsize = 512
+    maxsize: int = 512
     scale = maxsize / max(im.width, im.height)
     sizenew = (int(im.width * scale), int(im.height * scale))
     im = im.resize(sizenew, Image.NEAREST)
