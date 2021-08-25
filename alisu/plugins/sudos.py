@@ -95,7 +95,7 @@ async def evals(c: Client, m: Message):
         output_eval_one = f"<code>{html.escape(ev)}</code>"
         if len(output_eval_one) > c.tg_max_text_msg_len:
             with open("eval.txt", "w", encoding="utf8") as the_msg_eval_output_file_one:
-                the_msg_eval_output_file_one.write(str(output_eval_one))
+                the_msg_eval_output_file_one.write(str(ev))
             await m.reply_document(document="eval.txt")
             os.remove("eval.txt")
         else:
@@ -107,7 +107,7 @@ async def evals(c: Client, m: Message):
                 with open(
                     "eval.txt", "w", encoding="utf8"
                 ) as the_msg_eval_output_file_two:
-                    the_msg_eval_output_file_two.write(str(output_eval_msg_two_txt))
+                    the_msg_eval_output_file_two.write(str(res))
                 await m.reply_document(document="eval.txt")
                 os.remove("eval.txt")
             else:
@@ -136,24 +136,27 @@ async def execs(c: Client, m: Message):
         try:
             await locals()["__ex"](c, m)
         except:  # skipcq
-            msg_out_one = html.escape(traceback.format_exc())
+            trace_format_exc_exec_cmd = traceback.format_exc()
+            msg_out_one = html.escape(trace_format_exc_exec_cmd)
             if len(msg_out_one) > c.tg_max_text_msg_len:
                 with open(
                     "exec.txt", "w", encoding="utf8"
                 ) as the_msg_exec_output_file_one:
-                    the_msg_exec_output_file_one.write(str(msg_out_one))
+                    the_msg_exec_output_file_one.write(str(trace_format_exc_exec_cmd))
                 await m.reply_document(document="exec.txt")
                 return os.remove("exec.txt")
             else:
                 return await m.reply_text(msg_out_one)
 
     if strio.getvalue().strip():
-        out = f"<code>{html.escape(strio.getvalue())}</code>"
+        out_one = strio.getvalue()
+        out = f"<code>{html.escape(out_one)}</code>"
     else:
+        out_one = "Command executed."
         out = "Command executed."
     if len(out) > c.tg_max_text_msg_len:
         with open("exec.txt", "w", encoding="utf8") as the_msg_exec_output_file:
-            the_msg_exec_output_file.write(str(out))
+            the_msg_exec_output_file.write(str(out_one))
         await m.reply_document(document="exec.txt")
         os.remove("exec.txt")
     else:
