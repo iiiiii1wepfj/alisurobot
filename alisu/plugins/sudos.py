@@ -92,12 +92,36 @@ async def evals(c: Client, m: Message):
         res = await meval(text, globals(), **locals())
     except:  # skipcq
         ev = traceback.format_exc()
-        await m.reply_text(f"<code>{html.escape(ev)}</code>")
+        output_eval_one = f"<code>{html.escape(ev)}</code>"
+        if len(output_eval_one) > c.tg_max_text_msg_len:
+            with io.BytesIO(
+                str.encode(output_eval_one)
+            ) as the_msg_eval_output_file_one:
+                the_msg_eval_output_file_one.name = "eval.text"
+                await m.reply_document(document=the_msg_eval_output_file_one)
+        else:
+            await m.reply_text(output_eval_one)
     else:
         try:
-            await m.reply_text(f"<code>{html.escape(str(res))}</code>")
+            output_eval_msg_two_txt = f"<code>{html.escape(str(res))}</code>"
+            if len(output_eval_msg_two_txt) > c.tg_max_text_msg_len:
+                with io.BytesIO(
+                    str.encode(output_eval_msg_two_txt)
+                ) as the_msg_eval_output_file_two:
+                    the_msg_eval_output_file_two.name = "eval.text"
+                    await m.reply_document(document=the_msg_eval_output_file_two)
+            else:
+                await m.reply_text(output_eval_msg_two_txt)
         except Exception as e:  # skipcq
-            await m.reply_text(str(e))
+            output_eval_e = str(e)
+            if len(output_eval_e) > c.tg_max_text_msg_len:
+                with io.BytesIO(
+                    str.encode(output_eval_e)
+                ) as the_msg_eval_output_file_e:
+                    the_msg_eval_output_file_e.name = "eval.text"
+                    await m.reply_document(document=the_msg_eval_output_file_e)
+            else:
+                await m.reply_text(output_eval_e)
 
 
 @Client.on_message(filters.command("exec", prefix) & sudofilter)
@@ -111,13 +135,26 @@ async def execs(c: Client, m: Message):
         try:
             await locals()["__ex"](c, m)
         except:  # skipcq
-            return await m.reply_text(html.escape(traceback.format_exc()))
+            msg_out_one = html.escape(traceback.format_exc())
+            if len(msg_out_one) > c.tg_max_text_msg_len:
+                with io.BytesIO(
+                    str.encode(msg_out_one)
+                ) as the_msg_exec_output_file_one:
+                    the_msg_exec_output_file_one.name = "exec.text"
+                    return await m.reply_document(document=the_msg_exec_output_file_one)
+            else:
+                return await m.reply_text(msg_out_one)
 
     if strio.getvalue().strip():
         out = f"<code>{html.escape(strio.getvalue())}</code>"
     else:
         out = "Command executed."
-    await m.reply_text(out)
+    if len(out) > c.tg_max_text_msg_len:
+        with io.BytesIO(str.encode(out)) as the_msg_exec_output_file:
+            the_msg_exec_output_file.name = "exec.text"
+            await m.reply_document(document=the_msg_exec_output_file)
+    else:
+        await m.reply_text(out)
 
 
 @Client.on_message(filters.command("speedtest", prefix) & sudofilter)
