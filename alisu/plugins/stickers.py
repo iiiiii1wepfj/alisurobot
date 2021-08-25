@@ -29,23 +29,23 @@ from alisu.utils.bot_error_log import logging_errors
 async def kang_sticker(c: Client, m: Message, strings):
     prog_msg = await m.reply_text(strings("kanging_sticker_msg"))
     bot_username = c.me.username
-    sticker_emoji = "🤔"
-    packnum = 0
-    packname_found = False
-    resize = False
-    animated = False
+    sticker_emoji: str = "🤔"
+    packnum: int = 0
+    packname_found: bool = False
+    resize: bool = False
+    animated: bool = False
     reply = m.reply_to_message
     user = await c.resolve_peer(m.from_user.username or m.from_user.id)
     if reply and reply.media:
         if reply.photo:
-            resize = True
+            resize: bool = True
         elif reply.document:
             if "image" in reply.document.mime_type:
                 # mime_type: image/webp
-                resize = True
+                resize: bool = True
             elif "tgsticker" in reply.document.mime_type:
                 # mime_type: application/x-tgsticker
-                animated = True
+                animated: bool = True
         elif reply.sticker:
             if not reply.sticker.file_name:
                 return await prog_msg.edit_text(strings("err_sticker_no_file_name"))
@@ -53,17 +53,19 @@ async def kang_sticker(c: Client, m: Message, strings):
                 sticker_emoji = reply.sticker.emoji
             animated = reply.sticker.is_animated
             if not reply.sticker.file_name.endswith(".tgs"):
-                resize = True
+                resize: bool = True
         else:
             return await prog_msg.edit_text(strings("invalid_media_string"))
         pack_prefix = "anim" if animated else "a"
-        packname = f"{pack_prefix}_{m.from_user.id}_by_{bot_username}"
+        packname: str = f"{pack_prefix}_{m.from_user.id}_by_{bot_username}"
 
         if len(m.command) > 1:
             if m.command[1].isdigit() and int(m.command[1]) > 0:
                 # provide pack number to kang in desired pack
                 packnum = m.command.pop(1)
-                packname = f"{pack_prefix}{packnum}_{m.from_user.id}_by_{bot_username}"
+                packname: str = (
+                    f"{pack_prefix}{packnum}_{m.from_user.id}_by_{bot_username}"
+                )
             if len(m.command) > 1:
                 # matches all valid emojis in input
                 sticker_emoji = (
@@ -76,11 +78,11 @@ async def kang_sticker(c: Client, m: Message, strings):
             await prog_msg.delete()
             return
     elif m.entities and len(m.entities) > 1:
-        packname = f"a_{m.from_user.id}_by_{bot_username}"
-        pack_prefix = "a"
+        packname: str = f"a_{m.from_user.id}_by_{bot_username}"
+        pack_prefix: str = "a"
         # searching if image_url is given
         img_url = None
-        filename = "sticker.png"
+        filename: str = "sticker.png"
         for y in m.entities:
             if y.type == "url":
                 img_url = m.text[y.offset : (y.offset + y.length)]
@@ -105,7 +107,7 @@ async def kang_sticker(c: Client, m: Message, strings):
                     "".join(set(EMOJI_PATTERN.findall("".join(m.command[2:]))))
                     or sticker_emoji
                 )
-            resize = True
+            resize: bool = True
     else:
         return await prog_msg.delete()
     try:
@@ -121,11 +123,11 @@ async def kang_sticker(c: Client, m: Message, strings):
                 )
                 if stickerset.set.count >= max_stickers:
                     packnum += 1
-                    packname = (
+                    packname: str = (
                         f"{pack_prefix}_{packnum}_{m.from_user.id}_by_{bot_username}"
                     )
                 else:
-                    packname_found = True
+                    packname_found: bool = True
             except StickersetInvalid:
                 break
         file = await c.save_file(filename)
@@ -161,10 +163,10 @@ async def kang_sticker(c: Client, m: Message, strings):
             await prog_msg.edit_text(strings("create_new_pack_string"))
             u_name = m.from_user.username
             if u_name:
-                u_name = f"@{u_name}"
+                u_name: str = f"@{u_name}"
             else:
                 u_name = str(m.from_user.id)
-            stkr_title = f"{u_name}'s "
+            stkr_title: str = f"{u_name}'s "
             if animated:
                 stkr_title += "Anim. "
             stkr_title += "EduuPack"
