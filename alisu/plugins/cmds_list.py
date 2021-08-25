@@ -13,7 +13,7 @@ from alisu.utils.bot_error_log import logging_errors
 
 def gen_categories_kb(strings_manager):
     categories = list(commands.commands)
-    kb = []
+    kb: list = []
     while categories:
         name = strings_manager(categories[0], context="cmds_list")
         a = [InlineKeyboardButton(name, callback_data="view_category " + categories[0])]
