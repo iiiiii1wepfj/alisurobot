@@ -44,7 +44,7 @@ async def ip_inline(c: Client, q: InlineQuery):
             url = text
         r = await http.get("http://ip-api.com/json/" + url)
         req = r.json()
-        x = ""
+        x: str = ""
         for i in req:
             x += "<b>{}</b>: <code>{}</code>\n".format(i.title(), req[i])
         await q.answer(
