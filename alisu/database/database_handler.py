@@ -51,6 +51,6 @@ class user_warns(Model):
 
 async def init_database():
     await Tortoise.init(
-        db_url="sqlite://alisu/database/eduu.db", modules={"models": [__name__]}
+        db_url="sqlite://alisu/database/alisudb.db", modules={"models": [__name__]}
     )
     await Tortoise.generate_schemas()
