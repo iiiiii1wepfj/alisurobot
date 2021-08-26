@@ -32,6 +32,60 @@ async def toggle_welcome(chat_id: int, mode: bool):
     await groups.filter(chat_id=chat_id).update(welcome_enabled=mode)
 
 
+async def get_del_last_welcome_status(chat_id: int):
+    res = (await groups.get(chat_id=chat_id)).del_last_welcome_message
+    return True if res is True else False
+
+
+async def get_last_welcome_message_id(chat_id: int):
+    res = (await groups.get(chat_id=chat_id)).last_welcome_message_id
+    return res if res else None
+
+
+async def toggle_del_old_welcome(chat_id: int, mode: bool):
+    await groups.filter(chat_id=chat_id).update(del_last_welcome_message=mode)
+
+
+async def set_last_welcome_message_id(chat_id: int, msg_id: int):
+    await groups.filter(chat_id=chat_id).update(last_welcome_message_id=msg_id)
+
+
+@Client.on_message(
+    (
+        filters.command("del_old_welcome")
+        & ~filters.command(["del_old_welcome on", "del_old_welcome off"])
+    )
+    & filters.group
+)
+@require_admin(permissions=["can_change_info"])
+@use_chat_lang()
+@logging_errors
+async def invalid_del_old_welcome_status_arg(c: Client, m: Message, strings):
+    await m.reply_text(strings("del_old_welcome_mode_invalid"))
+
+
+@Client.on_message(filters.command("del_old_welcome on", prefix) & filters.group)
+@require_admin(permissions=["can_change_info"])
+@use_chat_lang()
+@logging_errors
+async def enable_del_old_welcome_message(c: Client, m: Message, strings):
+    await toggle_del_old_welcome(m.chat.id, True)
+    await m.reply_text(
+        strings("del_old_welcome_mode_enable").format(chat_title=m.chat.title)
+    )
+
+
+@Client.on_message(filters.command("del_old_welcome off", prefix) & filters.group)
+@require_admin(permissions=["can_change_info"])
+@use_chat_lang()
+@logging_errors
+async def disable_del_old_welcome_message(c: Client, m: Message, strings):
+    await toggle_del_old_welcome(m.chat.id, False)
+    await m.reply_text(
+        strings("del_old_welcome_mode_disable").format(chat_title=m.chat.title)
+    )
+
+
 @Client.on_message(
     filters.command(["welcomeformat", "start welcome_format_help"], prefix)
 )
@@ -182,7 +236,7 @@ async def greet_new_members(c: Client, m: Message, strings):
                 preview="",
             )
             welcome, welcome_buttons = button_parser(welcome)
-            await m.reply_text(
+            the_last_welcome_msg = await m.reply_text(
                 welcome,
                 disable_web_page_preview=check_if_disable_preview,
                 reply_markup=(
@@ -191,8 +245,28 @@ async def greet_new_members(c: Client, m: Message, strings):
                     else None
                 ),
             )
+            check_if_delete_old_welcome_message = await get_del_last_welcome_status(
+                m.chat.id
+            )
+            if check_if_delete_old_welcome_message is True:
+                get_last_welcome_message_id = await get_last_welcome_message_id(
+                    m.chat.id
+                )
+                if get_last_welcome_message_id:
+                    try:
+                        await c.delete_messages(
+                            chat_id=m.chat.id,
+                            message_ids=get_last_welcome_message_id,
+                            revoke=True,
+                        )
+                    except:
+                        pass
+            await set_last_welcome_message_id(
+                m.chat.id, the_last_welcome_msg.message_id
+            )
 
 
+commands.add_command("del_old_welcome", "admin")
 commands.add_command("resetwelcome", "admin")
 commands.add_command("setwelcome", "admin")
 commands.add_command("welcome", "admin")
