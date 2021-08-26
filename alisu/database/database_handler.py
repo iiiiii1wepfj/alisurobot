@@ -6,7 +6,7 @@ class groups(Model):
     chat_id = fields.BigIntField(pk=True)
     welcome = fields.TextField(null=True)
     welcome_enabled = fields.BooleanField(null=True)
-    last_welcome_message_id = fields.BigIntField(pk=True)
+    last_welcome_message_id = fields.BigIntField()
     del_last_welcome_message = fields.BooleanField(null=True, default=False)
     rules = fields.TextField(null=True)
     warns_limit = fields.IntField(null=True)
