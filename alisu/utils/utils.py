@@ -76,7 +76,9 @@ async def add_chat(chat_id, chat_type):
     if chat_type == "private":
         await users.create(user_id=chat_id)
     elif chat_type in group_types:  # groups and supergroups share the same table
-        await groups.create(chat_id=chat_id, welcome_enabled=True)
+        await groups.create(
+            chat_id=chat_id, welcome_enabled=True, del_last_welcome_message=False
+        )
     elif chat_type == "channel":
         await channels.create(chat_id=chat_id)
     else:

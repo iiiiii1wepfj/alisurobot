@@ -1,4 +1,8 @@
 {
+  "del_old_welcome_description": "מגדיר לבוט אם למחוק הודעות ברוכים הבאים ישנות או לא.",
+  "del_old_welcome_mode_disable": "מחיקות הודעות ברוכים הבאים ישנות מושבתת בצ'אט {chat_title}.",
+  "del_old_welcome_mode_enable": "מחיקות הודעות ברוכים הבאים ישנות פועלת בצ'אט {chat_title}.",
+  "del_old_welcome_mode_invalid": "משתנה לא חוקי. תשתמש ב <code>/del_old_welcome off/on</code>.",
   "resetwelcome_description": "מאפס את הודעת הברוכים הבאים להודעת ברירת המחדל של הבוט.",
   "setwelcome_description": "מגדיר את הודעת הברוכים הבאים. לעזרה בעיצוב תשתמש בפקודה /welcomeformat.",
   "welcome_default": "היי {first_name}, ברוך הבא ל {chat_title}!",
