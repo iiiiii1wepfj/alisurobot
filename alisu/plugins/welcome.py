@@ -249,14 +249,12 @@ async def greet_new_members(c: Client, m: Message, strings):
                 m.chat.id
             )
             if check_if_delete_old_welcome_message is True:
-                get_last_welcome_message_id = await get_last_welcome_message_id(
-                    m.chat.id
-                )
-                if get_last_welcome_message_id:
+                get_last_welcome_msg_id = await get_last_welcome_message_id(m.chat.id)
+                if get_last_welcome_msg_id:
                     try:
                         await c.delete_messages(
                             chat_id=m.chat.id,
-                            message_ids=get_last_welcome_message_id,
+                            message_ids=get_last_welcome_msg_id,
                             revoke=True,
                         )
                     except:
