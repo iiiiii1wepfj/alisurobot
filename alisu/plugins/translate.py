@@ -49,11 +49,11 @@ def get_tr_lang(text):
     if len(text.split()) > 0:
         lang = text.split()[0]
         if lang.split("-")[0] not in LANGUAGES:
-            lang = "pt"
+            lang = "en"
         if len(lang.split("-")) > 1 and lang.split("-")[1] not in LANGUAGES:
-            lang = "pt"
+            lang = "en"
     else:
-        lang = "pt"
+        lang = "en"
     return lang
 
 
