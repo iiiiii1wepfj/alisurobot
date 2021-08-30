@@ -1,7 +1,7 @@
 from typing import List
-from .mute_chat_member_custom import mute_chat_member_custom
+from .get_admin_permissions_raw import get_admin_permissions_raw
 
 
 __all__: List[str] = [
-    "mute_chat_member_custom",
+    "get_admin_permissions_raw",
 ]
