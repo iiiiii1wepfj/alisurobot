@@ -1,7 +1,6 @@
 from typing import List
-from .get_admin_permissions_raw import get_admin_permissions_raw
+from .get_admin_permissions_raw import GetAdminPermissionsRaw
 
 
-__all__: List[str] = [
-    "get_admin_permissions_raw",
-]
+class custom_methods(GetAdminPermissionsRaw):
+    pass
