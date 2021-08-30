@@ -24,7 +24,7 @@ from pyrogram.raw.all import (
 from pyrogram.types import Message
 
 from alisu import (
-    version as alisu_version,
+    __version__ as alisu_version,
 )
 from alisu.database import (
     groups,
