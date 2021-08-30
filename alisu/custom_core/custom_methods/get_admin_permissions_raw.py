@@ -16,7 +16,7 @@ class GetAdminPermissionsRaw(Scaffold):
             await self.send(
                 GetParticipant(
                     channel=chat,
-                    user_id=user,
+                    participant=user,
                 )
             )
         ).participant.admin_rights
