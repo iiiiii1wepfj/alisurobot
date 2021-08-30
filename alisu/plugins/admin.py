@@ -117,8 +117,14 @@ async def admin_echo_cmd(c: Client, m: Message):
 
 
 @Client.on_message(filters.command("del", prefix))
-@require_admin(permissions=["can_delete_messages"], allow_in_private=True)
-@bot_require_admin(permissions=["can_delete_messages"], allow_in_private=True)
+@require_admin(
+    permissions=["can_delete_messages"],
+    allow_in_private=True,
+)
+@bot_require_admin(
+    permissions=["can_delete_messages"],
+    allow_in_private=True,
+)
 async def del_message(c: Client, m: Message):
     try:
         await c.delete_messages(m.chat.id, m.reply_to_message.message_id)
@@ -131,8 +137,14 @@ async def del_message(c: Client, m: Message):
 
 
 @Client.on_message(filters.command("pin", prefix))
-@require_admin(permissions=["can_pin_messages"], allow_in_private=True)
-@bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@require_admin(
+    permissions=["can_pin_messages"],
+    allow_in_private=True,
+)
+@bot_require_admin(
+    permissions=["can_pin_messages"],
+    allow_in_private=True,
+)
 @logging_errors
 async def pin(c: Client, m: Message):
     if m.reply_to_message:
@@ -145,8 +157,14 @@ async def pin(c: Client, m: Message):
 
 
 @Client.on_message(filters.command("pin loud", prefix))
-@require_admin(permissions=["can_pin_messages"], allow_in_private=True)
-@bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@require_admin(
+    permissions=["can_pin_messages"],
+    allow_in_private=True,
+)
+@bot_require_admin(
+    permissions=["can_pin_messages"],
+    allow_in_private=True,
+)
 @logging_errors
 async def pinloud(c: Client, m: Message):
     if m.reply_to_message:
@@ -159,8 +177,14 @@ async def pinloud(c: Client, m: Message):
 
 
 @Client.on_message(filters.command("unpin", prefix))
-@require_admin(permissions=["can_pin_messages"], allow_in_private=True)
-@bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@require_admin(
+    permissions=["can_pin_messages"],
+    allow_in_private=True,
+)
+@bot_require_admin(
+    permissions=["can_pin_messages"],
+    allow_in_private=True,
+)
 @logging_errors
 async def unpin(c: Client, m: Message):
     if m.reply_to_message:
@@ -168,8 +192,14 @@ async def unpin(c: Client, m: Message):
 
 
 @Client.on_message(filters.command(["unpinall", "unpin all"], prefix))
-@require_admin(permissions=["can_pin_messages"], allow_in_private=True)
-@bot_require_admin(permissions=["can_pin_messages"], allow_in_private=True)
+@require_admin(
+    permissions=["can_pin_messages"],
+    allow_in_private=True,
+)
+@bot_require_admin(
+    permissions=["can_pin_messages"],
+    allow_in_private=True,
+)
 @logging_errors
 async def unpinall(c: Client, m: Message):
     await c.unpin_all_chat_messages(m.chat.id)
@@ -202,8 +232,12 @@ async def ban(c: Client, m: Message, strings):
 
 @Client.on_message(filters.command("dban", prefix))
 @use_chat_lang()
-@require_admin(permissions=["can_restrict_members", "can_delete_messages"])
-@bot_require_admin(permissions=["can_restrict_members", "can_delete_messages"])
+@require_admin(
+    permissions=["can_restrict_members", "can_delete_messages"],
+)
+@bot_require_admin(
+    permissions=["can_restrict_members", "can_delete_messages"],
+)
 @logging_errors
 async def dban(c: Client, m: Message, strings):
     if m.reply_to_message:
@@ -246,8 +280,12 @@ async def kick(c: Client, m: Message, strings):
 
 @Client.on_message(filters.command("dkick", prefix))
 @use_chat_lang()
-@require_admin(permissions=["can_restrict_members", "can_delete_messages"])
-@bot_require_admin(permissions=["can_restrict_members", "can_delete_messages"])
+@require_admin(
+    permissions=["can_restrict_members", "can_delete_messages"],
+)
+@bot_require_admin(
+    permissions=["can_restrict_members", "can_delete_messages"],
+)
 @logging_errors
 async def dkick(c: Client, m: Message, strings):
     if m.reply_to_message:
@@ -313,8 +351,12 @@ async def mute(c: Client, m: Message, strings):
 
 @Client.on_message(filters.command("dmute", prefix))
 @use_chat_lang()
-@require_admin(permissions=["can_restrict_members", "can_delete_messages"])
-@bot_require_admin(permissions=["can_restrict_members", "can_delete_messages"])
+@require_admin(
+    permissions=["can_restrict_members", "can_delete_messages"],
+)
+@bot_require_admin(
+    permissions=["can_restrict_members", "can_delete_messages"],
+)
 @logging_errors
 async def dmute(c: Client, m: Message, strings):
     if m.reply_to_message:
@@ -415,8 +457,14 @@ async def tban(c: Client, m: Message, strings):
 
 
 @Client.on_message(filters.command("purge", prefix))
-@require_admin(permissions=["can_delete_messages"], allow_in_private=True)
-@bot_require_admin(permissions=["can_delete_messages"], allow_in_private=True)
+@require_admin(
+    permissions=["can_delete_messages"],
+    allow_in_private=True,
+)
+@bot_require_admin(
+    permissions=["can_delete_messages"],
+    allow_in_private=True,
+)
 @use_chat_lang()
 @logging_errors
 async def purge(c: Client, m: Message, strings):
