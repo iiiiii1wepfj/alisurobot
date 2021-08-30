@@ -24,7 +24,7 @@ from alisu.utils.consts import http
 from alisu.database.database_handler import init_database
 
 
-class client(custom_methods, Client):
+class botclient(custom_methods, Client):
     def __init__(self):
         super().__init__(
             session_name="bot",
@@ -44,11 +44,12 @@ class client(custom_methods, Client):
         await super().stop()
 
 
-Conversation(client)
+Conversation(botclient)
 
 
 async def main() -> None:
     await init_database()
+    client = botclient()
     await client.start()
 
     # Saving commit number
