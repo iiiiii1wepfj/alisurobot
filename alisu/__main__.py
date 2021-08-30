@@ -37,6 +37,12 @@ class client(custom_methods, Client):
             plugins=dict(root="alisu.plugins", exclude=disabled_plugins),
         )
 
+    async def start(self):
+        await super().start()
+
+    async def stop(self, *args):
+        await super().stop()
+
 
 Conversation(client)
 
