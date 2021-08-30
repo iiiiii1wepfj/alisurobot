@@ -18,21 +18,26 @@ from alisu.config import (
     log_chat,
 )
 from alisu.custom_core.conv_handler import Conversation
+from alisu.custom_core.custom_methods import custom_methods
 from alisu.utils import shell_exec
 from alisu.utils.consts import http
 from alisu.database.database_handler import init_database
 
 
-client = Client(
-    session_name="bot",
-    app_version=f"v{alisu.__version__}",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=TOKEN,
-    workers=24,
-    parse_mode="html",
-    plugins=dict(root="alisu.plugins", exclude=disabled_plugins),
-)
+class client(custom_methods, Client):
+    def __init__(self):
+        super().__init__(
+            session_name="bot",
+            app_version=f"v{alisu.__version__}",
+            api_id=API_ID,
+            api_hash=API_HASH,
+            bot_token=TOKEN,
+            workers=24,
+            parse_mode="html",
+            plugins=dict(root="alisu.plugins", exclude=disabled_plugins),
+        )
+
+
 Conversation(client)
 
 
