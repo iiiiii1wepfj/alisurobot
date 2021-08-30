@@ -12,10 +12,20 @@ from typing import Union
 
 import speedtest
 from meval import meval
-from pyrogram import Client, filters
+from pyrogram import (
+    Client,
+    filters,
+    __version__ as pyrogram_version,
+)
 from pyrogram.errors import RPCError
+from pyrogram.raw.all import (
+    layer as pyrogram_layer,
+)
 from pyrogram.types import Message
 
+from alisu import (
+    version as alisu_version,
+)
 from alisu.database import (
     groups,
     users,
@@ -227,6 +237,8 @@ async def getbotstats(c: Client, m: Message):
         f"<b>Groups:</b> {groups_count}\n"
         f"<b>Filters:</b> {filters_count}\n"
         f"<b>Notes:</b> {notes_count}\n"
+        f"<b>Pyrogram Version:</b> {pyrogram_version} (Layer {pyrogram_layer})\n"
+        f"<b>Bot Version:</b> {alisu_version} ({c.version_code})\n"
         f"<b>Uptime:</b> {bot_uptime}"
     )
 
