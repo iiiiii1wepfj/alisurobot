@@ -18,7 +18,10 @@ from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
 
-async def get_reason_text(c: Client, m: Message) -> Message:
+async def get_reason_text(
+    c: Client,
+    m: Message,
+) -> Message:
     reply = m.reply_to_message
     spilt_text = m.text.split
     if not reply and len(spilt_text()) >= 3:
@@ -34,7 +37,10 @@ async def check_if_antichannelpin(chat_id: int):
     return (await groups.get(chat_id=chat_id)).antichannelpin
 
 
-async def toggle_antichannelpin(chat_id: int, mode: Optional[bool]):
+async def toggle_antichannelpin(
+    chat_id: int,
+    mode: Optional[bool],
+):
     await groups.filter(chat_id=chat_id).update(antichannelpin=mode)
 
 
@@ -42,11 +48,17 @@ async def check_if_del_service(chat_id: int):
     return (await groups.get(chat_id=chat_id)).delservicemsgs
 
 
-async def toggle_del_service(chat_id: int, mode: Optional[bool]):
+async def toggle_del_service(
+    chat_id: int,
+    mode: Optional[bool],
+):
     await groups.filter(chat_id=chat_id).update(delservicemsgs=mode)
 
 
-async def get_target_user(c: Client, m: Message) -> User:
+async def get_target_user(
+    c: Client,
+    m: Message,
+) -> User:
     if m.reply_to_message:
         target_user = m.reply_to_message.from_user
     else:
@@ -61,7 +73,11 @@ async def get_target_user(c: Client, m: Message) -> User:
     return target_user
 
 
-async def get_target_user_and_time_and_reason(c: Client, m: Message, strings):
+async def get_target_user_and_time_and_reason(
+    c: Client,
+    m: Message,
+    strings,
+):
     reason = None
     if m.reply_to_message:
         target_user = m.reply_to_message.from_user
