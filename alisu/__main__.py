@@ -36,7 +36,6 @@ class botclient(custom_methods, Client):
             parse_mode="html",
             plugins=dict(root="alisu.plugins", exclude=disabled_plugins),
         )
-        Conversation(super())
 
     async def start(self):
         await super().start()
@@ -48,6 +47,7 @@ class botclient(custom_methods, Client):
 async def main() -> None:
     await init_database()
     client = botclient()
+    Conversation(client)
     await client.start()
 
     # Saving commit number
