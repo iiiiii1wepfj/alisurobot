@@ -36,15 +36,13 @@ class botclient(custom_methods, Client):
             parse_mode="html",
             plugins=dict(root="alisu.plugins", exclude=disabled_plugins),
         )
+        Conversation(super())
 
     async def start(self):
         await super().start()
 
     async def stop(self, *args):
         await super().stop()
-
-
-Conversation(botclient)
 
 
 async def main() -> None:
