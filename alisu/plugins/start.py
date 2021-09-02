@@ -15,6 +15,7 @@ from alisu.utils.localization import use_chat_lang
 
 
 bot_repo_link: str = "https://github.com/iiiiii1wepfj/alisurobot"
+bot_chat: str = "@AlisuChat"
 
 # Using a low priority group so deeplinks will run before this and stop the propagation.
 @Client.on_message(
@@ -77,6 +78,7 @@ async def infos(c: Client, m: CallbackQuery, strings):
         version=alisu.__version__,
         version_code=c.version_code,
         codelink=bot_repo_link,
+        bot_chat=bot_chat,
     )
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
