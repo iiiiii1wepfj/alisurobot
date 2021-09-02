@@ -7,7 +7,9 @@ import time
 import pyrogram
 from pyrogram import Client, idle
 from pyrogram.errors import BadRequest
-from pyrogram.raw.functions.help import GetConfig as pyrogetclientconfraw
+from pyrogram.raw.functions.help import (
+    GetConfig as pyrogetclientconfraw,
+)
 
 import alisu
 from alisu.config import (
