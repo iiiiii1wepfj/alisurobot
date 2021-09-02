@@ -66,7 +66,10 @@ async def check_for_filters(chat_id: int, trigger):
 @use_chat_lang()
 @logging_errors
 async def save_filter(c: Client, m: Message, strings):
-    args = m.text.markdown.split(maxsplit=1)
+    if len(m.text.split()) > 1:
+        args = m.text.markdown.split(maxsplit=1)
+    else:
+        return
     split_text = split_quotes(args[1])
     trigger = split_text[0].lower()
 
@@ -151,7 +154,10 @@ async def save_filter(c: Client, m: Message, strings):
 @use_chat_lang()
 @logging_errors
 async def delete_filter(c: Client, m: Message, strings):
-    args = m.text.markdown.split(maxsplit=1)
+    if len(m.text.split()) > 1:
+        args = m.text.markdown.split(maxsplit=1)
+    else:
+        return
     trigger = args[1].lower()
     chat_id = m.chat.id
     check_filter = await check_for_filters(chat_id=chat_id, trigger=trigger)
