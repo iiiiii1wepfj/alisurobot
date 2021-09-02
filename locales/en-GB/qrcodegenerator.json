@@ -1,0 +1,3 @@
+{
+  "gen_qr_description": "Generate qr code, can to be used by reply or by specify the text, E.g.: <code>/gen_qr text</code>."
+}
