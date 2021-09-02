@@ -6,6 +6,6 @@
   "private": "Hello! I'm {myname}. To discover more about my functions, click on the buttons below.",
   "start_chat": "🤖 Start a chat",
   "group": "Hello! I'm {myname}. To discover my functions start a conversation with me.",
-  "info_page": "• {myname}\n\nVersion: {version} ({version_code})\n\n<a href=\"{codelink}\">Source Code</a>",
+  "info_page": "• {myname}\n\nVersion: {version} ({version_code})\n\n<a href=\"{codelink}\">Source Code</a>\nChat: {bot_chat}",
   "start_description": "Start the bot."
 }
