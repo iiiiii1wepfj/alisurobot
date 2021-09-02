@@ -34,7 +34,10 @@ class botclient(custom_methods, Client):
             bot_token=TOKEN,
             workers=24,
             parse_mode="html",
-            plugins=dict(root="alisu.plugins", exclude=disabled_plugins),
+            plugins=dict(
+                root="alisu.plugins",
+                exclude=disabled_plugins,
+            ),
         )
 
     async def start(self):
