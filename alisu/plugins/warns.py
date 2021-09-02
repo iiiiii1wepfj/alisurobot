@@ -78,7 +78,10 @@ async def set_warns_limit(chat_id: int, warns_limit: int):
 @use_chat_lang()
 @logging_errors
 async def warn_user(c: Client, m: Message, strings):
-    target_user = await get_target_user(c, m)
+    try:
+        target_user = await get_target_user(c, m)
+    except IndexError:
+        return
     warns_limit = await get_warns_limit(m.chat.id)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     reason = await get_warn_reason_text(c, m)
@@ -122,40 +125,6 @@ async def warn_user(c: Client, m: Message, strings):
             )
         else:
             await m.reply_text(warn_text)
-    else:
-        await m.reply_text(strings("warn_cant_admin"))
-
-
-@Client.on_message(filters.command("warn", prefix) & filters.reply)
-@require_admin(permissions=["can_restrict_members"])
-@bot_require_admin(permissions=["can_restrict_members"])
-@use_chat_lang()
-@logging_errors
-async def dwarn_user(c: Client, m: Message, strings):
-    target_user = m.reply_to_message.from_user
-    warns_limit = await get_warns_limit(m.chat.id)
-    check_admin = await c.get_chat_member(m.chat.id, target_user.id)
-    warn_action = await get_warn_action(m.chat.id)
-    if check_admin.status not in admin_status:
-        await m.delete()
-        await m.reply_to_message.delete()
-        await add_warns(m.chat.id, target_user.id, 1)
-        user_warns = await get_warns(m.chat.id, target_user.id)
-        if user_warns >= warns_limit:
-            if warn_action == "ban":
-                await c.kick_chat_member(m.chat.id, target_user.id)
-            elif warn_action == "mute":
-                await c.restrict_chat_member(
-                    m.chat.id,
-                    target_user.id,
-                    ChatPermissions(can_send_messages=False),
-                )
-            elif warn_action == "kick":
-                await c.kick_chat_member(m.chat.id, target_user.id)
-                await c.unban_chat_member(m.chat.id, target_user.id)
-            else:
-                return
-            await reset_warns(m.chat.id, target_user.id)
     else:
         await m.reply_text(strings("warn_cant_admin"))
 
