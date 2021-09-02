@@ -118,6 +118,7 @@ async def set_welcome_message(c: Client, m: Message, strings):
                     title=m.chat.title,
                     chat_title=m.chat.title,
                     count=(await c.get_chat_members_count(m.chat.id)),
+                    dc_id=m.from_user.dc_id or None,
                 )
             )
         except (KeyError, BadRequest) as e:
@@ -233,6 +234,7 @@ async def greet_new_members(c: Client, m: Message, strings):
                 title=chat_title,
                 chat_title=chat_title,
                 count=count,
+                dc_id=m.from_user.dc_id or None,
                 preview="",
             )
             welcome, welcome_buttons = button_parser(welcome)
