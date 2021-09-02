@@ -66,7 +66,10 @@ async def check_for_notes(chat_id: int, trigger):
 @use_chat_lang()
 @logging_errors
 async def save_note(c: Client, m: Message, strings):
-    args = m.text.html.split(maxsplit=1)
+    if len(m.text.split()) > 1:
+        args = m.text.html.split(maxsplit=1)
+    else:
+        return
     split_text = split_quotes(args[1])
     trigger = split_text[0].lower()
 
@@ -149,7 +152,10 @@ async def save_note(c: Client, m: Message, strings):
 @use_chat_lang()
 @logging_errors
 async def delete_note(c: Client, m: Message, strings):
-    args = m.text.html.split(maxsplit=1)
+    if len(m.text.split()) > 1:
+        args = m.text.html.split(maxsplit=1)
+    else:
+        return
     trigger = args[1].lower()
     chat_id = m.chat.id
     check_note = await check_for_notes(chat_id=chat_id, trigger=trigger)
