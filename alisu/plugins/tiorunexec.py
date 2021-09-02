@@ -18,7 +18,7 @@ tio = Tio()
 
 
 langslist = tio.query_languages()
-langs_list_link: str = "https://amanoteam.com/etc/langs.html"
+langs_list_link: str = "https://iiiiii1wepfj.github.io/alisurobot_website/tiolangs.html"
 
 
 @Client.on_message(filters.command("exec_code", prefix))
