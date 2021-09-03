@@ -5,6 +5,7 @@
   "warn_banned": "The user {target_user} has been banned because they were warned {warn_count} times.",
   "warn_kicked": "The user {target_user} has been kicked because they were warned {warn_count} times.",
   "warn_muted": "The user {target_user} has been muted because they were warned {warn_count} times.",
+  "warn_no_time_error_str": "You must specify the time after the action if the action is tban or tmute\n the valid time units are: <code>m/h/d</code>.",
   "warn_cant_admin": "I can't warn admins.",
   "warn_description": "Warn a user.",
   "warn_limit_changed": "Warnings limit successfully changed to {warn_limit}.",
