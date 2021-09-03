@@ -14,3 +14,4 @@ humanfriendly
 pyromod
 qrcode[pil]
 opencv-python
+pyzbar
