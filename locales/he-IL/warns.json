@@ -18,6 +18,6 @@
   "warns_action_set_string": "פעולת האזהרות הוגדרה ל {action}.",
   "warns_action_set_invalid": "משתנה לא חוקי. תשתמש ב <code>/setwarnsaction (ban/mute/kick)</code>.",
   "warn_action_status": "פעולת האזהרות היא {action}.",
-  "warn_for_time_string": "למשך",
+  "warn_time_lang_code_string": "he",
   "setwarnsaction_description": "מגדיר את פעולת האזהרות לצ'אט, אתה יכול להשתמש במשתנים <code>ban/mute/kick/tban/tmute</code>."
 }
