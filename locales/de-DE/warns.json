@@ -15,7 +15,7 @@
   "warns_description": "Warnungen des Benutzers abrufen.",
   "warns_count_string": "Der Benutzer {target_user} hat {warns_count} Warnungen.",
   "warns_action_set_string": "Die Warnaktion wurde auf {action} gesetzt.",
-  "warns_action_set_invalid": "Ungültiges Argument. Verwende <code>/setwarnsaction (ban/mute/kick)</code>.",
+  "warns_action_set_invalid": "Ungültiges Argument. Verwende <code>/setwarnsaction (ban/mute/kick/tban/tmute)</code>.",
   "warn_action_status": "Die Warnaktion für diesen Chat ist {action}.",
   "setwarnsaction_description": "Die Warnungen für den Chat setzen. Du kannst die Argumente <code>ban/mute/kick/tban/tmute</code> verwenden."
 }
