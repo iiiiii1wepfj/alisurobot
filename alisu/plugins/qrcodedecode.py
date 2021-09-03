@@ -4,12 +4,15 @@ from pyrogram.file_id import FileId
 
 from alisu.config import prefix
 from alisu.utils import commands
+from alisu.utils.localization import use_chat_lang
+
 
 import cv2
 
 
 @Client.on_message(filters.command("decode_qr", prefix) & filters.reply)
-async def get_qr_code(c: Client, m: Message):
+@use_chat_lang
+async def get_qr_code(c: Client, m: Message, strings):
     msg = m.reply_to_message
     if msg.photo or msg.document:
         if msg.document:
@@ -34,9 +37,7 @@ async def get_qr_code(c: Client, m: Message):
         qr_img = cv2.imread(pyro_get_file)
         detector = cv2.QRCodeDetector()
         qr_data, vertices_array, bun_qr = detector.detectAndDecode(qr_img)
-        await msg.reply_text(
-            f"<b>the text from the qr code</b>\n\n<code>{qr_data}</code>"
-        )
+        await msg.reply_text(strins("qr_decoder_string").format(qr_data=qr_data))
 
 
 commands.add_command("decode_qr", "general")
