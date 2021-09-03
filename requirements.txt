@@ -13,3 +13,4 @@ youtube-dl
 humanfriendly
 pyromod
 qrcode[pil]
+opencv-python
