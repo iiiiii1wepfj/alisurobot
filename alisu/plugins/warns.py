@@ -5,12 +5,56 @@ from pyrogram.types import ChatPermissions, Message
 
 from alisu.config import prefix
 from alisu.database import user_warns, groups
-from alisu.utils import commands, require_admin, bot_require_admin
+from alisu.utils import (
+    commands,
+    require_admin,
+    bot_require_admin,
+)
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
+from babel.dates import (
+    format_timedelta as babel_format_timedelta,
+)
+from babel.core import (
+    UnknownLocaleError as BabelUnknownLocaleError,
+)
+
+
 from .admin import get_target_user
+
+import time
+
+
+def get_warn_time_locale_string(the_time, lang):
+    try:
+        return babel_format_timedelta(the_time, locale=lang)
+    except BabelUnknownLocaleError:
+        return babel_format_timedelta(the_time, locale="en")
+
+
+class InvalidTimeUnitStringSpecifiedDbError(Exception):
+    pass
+
+
+def time_extract_to_db(t: str) -> int:
+    if t[-1] in ["m", "h", "d"]:
+        unit = t[-1]
+        num = t[:-1]
+        if not num.isdigit():
+            raise InvalidTimeUnitStringSpecifiedError("Invalid Amount specified")
+
+        if unit == "m":
+            t_time = int(num) * 60
+        elif unit == "h":
+            t_time = int(num) * 60 * 60
+        elif unit == "d":
+            t_time = int(num) * 24 * 60 * 60
+        else:
+            return 0
+        return int(t_time)
+    raise InvalidTimeUnitStringSpecifiedError("Invalid time format. Use 'm'/'h'/'d' ")
 
 
 async def get_warn_reason_text(c: Client, m: Message) -> Message:
@@ -26,12 +70,16 @@ async def get_warn_reason_text(c: Client, m: Message) -> Message:
 
 
 async def get_warn_action(chat_id: int) -> Tuple[Optional[str], bool]:
-    res = (await groups.get(chat_id=chat_id)).warn_action
-    return "ban" if res is None else res
+    res = await groups.get(chat_id=chat_id)
+    warn_action_str = "ban" if res.warn_action is None else res.warn_action
+    warn_time = 0 if res.warn_time is None else res.warn_time
+    return warn_action_str, warn_time
 
 
-async def set_warn_action(chat_id: int, action: Optional[str]):
-    await groups.filter(chat_id=chat_id).update(warn_action=action)
+async def set_warn_action(
+    chat_id: int, action: Optional[str], the_time: Optional[str] = None
+):
+    await groups.filter(chat_id=chat_id).update(warn_action=action, warn_time=the_time)
 
 
 async def get_warns(chat_id: int, user_id: int):
@@ -85,7 +133,10 @@ async def warn_user(c: Client, m: Message, strings):
     warns_limit = await get_warns_limit(m.chat.id)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     reason = await get_warn_reason_text(c, m)
-    warn_action = await get_warn_action(m.chat.id)
+    warn_action, warn_time = await get_warn_action(m.chat.id)
+    time_parsed = get_warn_time_locale_string(
+        the_time=warn_time, lang=strings("warn_time_lang_code_string")
+    )
     if check_admin.status not in admin_status:
         await add_warns(m.chat.id, target_user.id, 1)
         user_warns = await get_warns(m.chat.id, target_user.id)
@@ -104,11 +155,23 @@ async def warn_user(c: Client, m: Message, strings):
                 await c.kick_chat_member(m.chat.id, target_user.id)
                 await c.unban_chat_member(m.chat.id, target_user.id)
                 warn_string = strings("warn_kicked")
+            elif warn_action == "tban":
+                await c.kick_chat_member(
+                    m.chat.id, target_user.id, until_date=(time.time() + warn_time)
+                )
+                warn_string = strings("warn_tbanned") + strings(warn_for_time_string)
+            elif warn_action == "tmute":
+                await c.kick_chat_member(
+                    m.chat.id, target_user.id, until_date=(time.time() + warn_time)
+                )
+                warn_string = strings("warn_tmuted")
             else:
                 return
 
             warn_text = warn_string.format(
-                target_user=target_user.mention, warn_count=user_warns
+                target_user=target_user.mention,
+                warn_count=user_warns,
+                the_time=time_parsed,
             )
             await reset_warns(m.chat.id, target_user.id)
         else:
@@ -177,21 +240,28 @@ async def get_user_warns_cmd(c: Client, m: Message, strings):
 @logging_errors
 async def set_warns_action_cmd(c: Client, m: Message, strings):
     if len(m.text.split()) > 1:
-        if not m.command[1] in ("ban", "mute", "kick"):
+        if not m.command[1] in ("ban", "mute", "kick", "tban", "tmute"):
             return await m.reply_text(strings("warns_action_set_invalid"))
+        if m.command[1] in ("tban", "tmute"):
+            if len(m.text.split()) > 2:
+                try:
+                    the_time = time_extract_to_db(m.command[2])
+                except Exception as e:
+                    return await m.reply_text(f"{e}")
+            else:
+                return await m.reply_text(strings("warn_no_time_error_str"))
+        else:
+            the_time = None
 
         warn_action_txt = m.command[1]
 
-        await set_warn_action(m.chat.id, warn_action_txt)
+        await set_warn_action(m.chat.id, warn_action_txt, warn_time=the_time)
         await m.reply_text(
             strings("warns_action_set_string").format(action=warn_action_txt)
         )
     else:
-        await m.reply_text(
-            strings("warn_action_status").format(
-                action=(await get_warn_action(m.chat.id))
-            )
-        )
+        the_warn_action, the_warn_time = await get_warn_action(m.chat.id)
+        await m.reply_text(strings("warn_action_status").format(action=the_warn_action))
 
 
 commands.add_command("warn", "admin")
