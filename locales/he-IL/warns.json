@@ -5,6 +5,7 @@
   "warn_banned": "המשתמש {target_user} נחסם בגלל שהוא קיבל {warn_count} אזהרות.",
   "warn_kicked": "המשתמש {target_user} נבעט בגלל שהוא קיבל {warn_count} אזהרות.",
   "warn_muted": "המשתמש {target_user} הושתק בגלל שהוא קיבל {warn_count} אזהרות.",
+  "warn_no_time_error_str": "אתה צריך לציין את הזמן אחרי הפעולה אם הפעולה היא tban או tmute\n יחידות הזמן הנתמכות הזמן הן: <code>m/h/d</code>.",
   "warn_cant_admin": "אני לא יכול לתת אזהרה למנהלים.",
   "warn_description": "הזהר את המשתמש.",
   "warn_limit_changed": "מגבלת האזהרות שונתה בהצלחה ל {warn_limit}.",
