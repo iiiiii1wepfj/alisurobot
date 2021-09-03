@@ -24,5 +24,6 @@
   "warn_time_unit_hours": "{num} שעות",
   "warn_time_unit_day": "יום",
   "warn_time_unit_days": "{num} ימים",
+  "warn_for_time_string": "למשך",
   "setwarnsaction_description": "מגדיר את פעולת האזהרות לצ'אט, אתה יכול להשתמש במשתנים <code>ban/mute/kick/tban/tmute</code>."
 }
