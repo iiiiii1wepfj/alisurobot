@@ -18,5 +18,11 @@
   "warns_action_set_string": "The warn action was setted to {action}.",
   "warns_action_set_invalid": "Invalid argument. Use <code>/setwarnsaction (ban/mute/kick)</code>.",
   "warn_action_status": "The warns action for this chat is {action}.",
+  "warn_time_unit_second": "second",
+  "warn_time_unit_seconds": "{num} seconds",
+  "warn_time_unit_hour": "hour",
+  "warn_time_unit_hours": "{num} hours",
+  "warn_time_unit_day": "day",
+  "warn_time_unit_days": "{num} days",
   "setwarnsaction_description": "Set the warns actions for the chat, you can use the arguments <code>ban/mute/kick/tban/tmute</code>."
 }
