@@ -17,5 +17,5 @@
   "warns_action_set_string": "L'azione delle ammonizioni è stata impostata a {action}.",
   "warns_action_set_invalid": "Argomento non valido. Usa <code>/setwarnsaction (ban/mute/kick)</code>.",
   "warn_action_status": "L'azione delle ammonizioni per questa chat è {action}.",
-  "setwarnsaction_description": "Imposta l'azione delle ammonizioni per la chat, puoi usare gli argomenti <code>ban</code>/<code>mute</code>/<code>kick</code>."
+  "setwarnsaction_description": "Imposta l'azione delle ammonizioni per la chat, puoi usare gli argomenti <code>ban/mute/kick/tban/tmute</code>."
 }
