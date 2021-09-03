@@ -37,7 +37,7 @@ async def get_qr_code(c: Client, m: Message, strings):
         qr_img = cv2.imread(pyro_get_file)
         detector = cv2.QRCodeDetector()
         qr_data, vertices_array, bun_qr = detector.detectAndDecode(qr_img)
-        await msg.reply_text(strins("qr_decoder_string").format(qr_data=qr_data))
+        await msg.reply_text(strings("qr_decoder_string").format(qr_data=qr_data))
 
 
 commands.add_command("decode_qr", "general")
