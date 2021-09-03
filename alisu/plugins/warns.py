@@ -255,7 +255,7 @@ async def set_warns_action_cmd(c: Client, m: Message, strings):
 
         warn_action_txt = m.command[1]
 
-        await set_warn_action(m.chat.id, warn_action_txt, warn_time=the_time)
+        await set_warn_action(m.chat.id, warn_action_txt, the_time=the_time)
         await m.reply_text(
             strings("warns_action_set_string").format(action=warn_action_txt)
         )
