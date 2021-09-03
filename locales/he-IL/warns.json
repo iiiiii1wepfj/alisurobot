@@ -5,6 +5,9 @@
   "warn_banned": "המשתמש {target_user} נחסם בגלל שהוא קיבל {warn_count} אזהרות.",
   "warn_kicked": "המשתמש {target_user} נבעט בגלל שהוא קיבל {warn_count} אזהרות.",
   "warn_muted": "המשתמש {target_user} הושתק בגלל שהוא קיבל {warn_count} אזהרות.",
+  "warn_tbanned": "המשתמש {target_user} נחסם ל {the_time} בגלל שהוא קיבל {warn_count} אזהרות.",
+  "warn_tmuted": "המשתמש {target_user} הושתק ל {the_time} בגלל שהוא קיבל {warn_count} אזהרות.",
+  "warn_no_time_error_str": "אתה צריך לציין את הזמן אחרי הפעולה אם הפעולה היא tban או tmute\n יחידות הזמן הנתמכות הזמן הן: <code>m/h/d</code>.",
   "warn_cant_admin": "אני לא יכול לתת אזהרה למנהלים.",
   "warn_description": "הזהר את המשתמש.",
   "warn_limit_changed": "מגבלת האזהרות שונתה בהצלחה ל {warn_limit}.",
@@ -15,7 +18,8 @@
   "warns_description": "ראה את אזהרות המשתמש.",
   "warns_count_string": "למשתמש {target_user} יש {warns_count} אזהרות.",
   "warns_action_set_string": "פעולת האזהרות הוגדרה ל {action}.",
-  "warns_action_set_invalid": "משתנה לא חוקי. תשתמש ב <code>/setwarnsaction (ban/mute/kick)</code>.",
+  "warns_action_set_invalid": "משתנה לא חוקי. תשתמש ב <code>/setwarnsaction (ban/mute/kick/tban/tmute)</code>.",
   "warn_action_status": "פעולת האזהרות היא {action}.",
-  "setwarnsaction_description": "מגדיר את פעולת האזהרות לצ'אט, אתה יכול להשתמש במשתנים <code>ban/mute/kick</code>."
+  "warn_time_lang_code_string": "he",
+  "setwarnsaction_description": "מגדיר את פעולת האזהרות לצ'אט, אתה יכול להשתמש במשתנים <code>ban/mute/kick/tban/tmute</code>."
 }

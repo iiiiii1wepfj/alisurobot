@@ -15,6 +15,6 @@
   "warns_description": "ئاگادارکردنەوەکانی بەکارهێنەرێک ببینە.",
   "warns_count_string": "ژمارەی ئاگادارکردنەوەکانی بەکارهێنەر {target_user}: {warns_count}.",
   "warns_action_set_string": "کاردانەوەی ئاگادارکردنەوەکان کرا بە {action}.",
-  "warns_action_set_invalid": "پێدراوەکە دروست نییە، بەکارهێنان:\n<code>/setwarnsaction (ban/mute/kick)</code>",
+  "warns_action_set_invalid": "پێدراوەکە دروست نییە، بەکارهێنان:\n<code>/setwarnsaction (ban/mute/kick/tban/tmute)</code>",
   "warn_action_status": "کاردانەوەی ئاگادارکردنەوە لەم گروپە: {action}."
 }
