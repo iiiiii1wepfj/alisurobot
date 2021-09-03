@@ -161,7 +161,7 @@ async def warn_user(c: Client, m: Message, strings):
                     target_user.id,
                     until_date=(round(time.time()) + warn_time),
                 )
-                warn_string = strings("warn_tbanned") + strings(warn_for_time_string)
+                warn_string = strings("warn_tbanned")
             elif warn_action == "tmute":
                 await c.restrict_chat_member(
                     m.chat.id,
