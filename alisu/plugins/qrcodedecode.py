@@ -11,7 +11,7 @@ import cv2
 
 
 @Client.on_message(filters.command("decode_qr", prefix) & filters.reply)
-@use_chat_lang
+@use_chat_lang()
 async def get_qr_code(c: Client, m: Message, strings):
     msg = m.reply_to_message
     if msg.photo or msg.document:
