@@ -15,7 +15,7 @@ class groups(Model):
     antichannelpin = fields.BooleanField(null=True)
     delservicemsgs = fields.BooleanField(null=True)
     warn_action = fields.TextField(null=True)
-    warn_time = fields.TextField(null=True)
+    warn_time = fields.BigIntField(null=True)
 
 
 class users(Model):
