@@ -39,7 +39,7 @@ async def get_qr_code(c: Client, m: Message, strings):
         )
         qr_img = cv2.imread(pyro_get_file)
         detector = pyzbar_decode(qr_img)
-        qr_data = a[0].data.decode()
+        qr_data = detector[0].data.decode()
         await msg.reply_text(strings("qr_decoder_string").format(qr_data=qr_data))
 
 
