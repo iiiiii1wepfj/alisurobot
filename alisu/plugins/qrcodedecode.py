@@ -6,6 +6,9 @@ from alisu.config import prefix
 from alisu.utils import commands
 from alisu.utils.localization import use_chat_lang
 
+from pyzbar.pyzbar import (
+    decode as pyzbar_decode,
+)
 
 import cv2
 
@@ -35,8 +38,8 @@ async def get_qr_code(c: Client, m: Message, strings):
             progress=None,
         )
         qr_img = cv2.imread(pyro_get_file)
-        detector = cv2.QRCodeDetector()
-        qr_data, vertices_array, bun_qr = detector.detectAndDecode(qr_img)
+        detector = pyzbar_decode(qr_img)
+        qr_data = a[0].data.decode()
         await msg.reply_text(strings("qr_decoder_string").format(qr_data=qr_data))
 
 
