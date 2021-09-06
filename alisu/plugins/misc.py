@@ -105,7 +105,9 @@ async def getbotinfo(c: Client, m: Message, strings):
     )
 
 
-@Client.on_message(filters.reply & filters.group & filters.regex(r"(?i)^rt$"))
+@Client.on_message(
+    filters.reply & filters.group & filters.regex(r"(?i)^rt$") & filters.text
+)
 @logging_errors
 async def rtcommand(c: Client, m: Message):
     rt_text = None
