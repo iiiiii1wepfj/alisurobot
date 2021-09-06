@@ -61,7 +61,15 @@ async def check_for_filters(chat_id: int, trigger):
     return False
 
 
-@Client.on_message(filters.command(["filter", "savefilter"], prefix))
+@Client.on_message(
+    filters.command(
+        [
+            "filter",
+            "savefilter",
+        ],
+        prefix,
+    )
+)
 @require_admin(allow_in_private=True)
 @use_chat_lang()
 @logging_errors
@@ -145,11 +153,21 @@ async def save_filter(c: Client, m: Message, strings):
             filter_type=filter_type,
         )
     await m.reply_text(
-        strings("add_filter_success").format(trigger=trigger), quote=True
+        strings("add_filter_success").format(trigger=trigger),
+        quote=True,
     )
 
 
-@Client.on_message(filters.command(["delfilter", "rmfilter", "stop"], prefix))
+@Client.on_message(
+    filters.command(
+        [
+            "delfilter",
+            "rmfilter",
+            "stop",
+        ],
+        prefix,
+    )
+)
 @require_admin(allow_in_private=True)
 @use_chat_lang()
 @logging_errors
@@ -160,9 +178,15 @@ async def delete_filter(c: Client, m: Message, strings):
         return
     trigger = args[1].lower()
     chat_id = m.chat.id
-    check_filter = await check_for_filters(chat_id=chat_id, trigger=trigger)
+    check_filter = await check_for_filters(
+        chat_id=chat_id,
+        trigger=trigger,
+    )
     if check_filter:
-        await rm_filter(chat_id=chat_id, trigger=trigger)
+        await rm_filter(
+            chat_id=chat_id,
+            trigger=trigger,
+        )
         await m.reply_text(
             strings("remove_filter_success").format(trigger=trigger), quote=True
         )
