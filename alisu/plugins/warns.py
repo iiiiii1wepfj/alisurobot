@@ -27,11 +27,20 @@ from .admin import get_target_user
 import time
 
 
-def get_warn_time_locale_string(the_time, lang):
+def get_warn_time_locale_string(
+    the_time,
+    lang: str,
+):
     try:
-        return babel_format_timedelta(the_time, locale=lang)
+        return babel_format_timedelta(
+            the_time,
+            locale=lang,
+        )
     except BabelUnknownLocaleError:
-        return babel_format_timedelta(the_time, locale="en")
+        return babel_format_timedelta(
+            the_time,
+            locale="en",
+        )
 
 
 class InvalidTimeUnitStringSpecifiedDbError(Exception):
@@ -57,7 +66,10 @@ def time_extract_to_db(t: str) -> int:
     raise InvalidTimeUnitStringSpecifiedError("Invalid time format. Use 'm'/'h'/'d' ")
 
 
-async def get_warn_reason_text(c: Client, m: Message) -> Message:
+async def get_warn_reason_text(
+    c: Client,
+    m: Message,
+) -> Message:
     reply = m.reply_to_message
     spilt_text = m.text.split
     if not reply and len(spilt_text()) >= 3:
@@ -77,9 +89,14 @@ async def get_warn_action(chat_id: int) -> Tuple[Optional[str], bool]:
 
 
 async def set_warn_action(
-    chat_id: int, action: Optional[str], the_time: Optional[str] = None
+    chat_id: int,
+    action: Optional[str],
+    the_time: Optional[str] = None,
 ):
-    await groups.filter(chat_id=chat_id).update(warn_action=action, warn_time=the_time)
+    await groups.filter(chat_id=chat_id).update(
+        warn_action=action,
+        warn_time=the_time,
+    )
 
 
 async def get_warns(chat_id: int, user_id: int):
@@ -125,7 +142,11 @@ async def set_warns_limit(chat_id: int, warns_limit: int):
 @bot_require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
-async def warn_user(c: Client, m: Message, strings):
+async def warn_user(
+    c: Client,
+    m: Message,
+    strings,
+):
     try:
         target_user = await get_target_user(c, m)
     except IndexError:
@@ -201,7 +222,11 @@ async def warn_user(c: Client, m: Message, strings):
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
-async def on_set_warns_limit(c: Client, m: Message, strings):
+async def on_set_warns_limit(
+    c: Client,
+    m: Message,
+    strings,
+):
     if len(m.command) == 1:
         return await m.reply_text(strings("warn_limit_help"))
     try:
@@ -217,7 +242,11 @@ async def on_set_warns_limit(c: Client, m: Message, strings):
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
-async def unwarn_user(c: Client, m: Message, strings):
+async def unwarn_user(
+    c: Client,
+    m: Message,
+    strings,
+):
     target_user = await get_target_user(c, m)
     await reset_warns(m.chat.id, target_user.id)
     await m.reply_text(strings("warn_reset").format(target_user=target_user.mention))
@@ -227,7 +256,11 @@ async def unwarn_user(c: Client, m: Message, strings):
 @require_admin()
 @use_chat_lang()
 @logging_errors
-async def get_user_warns_cmd(c: Client, m: Message, strings):
+async def get_user_warns_cmd(
+    c: Client,
+    m: Message,
+    strings,
+):
     target_user = await get_target_user(c, m)
     user_warns = await get_warns(m.chat.id, target_user.id)
     await m.reply_text(
@@ -243,7 +276,11 @@ async def get_user_warns_cmd(c: Client, m: Message, strings):
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
-async def set_warns_action_cmd(c: Client, m: Message, strings):
+async def set_warns_action_cmd(
+    c: Client,
+    m: Message,
+    strings,
+):
     if len(m.text.split()) > 1:
         if not m.command[1] in ("ban", "mute", "kick", "tban", "tmute"):
             return await m.reply_text(strings("warns_action_set_invalid"))
