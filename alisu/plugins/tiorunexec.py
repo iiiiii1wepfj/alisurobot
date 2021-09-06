@@ -24,7 +24,11 @@ langs_list_link: str = "https://iiiiii1wepfj.github.io/alisurobot_website/tiolan
 @Client.on_message(filters.command("exec_code", prefix))
 @use_chat_lang()
 @logging_errors
-async def exec_tio_run_code(c: Client, m: Message, strings):
+async def exec_tio_run_code(
+    c: Client,
+    m: Message,
+    strings,
+):
     execlanguage = m.command[1]
     codetoexec = m.text.split(None, 2)[2]
     if execlanguage in langslist:
@@ -62,7 +66,11 @@ async def exec_tio_run_code(c: Client, m: Message, strings):
 
 @Client.on_inline_query(filters.regex(r"^exec"))
 @use_chat_lang()
-async def exec_tio_run_code_inline(c: Client, q: InlineQuery, strings):
+async def exec_tio_run_code_inline(
+    c: Client,
+    q: InlineQuery,
+    strings,
+):
     codetoexec = q.query.split(None, 2)[2]
     execlanguage = q.query.lower().split()[1]
     if execlanguage in langslist:
