@@ -129,7 +129,11 @@ async def ytdlcmd(c: Client, m: Message, strings):
 
 @Client.on_callback_query(filters.regex("^(_(vid|aud))"))
 @use_chat_lang()
-async def cli_ytdl(c: Client, cq: CallbackQuery, strings):
+async def cli_ytdl(
+    c: Client,
+    cq: CallbackQuery,
+    strings,
+):
     data, fsize, temp, vformat, cid, userid, mid = cq.data.split("|")
     if not cq.from_user.id == int(userid):
         return await cq.answer(strings("ytdl_button_denied"), cache_time=60)
