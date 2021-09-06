@@ -4,9 +4,18 @@ import tempfile
 
 from PIL import Image
 from pyrogram import Client, filters
-from pyrogram.errors import PeerIdInvalid, StickersetInvalid
-from pyrogram.raw.functions.messages import GetStickerSet, SendMedia
-from pyrogram.raw.functions.stickers import AddStickerToSet, CreateStickerSet
+from pyrogram.errors import (
+    PeerIdInvalid,
+    StickersetInvalid,
+)
+from pyrogram.raw.functions.messages import (
+    GetStickerSet,
+    SendMedia,
+)
+from pyrogram.raw.functions.stickers import (
+    AddStickerToSet,
+    CreateStickerSet,
+)
 from pyrogram.raw.types import (
     DocumentAttributeFilename,
     InputDocument,
@@ -14,7 +23,11 @@ from pyrogram.raw.types import (
     InputStickerSetItem,
     InputStickerSetShortName,
 )
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from pyrogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+)
 
 from alisu.config import log_chat, prefix
 from alisu.utils import EMOJI_PATTERN
@@ -23,10 +36,23 @@ from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
 
-@Client.on_message(filters.command(["kang", "kibe", "steal"], prefix))
+@Client.on_message(
+    filters.command(
+        [
+            "kang",
+            "kibe",
+            "steal",
+        ],
+        prefix,
+    )
+)
 @use_chat_lang()
 @logging_errors
-async def kang_sticker(c: Client, m: Message, strings):
+async def kang_sticker(
+    c: Client,
+    m: Message,
+    strings,
+):
     prog_msg = await m.reply_text(strings("kanging_sticker_msg"))
     bot_username = c.me.username
     sticker_emoji: str = "🤔"
@@ -246,7 +272,11 @@ def resize_image(filename: str) -> str:
 @Client.on_message(filters.command("stickerid", prefix) & filters.reply)
 @use_chat_lang()
 @logging_errors
-async def getstickerid(c: Client, m: Message, strings):
+async def getstickerid(
+    c: Client,
+    m: Message,
+    strings,
+):
     if m.reply_to_message.sticker:
         await m.reply_text(
             strings("get_sticker_id_string").format(
@@ -258,7 +288,11 @@ async def getstickerid(c: Client, m: Message, strings):
 @Client.on_message(filters.command("getsticker", prefix) & filters.reply)
 @use_chat_lang()
 @logging_errors
-async def getstickeraspng(c: Client, m: Message, strings):
+async def getstickeraspng(
+    c: Client,
+    m: Message,
+    strings,
+):
     sticker = m.reply_to_message.sticker
     if sticker:
         if sticker.is_animated:
