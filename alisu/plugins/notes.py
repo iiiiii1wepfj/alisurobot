@@ -61,7 +61,15 @@ async def check_for_notes(chat_id: int, trigger):
     return False
 
 
-@Client.on_message(filters.command(["note", "savenote"], prefix))
+@Client.on_message(
+    filters.command(
+        [
+            "note",
+            "savenote",
+        ],
+        prefix,
+    )
+)
 @require_admin(allow_in_private=True)
 @use_chat_lang()
 @logging_errors
@@ -147,7 +155,15 @@ async def save_note(c: Client, m: Message, strings):
     await m.reply_text(strings("add_note_success").format(trigger=trigger), quote=True)
 
 
-@Client.on_message(filters.command(["delnote", "rmnote"], prefix))
+@Client.on_message(
+    filters.command(
+        [
+            "delnote",
+            "rmnote",
+        ],
+        prefix,
+    )
+)
 @require_admin(allow_in_private=True)
 @use_chat_lang()
 @logging_errors
@@ -173,7 +189,11 @@ async def delete_note(c: Client, m: Message, strings):
 @Client.on_message(filters.command("notes", prefix))
 @use_chat_lang()
 @logging_errors
-async def get_all_chat_note(c: Client, m: Message, strings):
+async def get_all_chat_note(
+    c: Client,
+    m: Message,
+    strings,
+):
     chat_id = m.chat.id
     reply_text = strings("notes_list")
     all_notes = await get_all_notes(chat_id=chat_id)
@@ -187,7 +207,11 @@ async def get_all_chat_note(c: Client, m: Message, strings):
         await m.reply_text(reply_text, quote=True)
 
 
-async def serve_note(c: Client, m: Message, txt):
+async def serve_note(
+    c: Client,
+    m: Message,
+    txt,
+):
     chat_id = m.chat.id
     text = txt
 
@@ -274,10 +298,17 @@ async def serve_note(c: Client, m: Message, txt):
     group=2,
 )
 @logging_errors
-async def note_by_hashtag(c: Client, m: Message):
+async def note_by_hashtag(
+    c: Client,
+    m: Message,
+):
     note_data = m.text[1:]
     targeted_message = m.reply_to_message or m
-    await serve_note(c, targeted_message, txt=note_data)
+    await serve_note(
+        c,
+        targeted_message,
+        txt=note_data,
+    )
 
 
 @Client.on_message(
@@ -288,10 +319,17 @@ async def note_by_hashtag(c: Client, m: Message):
     group=2,
 )
 @logging_errors
-async def note_by_get_command(c: Client, m: Message):
+async def note_by_get_command(
+    c: Client,
+    m: Message,
+):
     note_data = " ".join(m.command[1:])
     targeted_message = m.reply_to_message or m
-    await serve_note(c, targeted_message, txt=note_data)
+    await serve_note(
+        c,
+        targeted_message,
+        txt=note_data,
+    )
 
 
 commands.add_command("delnote", "admin")
