@@ -13,9 +13,22 @@ from pyzbar.pyzbar import (
 import cv2
 
 
-@Client.on_message(filters.command("decode_qr", prefix) & filters.reply)
+@Client.on_message(
+    filters.command(
+        [
+            "decode_qr",
+            "decode_qr",
+        ],
+        prefix,
+    )
+    & filters.reply
+)
 @use_chat_lang()
-async def get_qr_code(c: Client, m: Message, strings):
+async def get_qr_code(
+    c: Client,
+    m: Message,
+    strings,
+):
     msg = m.reply_to_message
     if msg.photo or msg.document:
         if msg.document:
