@@ -46,7 +46,16 @@ def gen_langs_kb():
 
 
 @Client.on_callback_query(filters.regex("^chlang$"))
-@Client.on_message(filters.command(["setchatlang", "setlang"], prefix) & filters.group)
+@Client.on_message(
+    filters.command(
+        [
+            "setchatlang",
+            "setlang",
+        ],
+        prefix,
+    )
+    & filters.group
+)
 @require_admin(allow_in_private=True)
 @use_chat_lang()
 async def chlang(c: Client, m: Union[CallbackQuery, Message], strings):
