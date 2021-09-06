@@ -143,7 +143,10 @@ async def admin_echo_cmd(c: Client, m: Message):
 )
 async def del_message(c: Client, m: Message):
     try:
-        await c.delete_messages(m.chat.id, m.reply_to_message.message_id)
+        await c.delete_messages(
+            m.chat.id,
+            m.reply_to_message.message_id,
+        )
     except:
         pass
     try:
@@ -297,10 +300,16 @@ async def kick(c: Client, m: Message, strings):
 @Client.on_message(filters.command("dkick", prefix))
 @use_chat_lang()
 @require_admin(
-    permissions=["can_restrict_members", "can_delete_messages"],
+    permissions=[
+        "can_restrict_members",
+        "can_delete_messages",
+    ],
 )
 @bot_require_admin(
-    permissions=["can_restrict_members", "can_delete_messages"],
+    permissions=[
+        "can_restrict_members",
+        "can_delete_messages",
+    ],
 )
 @logging_errors
 async def dkick(c: Client, m: Message, strings):
@@ -349,7 +358,9 @@ async def mute(c: Client, m: Message, strings):
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     if check_admin.status not in admin_status:
         await c.restrict_chat_member(
-            m.chat.id, target_user.id, ChatPermissions(can_send_messages=False)
+            m.chat.id,
+            target_user.id,
+            ChatPermissions(can_send_messages=False),
         )
         text = strings("mute_success").format(
             user=target_user.mention,
@@ -368,16 +379,23 @@ async def mute(c: Client, m: Message, strings):
 @Client.on_message(filters.command("dmute", prefix))
 @use_chat_lang()
 @require_admin(
-    permissions=["can_restrict_members", "can_delete_messages"],
+    permissions=[
+        "can_restrict_members",
+        "can_delete_messages",
+    ],
 )
 @bot_require_admin(
-    permissions=["can_restrict_members", "can_delete_messages"],
+    permissions=[
+        "can_restrict_members",
+        "can_delete_messages",
+    ],
 )
 @logging_errors
 async def dmute(c: Client, m: Message, strings):
     if m.reply_to_message:
         check_admin = await c.get_chat_member(
-            m.chat.id, m.reply_to_message.from_user.id
+            m.chat.id,
+            m.reply_to_message.from_user.id,
         )
         if check_admin.status not in admin_status:
             await c.restrict_chat_member(
