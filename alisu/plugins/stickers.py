@@ -195,7 +195,7 @@ async def kang_sticker(
             stkr_title: str = f"{u_name}'s "
             if animated:
                 stkr_title += "Anim. "
-            stkr_title += "EduuPack"
+            stkr_title += "AlisuPack"
             if packnum != 0:
                 stkr_title += f" v{packnum}"
             try:
