@@ -6,5 +6,14 @@
   "rules_message": "The rules in the chat {chat_title} are:\n\n{rules}",
   "rules_set_empty": "You must specify the rules, E.g.: <code>/setrules (here the rules)</code>.",
   "rules_set_success": "The rules for {chat_title} were set successfully.",
+  "check_pvt_rules_mode_enabled": "The private rules mode for this chat is enabled.",
+  "check_pvt_rules_mode_disabled": "The private rules mode for this chat is disabled.",
+  "pvt_rules_set_msg_enabled": "From now i will send the chat rules in private.",
+  "pvt_rules_set_msg_disabled": "From now i will send here the chat rules.",
+  "set_pvt_rules_invalid_arg": "Invalid argument. Use <code>/set_pvt_rules off/on</code>",
+  "rules_pvt_message_group_text": "Click on the button bellow to get the rules in private chat.",
+  "rules_pvt_message_group_button": "Click Here",
+  "set_pvt_rules_description": "Set to the bot if send the chat rules in private chat to on or off.",
+  "check_pvt_rules_description": "Check if the private rules mode is enabled or disabled.",
   "setrules_description": "Set the rules of the chat."
 }
