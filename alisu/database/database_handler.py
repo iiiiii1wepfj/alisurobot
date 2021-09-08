@@ -16,6 +16,7 @@ class groups(Model):
     delservicemsgs = fields.BooleanField(null=True)
     warn_action = fields.TextField(null=True)
     warn_time = fields.BigIntField(null=True)
+    private_rules = fields.BooleanField(null=True)
 
 
 class users(Model):
