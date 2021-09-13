@@ -205,7 +205,7 @@ def require_admin(
                 return await sender(strings("private_not_allowed"))
             if msg.chat.type == "channel":
                 return await func(client, message, *args, *kwargs)
-            anon_admin_check = await check_if_is_from_anon_admin(message)
+            anon_admin_check = await check_if_is_from_anon_admin(msg)
             check_anon_perms_msg_send = None
             if anon_admin_check:
                 get_my_chat_member = await client.get_chat_member(msg.chat.id, "me")
