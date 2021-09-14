@@ -11,6 +11,7 @@ from alisu.utils import (
     require_admin,
     bot_require_admin,
     time_extract,
+    check_if_ban_time_range,
 )
 from alisu.utils.utils import InvalidTimeUnitStringSpecifiedError
 from alisu.utils.consts import admin_status
@@ -442,6 +443,9 @@ async def tmute(c: Client, m: Message, strings):
         return
     else:
         target_user, mute_time, mute_time_str, the_reason = get_tmute_info
+        check_if_valid_tmute_range = check_if_ban_time_range(mute_time)
+        if not check_if_valid_tmute_range:
+            return await m.reply_text(strings("invalid_punish_time_specified_msg"))
     await c.restrict_chat_member(
         m.chat.id,
         target_user.id,
@@ -474,6 +478,9 @@ async def tban(c: Client, m: Message, strings):
         return
     else:
         target_user, ban_time, ban_time_str, the_reason = get_tban_info
+        check_if_valid_tban_range = check_if_ban_time_range(ban_time)
+        if not check_if_valid_tban_range:
+            return await m.reply_text(strings("invalid_punish_time_specified_msg"))
     await c.kick_chat_member(m.chat.id, target_user.id, until_date=ban_time)
     the_tban_message_text = strings("tban_success").format(
         user=target_user.mention,

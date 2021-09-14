@@ -44,6 +44,7 @@
   "unpinall_description": "מבטל את נעיצת כל ההודעות בצ'אט.",
   "del_description": "מוחק את ההודעה מהצ'אט.",
   "reason_string": "סיבה: {reason_text}",
+  "invalid_punish_time_specified_msg": "צויין זמן לא חוקי, הזמן חייב להיות יותר מ30 שניות ופחות מ366 ימים.",
   "i_cant_ban_admins": "אני לא יכול להעיף מנהלים.",
   "i_cant_mute_admins": "אני לא יכול להשתיק מנהלים.",
   "i_cant_kick_admins": "אני לא יכול לבעוט מנהלים."
