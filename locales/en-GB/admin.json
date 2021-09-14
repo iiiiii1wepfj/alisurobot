@@ -44,6 +44,7 @@
   "unpinall_description": "Unpins all messages in chat.",
   "del_description": "Delete the message from the chat.",
   "reason_string": "Reason: {reason_text}",
+  "invalid_punish_time_specified_msg": "Invalid time specified, the time must to be more than 30 seconds and fewer than 366 days.",
   "i_cant_ban_admins": "I can't ban admins.",
   "i_cant_mute_admins": "I can't mute admins.",
   "i_cant_kick_admins": "I can't kick admins."
