@@ -545,3 +545,10 @@ async def shell_exec(code, treat=True):
 def get_format_keys(string: str) -> List[str]:
     """Return a list of formatting keys present in string."""
     return [i[1] for i in Formatter().parse(string) if i[1] is not None]
+
+
+def check_if_ban_time_range(sec):
+    if sec in range(30, 31622400):
+        return True
+    else:
+        return False
