@@ -21,5 +21,6 @@
   "warns_action_set_invalid": "משתנה לא חוקי. תשתמש ב <code>/setwarnsaction (ban/mute/kick/tban/tmute)</code>.",
   "warn_action_status": "פעולת האזהרות היא {action}.",
   "warn_time_lang_code_string": "he",
+  "invalid_punish_time_specified_msg": "צויין זמן לא חוקי, הזמן חייב להיות יותר מ30 שניות ופחות מ366 ימים.",
   "setwarnsaction_description": "מגדיר את פעולת האזהרות לצ'אט, אתה יכול להשתמש במשתנים <code>ban/mute/kick/tban/tmute</code>."
 }
