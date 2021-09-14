@@ -1,5 +1,5 @@
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, Update
 from typing import Union, Pattern
 import re
 
