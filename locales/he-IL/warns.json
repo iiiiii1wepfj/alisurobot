@@ -1,4 +1,5 @@
 {
+  "rem_warn_btn_str": "ביטול אזהרה",
   "resetwarns_description": "אפס את אזהרות המשתמש.",
   "setwarnslimit_description": "הגדר את מגבלת האזהרות בצ'אט.",
   "user_warned": "למשתמש {target_user} יש {warn_count} מתוך {warn_limit} אזהרות.",
@@ -21,6 +22,7 @@
   "warns_action_set_invalid": "משתנה לא חוקי. תשתמש ב <code>/setwarnsaction (ban/mute/kick/tban/tmute)</code>.",
   "warn_action_status": "פעולת האזהרות היא {action}.",
   "warn_time_lang_code_string": "he",
+  "warn_one_removed_edit_str": "האזהרה נמחקה.",
   "invalid_punish_time_specified_msg": "צויין זמן לא חוקי, הזמן חייב להיות יותר מ30 שניות ופחות מ366 ימים.",
   "setwarnsaction_description": "מגדיר את פעולת האזהרות לצ'אט, אתה יכול להשתמש במשתנים <code>ban/mute/kick/tban/tmute</code>."
 }
