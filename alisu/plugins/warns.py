@@ -28,6 +28,10 @@ from babel.core import (
     UnknownLocaleError as BabelUnknownLocaleError,
 )
 
+from tortoise.exceptions import (
+    DoesNotExist as tortoiseormdoesnotexisterr,
+)
+
 
 from .admin import get_target_user
 
@@ -253,19 +257,22 @@ async def warn_user(
 async def remwarncallbackfunc(c: Client, m: CallbackQuery, strings):
     chatid = m.message.chat.id
     the_msg_obj = m.message
-    just_unused_callback_one, unwarn_user_id_one = m.data.split(".")
-    unwarn_user_id = int(unwarn_user_id_one)
-    warns_limit = await get_warns_limit(chatid)
-    user_warns = await get_warns(chatid, unwarn_user_id)
-    if user_warns >= warns_limit:
+    try:
+        just_unused_callback_one, unwarn_user_id_one = m.data.split(".")
+        unwarn_user_id = int(unwarn_user_id_one)
+        warns_limit = await get_warns_limit(chatid)
+        user_warns = await get_warns(chatid, unwarn_user_id)
+        if user_warns >= warns_limit:
+            return await the_msg_obj.edit("¯\\_(ツ)_/¯")
+        elif user_warns == 0:
+            return await the_msg_obj.edit("¯\\_(ツ)_/¯")
+        else:
+            await remove_one_warn_db(
+                chat_id=chatid, user_id=unwarn_user_id, number=user_warns
+            )
+            return await the_msg_obj.edit(strings("warn_one_removed_edit_str"))
+    except tortoiseormdoesnotexisterr:
         return await the_msg_obj.edit("¯\\_(ツ)_/¯")
-    elif user_warns == 0:
-        return await the_msg_obj.edit("¯\\_(ツ)_/¯")
-    else:
-        await remove_one_warn_db(
-            chat_id=chatid, user_id=unwarn_user_id, number=user_warns
-        )
-        return await the_msg_obj.edit(strings("warn_one_removed_edit_str"))
 
 
 @Client.on_message(filters.command("setwarnslimit", prefix) & filters.group)
