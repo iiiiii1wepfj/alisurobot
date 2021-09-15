@@ -1,7 +1,13 @@
 from typing import Optional, Tuple
 
 from pyrogram import Client, filters
-from pyrogram.types import ChatPermissions, Message
+from pyrogram.types import (
+    CallbackQuery,
+    ChatPermissions,
+    Message,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+)
 
 from alisu.config import prefix
 from alisu.database import user_warns, groups
@@ -125,6 +131,13 @@ async def add_warns(chat_id: int, user_id: int, number: int):
         )
 
 
+async def remove_one_warn_db(chat_id: int, user_id: int, number: int):
+    the_number_res = int(number - 1)
+    await user_warns.filter(user_id=user_id, chat_id=chat_id).update(
+        count=the_number_res
+    )
+
+
 async def reset_warns(chat_id: int, user_id: int):
     await user_warns.filter(user_id=user_id, chat_id=chat_id).delete()
 
@@ -163,6 +176,7 @@ async def warn_user(
         await add_warns(m.chat.id, target_user.id, 1)
         user_warns = await get_warns(m.chat.id, target_user.id)
         if user_warns >= warns_limit:
+            warn_btns = None
             if warn_action == "ban":
                 await c.kick_chat_member(m.chat.id, target_user.id)
                 warn_string = strings("warn_banned")
@@ -207,16 +221,51 @@ async def warn_user(
                 warn_count=user_warns,
                 warn_limit=warns_limit,
             )
+            warn_btns = InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            strings("rem_warn_btn_str"),
+                            callback_data=f"rmwarn.{target_user.id}",
+                        )
+                    ]
+                ]
+            )
         if reason:
             await m.reply_text(
                 warn_text
                 + "\n"
-                + strings("warn_reason_text").format(reason_text=reason)
+                + strings("warn_reason_text").format(reason_text=reason),
+                reply_markup=warn_btns if warn_btns else None,
             )
         else:
-            await m.reply_text(warn_text)
+            await m.reply_text(
+                warn_text,
+                reply_markup=warn_btns if warn_btns else None,
+            )
     else:
         await m.reply_text(strings("warn_cant_admin"))
+
+
+@Client.on_callback_query(filters.regex("^rmwarn."))
+@use_chat_lang()
+@require_admin(permissions=["can_restrict_members"])
+async def remwarncallbackfunc(c: Client, m: CallbackQuery, strings):
+    chatid = m.message.chat.id
+    the_msg_obj = m.message
+    just_unused_callback_one, unwarn_user_id_one = m.data.split(".")
+    unwarn_user_id = int(unwarn_user_id_one)
+    warns_limit = await get_warns_limit(chatid)
+    user_warns = await get_warns(chatid, unwarn_user_id)
+    if user_warns >= warns_limit:
+        return await the_msg_obj.edit("¯\\_(ツ)_/¯")
+    elif user_warns == 0:
+        return await the_msg_obj.edit("¯\\_(ツ)_/¯")
+    else:
+        await remove_one_warn_db(
+            chat_id=chatid, user_id=unwarn_user_id, number=user_warns
+        )
+        return await the_msg_obj.edit(strings("warn_one_removed_edit_str"))
 
 
 @Client.on_message(filters.command("setwarnslimit", prefix) & filters.group)
