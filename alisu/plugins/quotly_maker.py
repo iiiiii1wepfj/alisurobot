@@ -124,8 +124,8 @@ async def msg_quotly_cmd(c: Client, m: Message):
                         )
                         if not i.empty and not i.media
                     ]
-                except:
-                    return await m.reply_text("¯\\_(ツ)_/¯")
+                except Exception as e:
+                    return await m.reply_text(f"{type(e)}: {e}")
                 try:
                     make_quotly = await pyrogram_to_quotly(messages)
                     bio_sticker = BytesIO(make_quotly)
