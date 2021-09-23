@@ -13,13 +13,6 @@ class QuotlyException(Exception):
     pass
 
 
-def get_user_full_name_pyro(msg):
-    if msg.from_user:
-        return f"{msg.from_user.first_name or 'unknown'} {msg.from_user.last_name or ''}".rstrip()
-    else:
-        return "unknown"
-
-
 # based on https://github.com/TheHamkerCat/Python_ARQ/blob/master/Python_ARQ/arq.py
 async def pyrogram_to_quotly(messages):
     if not isinstance(messages, list):
@@ -59,7 +52,7 @@ async def pyrogram_to_quotly(messages):
                     if message.from_user.photo
                     else "",
                     "type": message.chat.type,
-                    "name": get_user_full_name_pyro(message),
+                    "name": f"{message.from_user.first_name or 'unknown'} {message.from_user.last_name or ''}".rstrip(),
                 }
                 if not message.forward_from
                 else {
@@ -81,7 +74,7 @@ async def pyrogram_to_quotly(messages):
                 "text": message.text if message.text else "",
                 "replyMessage": (
                     {
-                        "name": get_user_full_name_pyro(message.reply_to_message),
+                        "name": f"{message.reply_to_message.from_user.first_name or 'unknown'} {message.reply_to_message.from_user.last_name or ''}".rstrip(),
                         "text": message.reply_to_message.text,
                         "chatId": message.reply_to_message.from_user.id,
                     }
