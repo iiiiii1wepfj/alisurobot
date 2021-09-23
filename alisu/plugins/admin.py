@@ -116,11 +116,11 @@ async def get_target_user_and_time_and_reason(
         )
     else:
         try:
-            the_time = await time_extract(m, the_time_string)
+            the_time, time_unix_now = await time_extract(m, the_time_string)
         except InvalidTimeUnitStringSpecifiedError as invalidtimeerrmsg:
             await m.reply_text(invalidtimeerrmsg)
             return
-    return target_user, the_time, the_time_string, reason
+    return target_user, the_time, the_time_string, reason, time_unix_now
 
 
 @Client.on_message(filters.command("echo", prefix))
@@ -442,8 +442,8 @@ async def tmute(c: Client, m: Message, strings):
     if not get_tmute_info:
         return
     else:
-        target_user, mute_time, mute_time_str, the_reason = get_tmute_info
-        check_if_valid_tmute_range = check_if_ban_time_range(mute_time)
+        target_user, mute_time, mute_time_str, the_reason, time_unix_now = get_tmute_info
+        check_if_valid_tmute_range = check_if_ban_time_range(mute_time, time_unix_now)
         if not check_if_valid_tmute_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
     await c.restrict_chat_member(
@@ -477,8 +477,8 @@ async def tban(c: Client, m: Message, strings):
     if not get_tban_info:
         return
     else:
-        target_user, ban_time, ban_time_str, the_reason = get_tban_info
-        check_if_valid_tban_range = check_if_ban_time_range(ban_time)
+        target_user, ban_time, ban_time_str, the_reason, time_unix_now = get_tban_info
+        check_if_valid_tban_range = check_if_ban_time_range(ban_time, time_unix_now)
         if not check_if_valid_tban_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
     await c.kick_chat_member(m.chat.id, target_user.id, until_date=ban_time)
