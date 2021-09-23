@@ -17,7 +17,7 @@ import cv2
     filters.command(
         [
             "decode_qr",
-            "decode_qr",
+            "qr_decode",
         ],
         prefix,
     )
