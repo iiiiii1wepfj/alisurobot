@@ -131,8 +131,8 @@ async def msg_quotly_cmd(c: Client, m: Message):
                     bio_sticker = BytesIO(make_quotly)
                     bio_sticker.name = "biosticker.webp"
                     return await m.reply_sticker(bio_sticker)
-                except Exception as e:
-                    return await m.reply_text(f"{type(e)}: {e}")
+                except:
+                    return await m.reply_text("¯\\_(ツ)_/¯")
         else:
             pass
     try:
