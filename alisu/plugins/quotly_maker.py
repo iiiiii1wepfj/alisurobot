@@ -52,7 +52,7 @@ async def pyrogram_to_quotly(messages):
                     if message.from_user.photo
                     else "",
                     "type": message.chat.type,
-                    "name": f"{message.from_user.first_name} {message.from_user.last_name or ''}".rstrip(),
+                    "name": f"{message.from_user.first_name or 'unknown'} {message.from_user.last_name or ''}".rstrip(),
                 }
                 if not message.forward_from
                 else {
@@ -69,12 +69,12 @@ async def pyrogram_to_quotly(messages):
                     if message.forward_from.photo
                     else "",
                     "type": message.chat.type,
-                    "name": f"{message.forward_from.first_name} {message.forward_from.last_name or ''}".rstrip(),
+                    "name": f"{message.forward_from.first_name or 'unknown'} {message.forward_from.last_name or ''}".rstrip(),
                 },
                 "text": message.text if message.text else "",
                 "replyMessage": (
                     {
-                        "name": f"{message.reply_to_message.from_user.first_name} {message.reply_to_message.from_user.last_name or ''}".rstrip(),
+                        "name": f"{message.reply_to_message.from_user.first_name or 'unknown'} {message.reply_to_message.from_user.last_name or ''}".rstrip(),
                         "text": message.reply_to_message.text,
                         "chatId": message.reply_to_message.from_user.id,
                     }
@@ -137,11 +137,17 @@ async def msg_quotly_cmd(c: Client, m: Message, strings):
                     return await m.reply_text("¯\\_(ツ)_/¯")
         else:
             pass
-    messages_one = await c.get_messages(
-        chat_id=m.chat.id, message_ids=m.reply_to_message.message_id, replies=-1
-    )
-    messages = [messages_one]
-    make_quotly = await pyrogram_to_quotly(messages)
-    bio_sticker = BytesIO(make_quotly)
-    bio_sticker.name = "biosticker.webp"
-    return await m.reply_sticker(bio_sticker)
+    try:
+        messages_one = await c.get_messages(
+            chat_id=m.chat.id, message_ids=m.reply_to_message.message_id, replies=-1
+        )
+        messages = [messages_one]
+    except:
+        return await m.reply_text("¯\\_(ツ)_/¯")
+    try:
+        make_quotly = await pyrogram_to_quotly(messages)
+        bio_sticker = BytesIO(make_quotly)
+        bio_sticker.name = "biosticker.webp"
+        return await m.reply_sticker(bio_sticker)
+    except:
+        return await m.reply_text("¯\\_(ツ)_/¯")
