@@ -3,6 +3,7 @@ from pyrogram.types import Message
 
 from alisu.config import prefix
 from alisu.utils.consts import http
+from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
 from io import BytesIO
@@ -103,13 +104,14 @@ def isArgInt(txt) -> list:
 
 
 @Client.on_message(filters.command("q", prefix))
+@use_chat_lang()
 @logging_errors
-async def msg_quotly_cmd(c: Client, m: Message):
+async def msg_quotly_cmd(c: Client, m: Message, strings):
     if len(m.text.split()) > 1:
         check_arg = isArgInt(m.command[1])
         if check_arg[0]:
             if check_arg[1] < 2 or check_arg[1] > 10:
-                return await m.reply_text("the arg range must to be between 2 to 10")
+                return await m.reply_text(strings("quotly_range_inavlid_string"))
             else:
                 try:
                     messages = [
