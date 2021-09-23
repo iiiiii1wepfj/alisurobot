@@ -118,14 +118,14 @@ async def msg_quotly_cmd(c: Client, m: Message):
                             chat_id=m.chat.id,
                             message_ids=range(
                                 m.reply_to_message.message_id,
-                                m.reply_to_message.message_id + (count + 5),
+                                m.reply_to_message.message_id + (check_arg + 5),
                             ),
                             replies=-1,
                         )
                         if not i.empty and not i.media
                     ]
-                except Exception as e:
-                    return await m.reply_text(f"{type(e)}: {e}")
+                except:
+                    return await m.reply_text("¯\\_(ツ)_/¯")
                 try:
                     make_quotly = await pyrogram_to_quotly(messages)
                     bio_sticker = BytesIO(make_quotly)
