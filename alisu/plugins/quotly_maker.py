@@ -141,10 +141,7 @@ async def msg_quotly_cmd(c: Client, m: Message, strings):
         chat_id=m.chat.id, message_ids=m.reply_to_message.message_id, replies=-1
     )
     messages = [messages_one]
-    try:
-        make_quotly = await pyrogram_to_quotly(messages)
-        bio_sticker = BytesIO(make_quotly)
-        bio_sticker.name = "biosticker.webp"
-        return await m.reply_sticker(bio_sticker)
-    except:
-        return await m.reply_text("¯\\_(ツ)_/¯")
+    make_quotly = await pyrogram_to_quotly(messages)
+    bio_sticker = BytesIO(make_quotly)
+    bio_sticker.name = "biosticker.webp"
+    return await m.reply_sticker(bio_sticker)
