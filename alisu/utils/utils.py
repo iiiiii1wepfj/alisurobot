@@ -370,7 +370,8 @@ async def time_extract(m: Message, t: str) -> int:
             t_time = int(num) * 24 * 60 * 60
         else:
             return 0
-        return int(time.time() + t_time)
+        the_time_now = time.time()
+        return int(the_time_now + t_time), int(the_time_now)
     raise InvalidTimeUnitStringSpecifiedError("Invalid time format. Use 'm'/'h'/'d' ")
 
 
@@ -547,8 +548,9 @@ def get_format_keys(string: str) -> List[str]:
     return [i[1] for i in Formatter().parse(string) if i[1] is not None]
 
 
-def check_if_ban_time_range(sec):
-    if sec in range(30, 31622400):
+def check_if_ban_time_range(sec, unix_time_int):
+    the_sec = sec - unix_time_int
+    if the_sec in range(30, 31622400):
         return True
     else:
         return False
