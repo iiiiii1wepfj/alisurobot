@@ -15,7 +15,6 @@ from alisu.utils import (
     commands,
     require_admin,
     bot_require_admin,
-    check_if_ban_time_range,
 )
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
@@ -36,6 +35,13 @@ from tortoise.exceptions import (
 from .admin import get_target_user
 
 import time
+
+
+def check_if_ban_time_range_db(sec):
+    if sec in range(30, 31622400):
+        return True
+    else:
+        return False
 
 
 def get_warn_time_locale_string(
@@ -345,7 +351,7 @@ async def set_warns_action_cmd(
             if len(m.text.split()) > 2:
                 try:
                     the_time = time_extract_to_db(m.command[2])
-                    check_if_valid_time_range = check_if_ban_time_range(the_time)
+                    check_if_valid_time_range = check_if_ban_time_range_db(the_time)
                     if not check_if_valid_time_range:
                         return await m.reply_text(
                             strings("invalid_punish_time_specified_msg")
