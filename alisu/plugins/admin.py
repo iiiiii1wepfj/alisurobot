@@ -442,7 +442,13 @@ async def tmute(c: Client, m: Message, strings):
     if not get_tmute_info:
         return
     else:
-        target_user, mute_time, mute_time_str, the_reason, time_unix_now = get_tmute_info
+        (
+            target_user,
+            mute_time,
+            mute_time_str,
+            the_reason,
+            time_unix_now,
+        ) = get_tmute_info
         check_if_valid_tmute_range = check_if_ban_time_range(mute_time, time_unix_now)
         if not check_if_valid_tmute_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
