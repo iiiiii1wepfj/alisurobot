@@ -2,7 +2,9 @@
 from pytio import Tio
 
 tio = Tio()
+
 tiolangslist_one = tio.query_languages()
+
 langslist = sorted(tiolangslist_one)
 
 langs_html_string_one: str = """
@@ -19,12 +21,14 @@ langs_html_string_one: str = """
 
     <ul>
 """
+
 langs_html_string_two: str = """
     </ul>
 </body>
 
 </html>
 """
+
 with open("langs.html", "w") as langsfile:
     langsfile.write(langs_html_string_one)
 
