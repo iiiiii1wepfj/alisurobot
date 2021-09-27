@@ -13,6 +13,7 @@ from pytio import Tio, TioRequest
 from alisu.config import prefix
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
+from alisu.utils.passindexerr import pass_index_error
 
 tio = Tio()
 
@@ -23,6 +24,7 @@ langs_list_link: str = "https://iiiiii1wepfj.github.io/alisurobot_website/tiolan
 
 @Client.on_message(filters.command("exec_code", prefix))
 @use_chat_lang()
+@pass_index_error
 @logging_errors
 async def exec_tio_run_code(
     c: Client,
