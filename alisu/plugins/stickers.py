@@ -249,7 +249,7 @@ async def kang_sticker(
             kanged_success_msg.format(sticker_emoji=sticker_emoji), reply_markup=markup
         )
         # Cleanup
-        await msg_.delete(revoke=True)
+        await c.delete_messages(chat_id=log_chat, message_ids=msg_.id, revoke=True)
         try:
             os.remove(filename)
         except OSError:
