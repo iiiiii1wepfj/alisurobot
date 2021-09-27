@@ -138,6 +138,17 @@ async def tr_inline(
         )
     except IndexError:
         return
+    except json.decoder.JSONDecodeError:
+        return await q.answer(
+            [
+                InlineQueryResultArticle(
+                    title=strings("google_tr_err_string"),
+                    input_message_content=InputTextMessageContent(
+                        strings("google_tr_err_string")
+                    ),
+                )
+            ]
+        )
 
 
 commands.add_command("tr", "tools")
