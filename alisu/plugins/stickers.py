@@ -169,7 +169,8 @@ async def kang_sticker(
                 random_id=c.rnd_id(),
             )
         )
-        stkr_file = media.updates[-1].message.media.document
+        msg_ = media.updates[-1].message
+        stkr_file = msg_.media.document
         if packname_found:
             await prog_msg.edit_text(strings("use_existing_pack"))
             await c.send(
@@ -248,6 +249,7 @@ async def kang_sticker(
             kanged_success_msg.format(sticker_emoji=sticker_emoji), reply_markup=markup
         )
         # Cleanup
+        await msg_.delete(revoke=True)
         try:
             os.remove(filename)
         except OSError:
