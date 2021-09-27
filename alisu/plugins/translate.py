@@ -66,24 +66,24 @@ async def translate(
     m: Message,
     strings,
 ):
-    try:
-        text = m.text[4:]
-        lang = get_tr_lang(text)
+    text = m.text[4:]
+    lang = get_tr_lang(text)
 
-        text = text.replace(lang, "", 1).strip() if text.startswith(lang) else text
+    text = text.replace(lang, "", 1).strip() if text.startswith(lang) else text
 
-        if not text and m.reply_to_message:
-            text = m.reply_to_message.text or m.reply_to_message.caption
+    if not text and m.reply_to_message:
+        text = m.reply_to_message.text or m.reply_to_message.caption
 
-        if not text:
-            return await m.reply_text(
-                strings("translate_usage"), reply_to_message_id=m.message_id
-            )
-
-        sent = await m.reply_text(
-            strings("translating"),
-            reply_to_message_id=m.message_id,
+    if not text:
+        return await m.reply_text(
+            strings("translate_usage"), reply_to_message_id=m.message_id
         )
+
+    sent = await m.reply_text(
+        strings("translating"),
+        reply_to_message_id=m.message_id,
+    )
+    try:
         langs = {}
 
         if len(lang.split("-")) > 1:
@@ -104,6 +104,7 @@ async def translate(
             )
         )
     except json.decoder.JSONDecodeError:
+        await sent.delete()
         return await m.reply_text(strings("google_tr_err_string"))
 
 
