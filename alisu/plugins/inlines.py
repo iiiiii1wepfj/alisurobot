@@ -1,7 +1,11 @@
 from typing import Dict, List
 
 from pyrogram import Client, filters
-from pyrogram.errors import PeerIdInvalid, UserIdInvalid, UsernameInvalid
+from pyrogram.errors import (
+    PeerIdInvalid,
+    UserIdInvalid,
+    UsernameInvalid,
+)
 from pyrogram.types import (
     InlineKeyboardMarkup,
     InlineQuery,
