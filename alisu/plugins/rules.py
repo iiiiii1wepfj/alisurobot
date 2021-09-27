@@ -1,5 +1,9 @@
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from pyrogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+)
 
 from alisu.config import prefix
 from alisu.database import groups
