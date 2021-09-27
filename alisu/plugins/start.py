@@ -52,7 +52,8 @@ async def start(c: Client, m: Union[Message, CallbackQuery], strings):
             ]
         )
         await method(
-            strings("private").format(myname=c.me.first_name), reply_markup=keyboard
+            strings("private").format(myname=c.me.first_name),
+            reply_markup=keyboard,
         )
     else:
         keyboard = InlineKeyboardMarkup(
