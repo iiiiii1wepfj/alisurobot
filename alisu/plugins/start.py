@@ -86,12 +86,17 @@ async def infos(c: Client, m: CallbackQuery, strings):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    strings("back_btn", context="general"), callback_data="start_back"
+                    strings("back_btn", context="general"),
+                    callback_data="start_back",
                 )
             ]
         ]
     )
-    await m.message.edit_text(res, reply_markup=keyboard, disable_web_page_preview=True)
+    await m.message.edit_text(
+        res,
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
 
 
 commands.add_command("start", "general")
