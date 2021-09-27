@@ -1,3 +1,8 @@
+from pyrogram import Client
+from pyrogram.types import Message
+from functools import wraps
+
+
 def pass_index_error(f):
     @wraps(f)
     async def pass_index_err(
@@ -10,4 +15,5 @@ def pass_index_error(f):
             return await f(c, m, *args, **kwargs)
         except IndexError:
             pass
+
     return pass_index_err
