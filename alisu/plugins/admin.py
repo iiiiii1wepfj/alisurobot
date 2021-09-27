@@ -265,9 +265,12 @@ async def dban(c: Client, m: Message, strings):
             m.chat.id, m.reply_to_message.from_user.id
         )
         if check_admin.status not in admin_status:
-            await c.kick_chat_member(m.chat.id, m.reply_to_message.from_user.id)
+            kick_member_msg = await c.kick_chat_member(
+                m.chat.id, m.reply_to_message.from_user.id
+            )
             await m.reply_to_message.delete()
             await m.delete()
+            await kick_member_msg.delete()
         else:
             await m.reply_text(strings("i_cant_ban_admins"))
 
