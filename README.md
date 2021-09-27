@@ -45,7 +45,7 @@ cd ..
 python3 -m alisu
 ```
 
-to install zbar follow [this guide](https://github.com/NaturalHistoryMuseum/pyzbar#installation)
+to install zbar (for decode qr codes) follow [this guide](https://github.com/NaturalHistoryMuseum/pyzbar#installation)
 
 
 based on [EduuRobot](https://github.com/AmanoTeam/EduuRobot)
