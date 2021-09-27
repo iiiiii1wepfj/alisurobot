@@ -3,5 +3,6 @@
   "translate_usage": "<b>Usage:</b> <code>/tr &lt;language&gt; text for translation</code> (Can be also used in reply to a message).",
   "translating": "Translating...",
   "translation": "<b>Language:</b> {from_lang} -> {to_lang}\n<b>Translation:</b> <code>{translation}</code>",
+  "google_tr_err_string": "Translation error, please try again later.",
   "translate_inline_send": "Translate from {srclangformat} to {tolangformat}"
 }
