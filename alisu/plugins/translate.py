@@ -1,4 +1,5 @@
 import html
+import json
 
 from gpytranslate import Translator
 from pyrogram import Client, filters
@@ -65,42 +66,45 @@ async def translate(
     m: Message,
     strings,
 ):
-    text = m.text[4:]
-    lang = get_tr_lang(text)
+    try:
+        text = m.text[4:]
+        lang = get_tr_lang(text)
 
-    text = text.replace(lang, "", 1).strip() if text.startswith(lang) else text
+        text = text.replace(lang, "", 1).strip() if text.startswith(lang) else text
 
-    if not text and m.reply_to_message:
-        text = m.reply_to_message.text or m.reply_to_message.caption
+        if not text and m.reply_to_message:
+            text = m.reply_to_message.text or m.reply_to_message.caption
 
-    if not text:
-        return await m.reply_text(
-            strings("translate_usage"), reply_to_message_id=m.message_id
+        if not text:
+            return await m.reply_text(
+                strings("translate_usage"), reply_to_message_id=m.message_id
+            )
+
+        sent = await m.reply_text(
+            strings("translating"),
+            reply_to_message_id=m.message_id,
         )
+        langs = {}
 
-    sent = await m.reply_text(
-        strings("translating"),
-        reply_to_message_id=m.message_id,
-    )
-    langs = {}
+        if len(lang.split("-")) > 1:
+            langs["sourcelang"] = lang.split("-")[0]
+            langs["targetlang"] = lang.split("-")[1]
+        else:
+            langs["targetlang"] = lang
 
-    if len(lang.split("-")) > 1:
-        langs["sourcelang"] = lang.split("-")[0]
-        langs["targetlang"] = lang.split("-")[1]
-    else:
-        langs["targetlang"] = lang
+        trres = await tr.translate(text, **langs)
+        text = trres.text
 
-    trres = await tr.translate(text, **langs)
-    text = trres.text
-
-    res = html.escape(text)
-    await sent.edit_text(
-        strings("translation").format(
-            from_lang=trres.lang,
-            to_lang=langs["targetlang"],
-            translation=res,
+        res = html.escape(text)
+        await sent.edit_text(
+            strings("translation").format(
+                from_lang=trres.lang,
+                to_lang=langs["targetlang"],
+                translation=res,
+            )
         )
-    )
+    except json.decoder.JSONDecodeError:
+        return await m.reply_text(strings("google_tr_err_string"))
 
 
 @Client.on_inline_query(filters.regex(r"^tr"))
