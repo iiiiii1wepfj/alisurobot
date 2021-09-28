@@ -19,7 +19,7 @@ from alisu.utils import (
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
-from alisu.utils.passindexerr import pass_index_error
+from alisu.utils.custom_methods_exceptions import target_user_not_found_custom_exception
 
 from babel.dates import (
     format_timedelta as babel_format_timedelta,
@@ -33,7 +33,7 @@ from tortoise.exceptions import (
 )
 
 
-from .admin import get_target_user
+from alisu.plugins.admin import get_target_user
 
 import time
 
@@ -173,9 +173,9 @@ async def warn_user(
     strings,
 ):
     try:
-        target_user = await get_target_user(c, m)
-    except IndexError:
-        return
+        target_user = await get_target_user(c, m, strings)
+    except target_user_not_found_custom_exception as e:
+        return await m.reply_text(e)
     warns_limit = await get_warns_limit(m.chat.id)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     reason = await get_warn_reason_text(c, m)
@@ -306,13 +306,15 @@ async def on_set_warns_limit(
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
-@pass_index_error
 async def unwarn_user(
     c: Client,
     m: Message,
     strings,
 ):
-    target_user = await get_target_user(c, m)
+    try:
+        target_user = await get_target_user(c, m, strings)
+    except target_user_not_found_custom_exception as e:
+        return await m.reply_text(e)
     await reset_warns(m.chat.id, target_user.id)
     await m.reply_text(strings("warn_reset").format(target_user=target_user.mention))
 
@@ -321,13 +323,15 @@ async def unwarn_user(
 @require_admin()
 @use_chat_lang()
 @logging_errors
-@pass_index_error
 async def get_user_warns_cmd(
     c: Client,
     m: Message,
     strings,
 ):
-    target_user = await get_target_user(c, m)
+    try:
+        target_user = await get_target_user(c, m, strings)
+    except target_user_not_found_custom_exception as e:
+        return await m.reply_text(e)
     user_warns = await get_warns(m.chat.id, target_user.id)
     await m.reply_text(
         strings("warns_count_string").format(
