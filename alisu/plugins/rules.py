@@ -131,9 +131,14 @@ async def show_rules(c: Client, m: Message, strings):
 @logging_errors
 @pass_index_error
 async def show_rules_pvt(c: Client, m: Message, strings):
-    cid_one = m.text.split("_")[1]
-    gettherules = await get_rules(cid_one if cid_one.startswith("-") else f"-{cid_one}")
-    rulestxt, rules_buttons = button_parser(gettherules)
+    try:
+        cid_one = m.text.split("_")[1]
+        gettherules = await get_rules(
+            cid_one if cid_one.startswith("-") else f"-{cid_one}"
+        )
+        rulestxt, rules_buttons = button_parser(gettherules)
+    except ValueError:
+        return
     if rulestxt:
         await m.reply_text(
             rulestxt,
