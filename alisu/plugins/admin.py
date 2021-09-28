@@ -17,6 +17,7 @@ from alisu.utils.utils import InvalidTimeUnitStringSpecifiedError
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
+from alisu.utils.custom_methods_exceptions import target_user_not_found_custom_exception
 
 
 async def get_reason_text(
@@ -59,19 +60,28 @@ async def toggle_del_service(
 async def get_target_user(
     c: Client,
     m: Message,
+    strings=None,
 ) -> User:
-    if m.reply_to_message:
-        target_user = m.reply_to_message.from_user
-    else:
-        msg_entities = m.entities[1] if m.text.startswith("/") else m.entities[0]
-        target_user = await c.get_users(
-            msg_entities.user.id
-            if msg_entities.type == "text_mention"
-            else int(m.command[1])
-            if m.command[1].isdecimal()
-            else m.command[1]
-        )
-    return target_user
+    try:
+        if m.reply_to_message:
+            target_user = m.reply_to_message.from_user
+        else:
+            msg_entities = m.entities[1] if m.text.startswith("/") else m.entities[0]
+            target_user = await c.get_users(
+                msg_entities.user.id
+                if msg_entities.type == "text_mention"
+                else int(m.command[1])
+                if m.command[1].isdecimal()
+                else m.command[1]
+            )
+        return target_user
+    except:
+        if strings:
+            raise target_user_not_found_custom_exception(
+                strings("target_user_not_found_err_str", context="admin")
+            )
+        else:
+            raise target_user_not_found_custom_exception("The user is not found.")
 
 
 async def get_target_user_and_time_and_reason(
@@ -231,7 +241,10 @@ async def unpinall(c: Client, m: Message):
 @bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def ban(c: Client, m: Message, strings):
-    target_user = await get_target_user(c, m)
+    try:
+        target_user = await get_target_user(c, m, strings)
+    except target_user_not_found_custom_exception as e:
+        return await m.reply_text(e)
     reason = await get_reason_text(c, m)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     if check_admin.status not in admin_status:
@@ -281,7 +294,10 @@ async def dban(c: Client, m: Message, strings):
 @bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def kick(c: Client, m: Message, strings):
-    target_user = await get_target_user(c, m)
+    try:
+        target_user = await get_target_user(c, m, strings)
+    except target_user_not_found_custom_exception as e:
+        return await m.reply_text(e)
     reason = await get_reason_text(c, m)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     if check_admin.status not in admin_status:
@@ -339,7 +355,10 @@ async def dkick(c: Client, m: Message, strings):
 @bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def unban(c: Client, m: Message, strings):
-    target_user = await get_target_user(c, m)
+    try:
+        target_user = await get_target_user(c, m, strings)
+    except target_user_not_found_custom_exception as e:
+        return await m.reply_text(e)
     reason = await get_reason_text(c, m)
     await m.chat.unban_member(target_user.id)
     text = strings("unban_success").format(
@@ -360,7 +379,10 @@ async def unban(c: Client, m: Message, strings):
 @bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def mute(c: Client, m: Message, strings):
-    target_user = await get_target_user(c, m)
+    try:
+        target_user = await get_target_user(c, m, strings)
+    except target_user_not_found_custom_exception as e:
+        return await m.reply_text(e)
     reason = await get_reason_text(c, m)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     if check_admin.status not in admin_status:
@@ -423,7 +445,10 @@ async def dmute(c: Client, m: Message, strings):
 @bot_require_admin(permissions=["can_restrict_members"])
 @logging_errors
 async def unmute(c: Client, m: Message, strings):
-    target_user = await get_target_user(c, m)
+    try:
+        target_user = await get_target_user(c, m, strings)
+    except target_user_not_found_custom_exception as e:
+        return await m.reply_text(e)
     reason = await get_reason_text(c, m)
     await m.chat.unban_member(target_user.id)
     text = strings("unmute_success").format(
