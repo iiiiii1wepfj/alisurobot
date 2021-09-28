@@ -21,6 +21,7 @@
   "tban_success": "{user} was temporarily banned by {admin} for <b>{time}</b>.",
   "tmute_description": "Mutes a user in the chat for the specified time.",
   "tmute_success": "{user} was temporarily muted by {admin} for <b>{time}</b>.",
+  "target_user_not_found_err_str": "The user is not found.",
   "unban_description": "Unbans a user from chat.",
   "unban_success": "{user} was unbanned by {admin}.",
   "unmute_description": "Unmutes a user in the chat.",
