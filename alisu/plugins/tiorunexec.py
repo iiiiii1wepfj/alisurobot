@@ -13,7 +13,6 @@ from pytio import Tio, TioRequest
 from alisu.config import prefix
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
-from alisu.utils.passindexerr import pass_index_error
 
 tio = Tio()
 
@@ -25,14 +24,16 @@ langs_list_link: str = "https://iiiiii1wepfj.github.io/alisurobot_website/tiolan
 @Client.on_message(filters.command("exec_code", prefix))
 @use_chat_lang()
 @logging_errors
-@pass_index_error
 async def exec_tio_run_code(
     c: Client,
     m: Message,
     strings,
 ):
-    execlanguage = m.command[1]
-    codetoexec = m.text.split(None, 2)[2]
+    try:
+        execlanguage = m.command[1]
+        codetoexec = m.text.split(None, 2)[2]
+    except IndexError:
+        return await m.reply_text(strings("code_lang_not_specified_err"))
     if execlanguage in langslist:
         tioreq = TioRequest(lang=execlanguage, code=codetoexec)
         loop = asyncio.get_event_loop()
