@@ -19,7 +19,7 @@ from alisu.utils import (
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
-from alisu.utils.custom_methods_exceptions import target_user_not_found_custom_exception
+from alisu.utils.bot_custom_exceptions import target_user_not_found_custom_exception
 
 from babel.dates import (
     format_timedelta as babel_format_timedelta,
