@@ -18,6 +18,7 @@ from alisu.utils import aiowrap, pretty_size
 from alisu.utils.consts import http
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
+from alisu.utils.passindexerr import pass_index_error
 
 
 @aiowrap
@@ -52,6 +53,7 @@ async def search_yt(query):
 
 @Client.on_message(filters.command("yt", prefix))
 @logging_errors
+@pass_index_error
 async def yt_search_cmd(c: Client, m: Message):
     vids = [
         '{}: <a href="{}">{}</a>'.format(num + 1, i["url"], i["title"])
