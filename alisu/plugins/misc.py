@@ -11,6 +11,7 @@ from alisu.utils import button_parser, commands
 from alisu.utils.consts import admin_status, http
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
+from alisu.utils.passindexerr import pass_index_error
 
 
 @Client.on_message(filters.command("mark", prefix))
@@ -133,12 +134,14 @@ async def rtcommand(c: Client, m: Message):
 
 @Client.on_message(filters.command("urlencode", prefix))
 @logging_errors
+@pass_index_error
 async def urlencodecmd(c: Client, m: Message):
     await m.reply_text(quote(m.text.split(None, 1)[1]))
 
 
 @Client.on_message(filters.command("urldecode", prefix))
 @logging_errors
+@pass_index_error
 async def urldecodecmd(c: Client, m: Message):
     await m.reply_text(unquote(m.text.split(None, 1)[1]))
 
