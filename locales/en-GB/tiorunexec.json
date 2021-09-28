@@ -3,5 +3,6 @@
   "code_exec_tio_res_string_err": "<b>Language:</b> <code>{langformat}</code>\n\n<b>Code:</b>\n<code>{codeformat}</code>\n\n<b>Results:</b>\n<code>{resformat}</code>\n\n<b>Errors:</b>\n<code>{errformat}</code>",
   "code_exec_err_string": "Error: The language <b>{langformat}</b> was not found. Supported languages list: {langslistlink}",
   "code_exec_inline_send": "Language: {langformat}",
+  "code_lang_not_specified_err": "you must specify the language and the code.",
   "code_exec_err_inline_send_string": "Language {langformat} not found."
 }
