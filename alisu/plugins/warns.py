@@ -19,6 +19,7 @@ from alisu.utils import (
 from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
+from alisu.utils.passindexerr import pass_index_error
 
 from babel.dates import (
     format_timedelta as babel_format_timedelta,
@@ -305,6 +306,7 @@ async def on_set_warns_limit(
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
+@pass_index_error
 async def unwarn_user(
     c: Client,
     m: Message,
@@ -319,6 +321,7 @@ async def unwarn_user(
 @require_admin()
 @use_chat_lang()
 @logging_errors
+@pass_index_error
 async def get_user_warns_cmd(
     c: Client,
     m: Message,
