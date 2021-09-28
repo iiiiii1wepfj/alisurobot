@@ -36,6 +36,7 @@
   "tban_success": "{user} הוסר זמנית על ידי המנהל {admin} ל <b>{time}</b>.",
   "tmute_description": "משתיק את המשתמש לזמן הנבחר.",
   "tmute_success": "{user} הושתק זמנית על ידי המנהל {admin} ל <b>{time}</b>.",
+  "target_user_not_found_err_str": "המשתמש לא נמצא.",
   "unban_description": "מבטל את החסימה של המשתמש.",
   "unban_success": "{user} כבר לא חסום על ידי {admin}.",
   "unmute_description": "מבטל את ההשתקה של המשתמש.",
