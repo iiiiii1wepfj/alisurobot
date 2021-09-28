@@ -14,6 +14,7 @@ from alisu.utils import (
 )
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
+from alisu.utils.passindexerr import pass_index_error
 
 
 async def get_rules(chat_id: int):
@@ -128,6 +129,7 @@ async def show_rules(c: Client, m: Message, strings):
 @Client.on_message(filters.regex("^/start rules_") & filters.private)
 @use_chat_lang()
 @logging_errors
+@pass_index_error
 async def show_rules_pvt(c: Client, m: Message, strings):
     cid_one = m.text.split("_")[1]
     gettherules = await get_rules(cid_one if cid_one.startswith("-") else f"-{cid_one}")
