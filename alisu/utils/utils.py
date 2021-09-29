@@ -355,7 +355,7 @@ def bot_require_admin(
 sudofilter = filters.user(sudoers)
 
 
-async def time_extract(m: Message, t: str) -> int:
+async def time_extract(m: Message, t: str):
     if t[-1] in ["m", "h", "d"]:
         unit = t[-1]
         num = t[:-1]
