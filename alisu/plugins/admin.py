@@ -599,13 +599,15 @@ async def setantichannelpin(c: Client, m: Message, strings):
 
 
 @Client.on_message(filters.linked_channel, group=-1)
-@logging_errors
 async def acp_action(c: Client, m: Message):
-    get_acp = await check_if_antichannelpin(m.chat.id)
-    getmychatmember = await c.get_chat_member(m.chat.id, "me")
-    if (get_acp and getmychatmember.can_pin_messages) is True:
-        await m.unpin()
-    else:
+    try:
+        get_acp = await check_if_antichannelpin(m.chat.id)
+        getmychatmember = await c.get_chat_member(m.chat.id, "me")
+        if (get_acp and getmychatmember.can_pin_messages) is True:
+            await m.unpin()
+        else:
+            pass
+    except:
         pass
 
 
@@ -632,13 +634,15 @@ async def delservice(c: Client, m: Message, strings):
 
 
 @Client.on_message(filters.service, group=-1)
-@logging_errors
 async def delservice_action(c: Client, m: Message):
-    get_delservice = await check_if_del_service(m.chat.id)
-    getmychatmember = await c.get_chat_member(m.chat.id, "me")
-    if (get_delservice and getmychatmember.can_delete_messages) is True:
-        await m.delete()
-    else:
+    try:
+        get_delservice = await check_if_del_service(m.chat.id)
+        getmychatmember = await c.get_chat_member(m.chat.id, "me")
+        if (get_delservice and getmychatmember.can_delete_messages) is True:
+            await m.delete()
+        else:
+            pass
+    except:
         pass
 
 
