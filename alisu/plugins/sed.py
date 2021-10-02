@@ -3,6 +3,7 @@ import html
 import regex
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from pyrogram.errors.exceptions.bad_request_400 import MessageTooLong, MessageEmpty
 
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
@@ -48,8 +49,11 @@ async def sed(c: Client, m: Message, strings):
     except regex.error as e:
         await m.reply_text(str(e))
     else:
-        await c.send_message(
-            m.chat.id,
-            f"<pre>{html.escape(res)}</pre>",
-            reply_to_message_id=m.reply_to_message.message_id,
-        )
+        try:
+            await c.send_message(
+                m.chat.id,
+                f"<pre>{html.escape(res)}</pre>",
+                reply_to_message_id=m.reply_to_message.message_id,
+            )
+        except (MessageTooLong, MessageEmpty):
+            pass
