@@ -104,33 +104,26 @@ async def evals(c: Client, m: Message):
         ev = traceback.format_exc()
         output_eval_one = f"<code>{html.escape(ev)}</code>"
         if len(output_eval_one) > c.tg_max_text_msg_len:
-            with open("eval.txt", "w", encoding="utf8") as the_msg_eval_output_file_one:
-                the_msg_eval_output_file_one.write(str(ev))
-            await m.reply_document(document="eval.txt")
-            os.remove("eval.txt")
+            bio = io.BytesIO(str(ev).encode())
+            bio.name: str = "eval.txt"
+            await m.reply_document(bio)
         else:
             await m.reply_text(output_eval_one)
     else:
         try:
             output_eval_msg_two_txt = f"<code>{html.escape(str(res))}</code>"
             if len(output_eval_msg_two_txt) > c.tg_max_text_msg_len:
-                with open(
-                    "eval.txt", "w", encoding="utf8"
-                ) as the_msg_eval_output_file_two:
-                    the_msg_eval_output_file_two.write(str(res))
-                await m.reply_document(document="eval.txt")
-                os.remove("eval.txt")
+                bio = io.BytesIO(str(res).encode())
+                bio.name: str = "eval.txt"
+                await m.reply_document(bio)
             else:
                 await m.reply_text(output_eval_msg_two_txt)
         except Exception as e:  # skipcq
             output_eval_e = str(e)
             if len(output_eval_e) > c.tg_max_text_msg_len:
-                with open(
-                    "eval.txt", "w", encoding="utf8"
-                ) as the_msg_eval_output_file_e:
-                    the_msg_eval_output_file_e.write(str(output_eval_e))
-                await m.reply_document(document="eval.txt")
-                os.remove("eval.txt")
+                bio = io.BytesIO(str(output_eval_e).encode())
+                bio.name: str = "eval.txt"
+                await m.reply_document(bio)
             else:
                 await m.reply_text(output_eval_e)
 
@@ -149,12 +142,9 @@ async def execs(c: Client, m: Message):
             trace_format_exc_exec_cmd = traceback.format_exc()
             msg_out_one = html.escape(trace_format_exc_exec_cmd)
             if len(msg_out_one) > c.tg_max_text_msg_len:
-                with open(
-                    "exec.txt", "w", encoding="utf8"
-                ) as the_msg_exec_output_file_one:
-                    the_msg_exec_output_file_one.write(str(trace_format_exc_exec_cmd))
-                await m.reply_document(document="exec.txt")
-                return os.remove("exec.txt")
+                bio = io.BytesIO(str(trace_format_exc_exec_cmd).encode())
+                bio.name: str = "exec.txt"
+                return await m.reply_document(bio)
             else:
                 return await m.reply_text(msg_out_one)
 
@@ -165,10 +155,9 @@ async def execs(c: Client, m: Message):
         out_one = "Command executed."
         out = "Command executed."
     if len(out) > c.tg_max_text_msg_len:
-        with open("exec.txt", "w", encoding="utf8") as the_msg_exec_output_file:
-            the_msg_exec_output_file.write(str(out_one))
-        await m.reply_document(document="exec.txt")
-        os.remove("exec.txt")
+        bio = io.BytesIO(str(out_one).encode())
+        bio.name: str = "exec.txt"
+        await m.reply_document(bio)
     else:
         await m.reply_text(out)
 
