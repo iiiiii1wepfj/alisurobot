@@ -1,6 +1,7 @@
 git+https://github.com/pyrogram/pyrogram.git
 git+https://github.com/aio-libs/async-lru.git#egg=async_lru
 tgcrypto
+pyromod
 tortoise-orm
 gpytranslate
 meval
@@ -11,7 +12,6 @@ telegraph
 pytio
 youtube-dl
 humanfriendly
-pyromod
 Pillow
 qrcode[pil]
 opencv-python
