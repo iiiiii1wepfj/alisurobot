@@ -8,11 +8,11 @@ speedtest-cli
 httpx[http2]
 regex
 telegraph
-Pillow
 pytio
 youtube-dl
 humanfriendly
 pyromod
+Pillow
 qrcode[pil]
 opencv-python
 pyzbar
