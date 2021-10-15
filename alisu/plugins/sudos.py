@@ -35,7 +35,15 @@ from alisu.database import (
 from alisu.utils import sudofilter
 from alisu.utils.localization import use_chat_lang
 
+from threading import Thread
+
 prefix: Union[list, str] = "!"
+
+
+async def restartbot(c: Client):
+    await c.stop()
+    args = [sys.executable, "-m", "alisu"]
+    os.execv(sys.executable, args)
 
 
 @Client.on_message(filters.command("sudos", prefix) & sudofilter)
@@ -85,8 +93,8 @@ async def upgrade(c: Client, m: Message, strings):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text(strings("restarting"))
-            args = [sys.executable, "-m", "alisu"]
-            os.execv(sys.executable, args)  # skipcq: BAN-B606
+            Thread(target=asyncio.run, args=(restartbot(c),)).start()
+            await sm.edit_text("done")
     else:
         await sm.edit_text(
             f"Upgrade failed (process exited with {proc.returncode}):\n{stdout.decode()}"
@@ -192,8 +200,8 @@ async def test_speed(c: Client, m: Message, strings):
 @use_chat_lang()
 async def restart(c: Client, m: Message, strings):
     sent = await m.reply_text(strings("restarting"))
-    args = [sys.executable, "-m", "alisu"]
-    os.execv(sys.executable, args)  # skipcq: BAN-B606
+    Thread(target=asyncio.run, args=(restartbot(c),)).start()
+    await sent.edit_text("done")
 
 
 @Client.on_message(filters.command("leave", prefix) & sudofilter)
