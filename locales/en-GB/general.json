@@ -1,4 +1,5 @@
 {
   "back_btn": "« Go back",
+  "invalid_msg_type_str": "Invalid message type.",
   "no_results": "No results found."
 }
