@@ -169,7 +169,7 @@ async def pyrogram_to_quotly(messages):
                 }
                 for entity in message.entities
             ]
-        elif m.caption_entities:
+        elif message.caption_entities:
             the_message_dict_to_append["entities"] = [
                 {
                     "type": entity.type,
