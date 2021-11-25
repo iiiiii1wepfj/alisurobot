@@ -139,6 +139,15 @@ async def get_message_sender_photo(m: Message):
             return ""
 
 
+async def get_text_or_caption(m: Message):
+    if m.text:
+        return m.text
+    elif m.caption:
+        return m.caption
+    else:
+        return ""
+
+
 async def pyrogram_to_quotly(messages):
     if not isinstance(messages, list):
         messages = [messages]
@@ -163,7 +172,7 @@ async def pyrogram_to_quotly(messages):
         else:
             the_message_dict_to_append["entities"] = []
         the_message_dict_to_append["chatId"] = await get_message_sender_id(message)
-        the_message_dict_to_append["text"] = message.text if message.text else ""
+        the_message_dict_to_append["text"] = await get_text_or_caption(message)
         the_message_dict_to_append["avatar"] = True
         the_message_dict_to_append["from"] = {}
         the_message_dict_to_append["from"]["id"] = await get_message_sender_id(message)
@@ -180,7 +189,7 @@ async def pyrogram_to_quotly(messages):
         if message.reply_to_message:
             the_message_dict_to_append["replyMessage"] = {
                 "name": await get_message_sender_name(message.reply_to_message),
-                "text": message.reply_to_message.text,
+                "text": await get_text_or_caption(message.reply_to_message),
                 "chatId": await get_message_sender_id(message.reply_to_message),
             }
         else:
