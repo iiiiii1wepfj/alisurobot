@@ -169,6 +169,15 @@ async def pyrogram_to_quotly(messages):
                 }
                 for entity in message.entities
             ]
+        elif m.caption_entities:
+            the_message_dict_to_append["entities"] = [
+                {
+                    "type": entity.type,
+                    "offset": entity.offset,
+                    "length": entity.length,
+                }
+                for entity in message.entities
+            ]
         else:
             the_message_dict_to_append["entities"] = []
         the_message_dict_to_append["chatId"] = await get_message_sender_id(message)
