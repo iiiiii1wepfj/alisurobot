@@ -176,7 +176,7 @@ async def pyrogram_to_quotly(messages):
                     "offset": entity.offset,
                     "length": entity.length,
                 }
-                for entity in message.entities
+                for entity in message.caption_entities
             ]
         else:
             the_message_dict_to_append["entities"] = []
