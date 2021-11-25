@@ -151,45 +151,40 @@ async def pyrogram_to_quotly(messages):
 
     for message in messages:
         the_message_dict_to_append = {}
-        if len(messages) == 1:
-            if message.entities:
-                the_message_dict_to_append["entities"] = [
-                    {
-                        "type": entity.type,
-                        "offset": entity.offset,
-                        "length": entity.length,
-                    }
-                    for entity in message.entities
-                ]
-            else:
-                the_message_dict_to_append["entities"] = []
-            the_message_dict_to_append["chatId"] = await get_message_sender_id(message)
-            the_message_dict_to_append["text"] = message.text if message.text else ""
-            the_message_dict_to_append["avatar"] = True
-            the_message_dict_to_append["from"] = {}
-            the_message_dict_to_append["from"]["id"] = await get_message_sender_id(
-                message
-            )
-            the_message_dict_to_append["from"]["name"] = await get_message_sender_name(
-                message
-            )
-            the_message_dict_to_append["from"][
-                "username"
-            ] = await get_message_sender_username(message)
-            the_message_dict_to_append["from"]["type"] = message.chat.type
-            the_message_dict_to_append["from"][
-                "photo"
-            ] = await get_message_sender_photo(message)
-            if message.reply_to_message:
-                the_message_dict_to_append["replyMessage"] = {
-                    "name": await get_message_sender_name(message.reply_to_message),
-                    "text": message.reply_to_message.text,
-                    "chatId": await get_message_sender_id(message.reply_to_message),
+        if message.entities:
+            the_message_dict_to_append["entities"] = [
+                {
+                    "type": entity.type,
+                    "offset": entity.offset,
+                    "length": entity.length,
                 }
-            else:
-                the_message_dict_to_append["replyMessage"] = {}
+                for entity in message.entities
+            ]
         else:
-            pass
+            the_message_dict_to_append["entities"] = []
+        the_message_dict_to_append["chatId"] = await get_message_sender_id(message)
+        the_message_dict_to_append["text"] = message.text if message.text else ""
+        the_message_dict_to_append["avatar"] = True
+        the_message_dict_to_append["from"] = {}
+        the_message_dict_to_append["from"]["id"] = await get_message_sender_id(message)
+        the_message_dict_to_append["from"]["name"] = await get_message_sender_name(
+            message
+        )
+        the_message_dict_to_append["from"][
+            "username"
+        ] = await get_message_sender_username(message)
+        the_message_dict_to_append["from"]["type"] = message.chat.type
+        the_message_dict_to_append["from"]["photo"] = await get_message_sender_photo(
+            message
+        )
+        if message.reply_to_message:
+            the_message_dict_to_append["replyMessage"] = {
+                "name": await get_message_sender_name(message.reply_to_message),
+                "text": message.reply_to_message.text,
+                "chatId": await get_message_sender_id(message.reply_to_message),
+            }
+        else:
+            the_message_dict_to_append["replyMessage"] = {}
         payload["messages"].append(the_message_dict_to_append)
     r = await http.post(f"https://bot.lyo.su/quote/generate.png", json=payload)
     if not r.is_error:
