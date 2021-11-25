@@ -166,6 +166,7 @@ async def pyrogram_to_quotly(messages):
             the_message_dict_to_append["chatId"] = await get_message_sender_id(message)
             the_message_dict_to_append["text"] = message.text if message.text else ""
             the_message_dict_to_append["avatar"] = True
+            the_message_dict_to_append["from"] = {}
             the_message_dict_to_append["from"]["id"] = await get_message_sender_id(
                 message
             )
