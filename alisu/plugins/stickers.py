@@ -53,6 +53,8 @@ async def kang_sticker(
     m: Message,
     strings,
 ):
+    if not m.from_user:
+        return
     prog_msg = await m.reply_text(strings("kanging_sticker_msg"))
     bot_username = c.me.username
     sticker_emoji: str = "🤔"
