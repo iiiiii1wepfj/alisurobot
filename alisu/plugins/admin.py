@@ -282,6 +282,8 @@ async def ban(c: Client, m: Message, strings):
 @logging_errors
 async def dban(c: Client, m: Message, strings):
     if m.reply_to_message:
+        if not m.reply_to_message.from_user:
+            return
         check_admin = await c.get_chat_member(
             m.chat.id, m.reply_to_message.from_user.id
         )
@@ -343,6 +345,8 @@ async def kick(c: Client, m: Message, strings):
 @logging_errors
 async def dkick(c: Client, m: Message, strings):
     if m.reply_to_message:
+        if not m.reply_to_message.from_user:
+            return
         check_admin = await c.get_chat_member(
             m.chat.id, m.reply_to_message.from_user.id
         )
@@ -433,6 +437,8 @@ async def mute(c: Client, m: Message, strings):
 @logging_errors
 async def dmute(c: Client, m: Message, strings):
     if m.reply_to_message:
+        if not m.reply_to_message.from_user:
+            return
         check_admin = await c.get_chat_member(
             m.chat.id,
             m.reply_to_message.from_user.id,
