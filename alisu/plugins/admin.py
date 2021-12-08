@@ -35,6 +35,13 @@ async def get_reason_text(
     return reason
 
 
+async def mention_or_unknowen(m: Message):
+    if m.from_user:
+        return m.from_user.mention
+    else:
+        return "¯\_(ツ)_/¯"
+
+
 async def check_if_antichannelpin(chat_id: int):
     return (await groups.get(chat_id=chat_id)).antichannelpin
 
@@ -247,11 +254,12 @@ async def ban(c: Client, m: Message, strings):
         return await m.reply_text(e)
     reason = await get_reason_text(c, m)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
+    mentionadm = await mention_or_unknowen(m)
     if check_admin.status not in admin_status:
         await c.kick_chat_member(m.chat.id, target_user.id)
         text = strings("ban_success").format(
             user=target_user.mention,
-            admin=m.from_user.mention,
+            admin=mentionadm,
         )
         if reason:
             await m.reply_text(
@@ -301,11 +309,12 @@ async def kick(c: Client, m: Message, strings):
     reason = await get_reason_text(c, m)
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     if check_admin.status not in admin_status:
+        mentionadm = await mention_or_unknowen(m)
         await c.kick_chat_member(m.chat.id, target_user.id)
         await m.chat.unban_member(target_user.id)
         text = strings("kick_success").format(
             user=target_user.mention,
-            admin=m.from_user.mention,
+            admin=mentionadm,
         )
         if reason:
             await m.reply_text(
@@ -361,9 +370,10 @@ async def unban(c: Client, m: Message, strings):
         return await m.reply_text(e)
     reason = await get_reason_text(c, m)
     await m.chat.unban_member(target_user.id)
+    mentionadm = await mention_or_unknowen(m)
     text = strings("unban_success").format(
         user=target_user.mention,
-        admin=m.from_user.mention,
+        admin=mentionadm,
     )
     if reason:
         await m.reply_text(
@@ -391,9 +401,10 @@ async def mute(c: Client, m: Message, strings):
             target_user.id,
             ChatPermissions(can_send_messages=False),
         )
+        mentionadm = await mention_or_unknowen(m)
         text = strings("mute_success").format(
             user=target_user.mention,
-            admin=m.from_user.mention,
+            admin=mentionadm,
         )
         if reason:
             await m.reply_text(
@@ -451,9 +462,10 @@ async def unmute(c: Client, m: Message, strings):
         return await m.reply_text(e)
     reason = await get_reason_text(c, m)
     await m.chat.unban_member(target_user.id)
+    mentionadm = await mention_or_unknowen(m)
     text = strings("unmute_success").format(
         user=target_user.mention,
-        admin=m.from_user.mention,
+        admin=mentionadm,
     )
     if reason:
         await m.reply_text(
@@ -489,9 +501,10 @@ async def tmute(c: Client, m: Message, strings):
         ChatPermissions(can_send_messages=False),
         until_date=mute_time,
     )
+    mentionadm = await mention_or_unknowen(m)
     the_tmute_message_text = strings("tmute_success").format(
         user=target_user.mention,
-        admin=m.from_user.mention,
+        admin=mentionadm,
         time=mute_time_str,
     )
     if the_reason:
@@ -519,9 +532,10 @@ async def tban(c: Client, m: Message, strings):
         if not check_if_valid_tban_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
     await c.kick_chat_member(m.chat.id, target_user.id, until_date=ban_time)
+    mentionadm = await mention_or_unknowen(m)
     the_tban_message_text = strings("tban_success").format(
         user=target_user.mention,
-        admin=m.from_user.mention,
+        admin=mentionadm,
         time=ban_time_str,
     )
     if the_reason:
