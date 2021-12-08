@@ -56,7 +56,10 @@ async def ids(c: Client, m: Message, strings):
     elif m.reply_to_message:
         user_data = m.reply_to_message.from_user
     else:
-        user_data = m.from_user
+        if m.from_user:
+            user_data = m.from_user
+        else:
+            pass
 
     await m.reply_text(
         strings("info_group").format(
