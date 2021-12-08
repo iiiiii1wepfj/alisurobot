@@ -121,6 +121,8 @@ async def set_welcome_message(c: Client, m: Message, strings):
                     dc_id=m.from_user.dc_id or None,
                 )
             )
+        except AttributeError:
+            sent = await m.reply_text(message)
         except (KeyError, BadRequest) as e:
             await m.reply_text(
                 strings("welcome_set_error").format(
