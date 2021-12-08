@@ -71,6 +71,8 @@ async def yt_search_cmd(c: Client, m: Message, strings):
 @use_chat_lang()
 @logging_errors
 async def ytdlcmd(c: Client, m: Message, strings):
+    if not m.from_user:
+        return
     user = m.from_user.id
 
     if m.reply_to_message and m.reply_to_message.text:
