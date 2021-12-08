@@ -101,6 +101,8 @@ async def get_target_user_and_time_and_reason(
 ):
     reason = None
     if m.reply_to_message:
+        if m.reply_to_message.sender_chat:
+            return
         target_user = m.reply_to_message.from_user
         if len(m.text.split()) > 1:
             the_time_string = m.command[1]
