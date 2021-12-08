@@ -119,10 +119,21 @@ async def rtcommand(c: Client, m: Message):
 
     if rt_text is None:
         return
-
+    if m.from_user:
+        from_rt_user = m.from_user.first_name
+    elif m.sender_chat:
+        from_rt_user = m.sender_chat.title
+    else:
+        return
+    if m.reply_to_message.from_user:
+        from_reply_rt_user = m.reply_to_message.from_user.first_name
+    elif m.reply_to_message.sender_chat:
+        from_reply_rt_user = m.reply_to_message.sender_chat.title
+    else:
+        return
     if not re.match("🔃 .* retweeted:\n\n👤 .*", rt_text):
-        text: str = f"🔃 <b>{escape(m.from_user.first_name)}</b> retweeted:\n\n"
-        text += f"👤 <b>{escape(m.reply_to_message.from_user.first_name)}</b>:"
+        text: str = f"🔃 <b>{escape(from_rt_user)}</b> retweeted:\n\n"
+        text += f"👤 <b>{escape(from_reply_rt_user)}</b>:"
         text += f" <i>{escape(rt_text)}</i>"
 
         await m.reply_to_message.reply_text(
