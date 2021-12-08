@@ -161,6 +161,8 @@ async def urldecodecmd(c: Client, m: Message):
 @use_chat_lang()
 @logging_errors
 async def bug_report_cmd(c: Client, m: Message, strings):
+    if not m.from_user:
+        return
     if len(m.text.split()) > 1:
         try:
             bug_report = (
