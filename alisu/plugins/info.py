@@ -24,7 +24,10 @@ async def user_info(c: Client, m: Message, strings):
     elif m.reply_to_message:
         user = m.reply_to_message.from_user
     else:
-        user = m.from_user
+        if m.from_user:
+            user = m.from_user
+        else:
+            return
 
     text = strings("info_header")
     text += strings("info_id").format(id=user.id)
