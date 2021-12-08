@@ -71,7 +71,10 @@ async def get_target_user(
 ) -> User:
     try:
         if m.reply_to_message:
+            if m.reply_to_message.sender_chat:
+                raise Exception
             target_user = m.reply_to_message.from_user
+
         else:
             msg_entities = m.entities[1] if m.text.startswith("/") else m.entities[0]
             target_user = await c.get_users(
