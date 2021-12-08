@@ -226,7 +226,7 @@ def require_admin(
                     msg = anon_callback_listen.message
                     msg_to_check_perm = anon_callback_listen
                 except asyncio.exceptions.TimeoutError:
-                    return
+                    return await anon_callback_listen.msg.delete()
             has_perms = await check_perms(
                 client,
                 msg_to_check_perm,
