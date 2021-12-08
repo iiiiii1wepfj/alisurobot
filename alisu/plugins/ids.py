@@ -59,7 +59,7 @@ async def ids(c: Client, m: Message, strings):
         if m.from_user:
             user_data = m.from_user
         else:
-            pass
+            return
 
     await m.reply_text(
         strings("info_group").format(
