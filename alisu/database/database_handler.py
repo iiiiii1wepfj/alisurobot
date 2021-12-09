@@ -17,7 +17,7 @@ class groups(Model):
     warn_action = fields.TextField(null=True)
     warn_time = fields.BigIntField(null=True)
     private_rules = fields.BooleanField(null=True)
-    del_anon_channel_messages = fields.BooleanField(null=False)
+    del_anon_channel_messages = fields.BooleanField(null=True)
 
 
 class users(Model):
