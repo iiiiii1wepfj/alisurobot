@@ -12,6 +12,7 @@ non_anonymous_poll = filters.create(
 anon_channel_filter = filters.create(
     lambda _, __, Message: Message.sender_chat
     and not (Message.forward_from_chat and not Message.from_user)
+    and (Message.sender_chat.id != Message.chat.id)
 )
 
 
