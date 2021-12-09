@@ -81,6 +81,9 @@ async def add_chat(chat_id, chat_type):
             welcome_enabled=True,
             del_last_welcome_message=False,
             private_rules=False,
+            del_anon_channel_messages=False,
+            delservicemsgs=False,
+            antichannelpin=False,
         )
     elif chat_type == "channel":
         await channels.create(chat_id=chat_id)
