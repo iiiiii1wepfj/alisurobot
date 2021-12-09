@@ -18,6 +18,7 @@ from alisu.utils.consts import admin_status
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 from alisu.utils.bot_custom_exceptions import target_user_not_found_custom_exception
+from alisu.custom_core.custom_bot_filters import anon_channel_filter
 
 
 async def get_reason_text(
@@ -62,6 +63,17 @@ async def toggle_del_service(
     mode: Optional[bool],
 ):
     await groups.filter(chat_id=chat_id).update(delservicemsgs=mode)
+
+
+async def check_if_del_anon_channel_messages(chat_id: int):
+    return (await groups.get(chat_id=chat_id)).del_anon_channel_messages
+
+
+async def toggle_del_anon_channel_messages(
+    chat_id: int,
+    mode: Optional[bool],
+):
+    await groups.filter(chat_id=chat_id).update(del_anon_channel_messages=mode)
 
 
 async def get_target_user(
@@ -652,9 +664,9 @@ async def delservice(c: Client, m: Message, strings):
             await m.reply_text(strings("cleanservice_invalid_arg"))
     else:
         check_delservice = await check_if_del_service(m.chat.id)
-        if check_delservice is None:
+        if not check_delservice:
             await m.reply_text(strings("cleanservice_status_disabled"))
-        elif check_delservice is not None:
+        else:
             await m.reply_text(strings("cleanservice_status_enabled"))
 
 
@@ -664,6 +676,41 @@ async def delservice_action(c: Client, m: Message):
         get_delservice = await check_if_del_service(m.chat.id)
         getmychatmember = await c.get_chat_member(m.chat.id, "me")
         if (get_delservice and getmychatmember.can_delete_messages) is True:
+            await m.delete()
+        else:
+            pass
+    except:
+        pass
+
+
+@Client.on_message(filters.command("clear_anon_channel", prefix))
+@require_admin(permissions=["can_delete_messages"])
+@use_chat_lang()
+@logging_errors
+async def delanonchannel(c: Client, m: Message, strings):
+    if len(m.text.split()) > 1:
+        if m.command[1] == "on":
+            await toggle_del_anon_channel_messages(m.chat.id, True)
+            await m.reply_text(strings("delanonchannel_status_enabled"))
+        elif m.command[1] == "off":
+            await toggle_del_anon_channel_messages(m.chat.id, False)
+            await m.reply_text(strings("delanonchannel_status_disabled"))
+        else:
+            await m.reply_text(strings("clear_anon_channel_invalid_arg"))
+    else:
+        check_delanonchannel = await check_if_del_anon_channel_messages(m.chat.id)
+        if not check_delanonchannel:
+            await m.reply_text(strings("delanonchannel_status_disabled"))
+        else:
+            await m.reply_text(strings("delanonchannel_status_enabled"))
+
+
+@Client.on_message(anon_channel_filter, group=-1)
+async def delanonchannel_action(c: Client, m: Message):
+    try:
+        get_delanonchannel = await check_if_del_anon_channel_messages(m.chat.id)
+        getmychatmember = await c.get_chat_member(m.chat.id, "me")
+        if (get_delanonchannel and getmychatmember.can_delete_messages) is True:
             await m.delete()
         else:
             pass
@@ -688,3 +735,4 @@ commands.add_command("unmute", "admin")
 commands.add_command("unpin", "admin")
 commands.add_command("unpinall", "admin")
 commands.add_command("del", "admin")
+commands.add_command("clear_anon_channel", "admin")
