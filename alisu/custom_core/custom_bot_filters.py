@@ -9,6 +9,11 @@ non_anonymous_poll = filters.create(
     lambda *_: _[2].poll is not None and not _[2].poll.is_anonymous
 )
 
+anon_channel_filter = filters.create(
+    lambda _, __, Message: Message.sender_chat
+    and not (Message.forward_from_chat and not Message.from_user)
+)
+
 
 def biofilter(pattern: Union[str, Pattern], flags: int = 0):
     async def func(flt, client, message):
