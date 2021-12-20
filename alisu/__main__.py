@@ -89,6 +89,6 @@ async def main() -> None:
     await client.stop()
 
 
-loop = asyncio.get_event_loop()
-
-loop.run_until_complete(main())
+event_policy = asyncio.get_event_loop_policy()
+event_loop = event_policy.new_event_loop()
+event_loop.run_until_complete(main())
