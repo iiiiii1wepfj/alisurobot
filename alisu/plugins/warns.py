@@ -203,7 +203,7 @@ async def warn_user(
                 await c.unban_chat_member(m.chat.id, target_user.id)
                 warn_string = strings("warn_kicked")
             elif warn_action == "tban":
-                await c.kick_chat_member(
+                await c.ban_chat_member(
                     m.chat.id,
                     target_user.id,
                     until_date=(round(time.time()) + warn_time),
