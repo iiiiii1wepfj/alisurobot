@@ -93,7 +93,7 @@ async def upgrade(c: Client, m: Message, strings):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text(strings("restarting"))
-            Thread(target=asyncio.run, args=(restartbot(c),)).start()
+            Thread(target=restartbot, args=(c,)).start()
             await sm.edit_text("done")
     else:
         await sm.edit_text(
