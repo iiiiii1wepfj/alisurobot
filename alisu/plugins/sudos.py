@@ -40,8 +40,8 @@ from threading import Thread
 prefix: Union[list, str] = "!"
 
 
-async def restartbot(c: Client):
-    await c.stop()
+def restartbot(c: Client):
+    c.stop()
     args = [sys.executable, "-m", "alisu"]
     os.execv(sys.executable, args)
 
@@ -200,7 +200,7 @@ async def test_speed(c: Client, m: Message, strings):
 @use_chat_lang()
 async def restart(c: Client, m: Message, strings):
     sent = await m.reply_text(strings("restarting"))
-    Thread(target=asyncio.run, args=(restartbot(c),)).start()
+    Thread(target=restartbot, args=(c,)).start()
     await sent.edit_text("done")
 
 
