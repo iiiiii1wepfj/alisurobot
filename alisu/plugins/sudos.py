@@ -7,6 +7,7 @@ import sys
 import traceback
 import humanfriendly
 import time
+import warnings
 from contextlib import redirect_stdout
 from typing import Union
 
@@ -41,7 +42,9 @@ prefix: Union[list, str] = "!"
 
 
 def restartbot(c: Client):
-    c.stop()
+    with warnings.catch_warnings():
+     warnings.filterwarnings("ignore", category=RuntimeWarning)
+     c.stop()
     args = [sys.executable, "-m", "alisu"]
     os.execv(sys.executable, args)
 
