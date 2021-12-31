@@ -43,8 +43,8 @@ prefix: Union[list, str] = "!"
 
 def restartbot(c: Client):
     with warnings.catch_warnings():
-     warnings.filterwarnings("ignore", category=RuntimeWarning)
-     c.stop()
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
+        c.stop()
     args = [sys.executable, "-m", "alisu"]
     os.execv(sys.executable, args)
 
