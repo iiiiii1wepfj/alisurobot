@@ -41,7 +41,7 @@ prefix: Union[list, str] = "!"
 
 
 def restartbot(c: Client):
-    c.stop_sync()
+    c.stop()
     args = [sys.executable, "-m", "alisu"]
     os.execv(sys.executable, args)
 
