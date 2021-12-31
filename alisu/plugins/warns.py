@@ -189,7 +189,7 @@ async def warn_user(
         if user_warns >= warns_limit:
             warn_btns = None
             if warn_action == "ban":
-                await c.kick_chat_member(m.chat.id, target_user.id)
+                await c.ban_chat_member(m.chat.id, target_user.id)
                 warn_string = strings("warn_banned")
             elif warn_action == "mute":
                 await c.restrict_chat_member(
@@ -199,11 +199,11 @@ async def warn_user(
                 )
                 warn_string = strings("warn_muted")
             elif warn_action == "kick":
-                await c.kick_chat_member(m.chat.id, target_user.id)
+                await c.ban_chat_member(m.chat.id, target_user.id)
                 await c.unban_chat_member(m.chat.id, target_user.id)
                 warn_string = strings("warn_kicked")
             elif warn_action == "tban":
-                await c.kick_chat_member(
+                await c.ban_chat_member(
                     m.chat.id,
                     target_user.id,
                     until_date=(round(time.time()) + warn_time),

@@ -273,7 +273,7 @@ async def ban(c: Client, m: Message, strings):
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     mentionadm = await mention_or_unknowen(m)
     if check_admin.status not in admin_status:
-        await c.kick_chat_member(m.chat.id, target_user.id)
+        await c.ban_chat_member(m.chat.id, target_user.id)
         text = strings("ban_success").format(
             user=target_user.mention,
             admin=mentionadm,
@@ -305,7 +305,7 @@ async def dban(c: Client, m: Message, strings):
             m.chat.id, m.reply_to_message.from_user.id
         )
         if check_admin.status not in admin_status:
-            kick_member_msg = await c.kick_chat_member(
+            kick_member_msg = await c.ban_chat_member(
                 m.chat.id, m.reply_to_message.from_user.id
             )
             await m.reply_to_message.delete()
@@ -329,7 +329,7 @@ async def kick(c: Client, m: Message, strings):
     check_admin = await c.get_chat_member(m.chat.id, target_user.id)
     if check_admin.status not in admin_status:
         mentionadm = await mention_or_unknowen(m)
-        await c.kick_chat_member(m.chat.id, target_user.id)
+        await c.ban_chat_member(m.chat.id, target_user.id)
         await m.chat.unban_member(target_user.id)
         text = strings("kick_success").format(
             user=target_user.mention,
@@ -368,7 +368,7 @@ async def dkick(c: Client, m: Message, strings):
             m.chat.id, m.reply_to_message.from_user.id
         )
         if check_admin.status not in admin_status:
-            kick_member_msg = await c.kick_chat_member(
+            kick_member_msg = await c.ban_chat_member(
                 m.chat.id, m.reply_to_message.from_user.id
             )
             await m.chat.unban_member(m.reply_to_message.from_user.id)
@@ -554,7 +554,7 @@ async def tban(c: Client, m: Message, strings):
         check_if_valid_tban_range = check_if_ban_time_range(ban_time, time_unix_now)
         if not check_if_valid_tban_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
-    await c.kick_chat_member(m.chat.id, target_user.id, until_date=ban_time)
+    await c.ban_chat_member(m.chat.id, target_user.id, until_date=ban_time)
     mentionadm = await mention_or_unknowen(m)
     the_tban_message_text = strings("tban_success").format(
         user=target_user.mention,
