@@ -47,6 +47,8 @@ class botclient(custom_methods, Client):
 
     async def stop(self, *args):
         await super().stop()
+    def stop_sync(self, *args):
+        super().stop()
 
 
 async def main() -> None:
