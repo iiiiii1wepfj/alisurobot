@@ -1,7 +1,6 @@
 import html
-import json
 
-from gpytranslate import Translator
+from gpytranslate import Translator, TranslationError
 from pyrogram import Client, filters
 from pyrogram.types import (
     InlineQuery,
@@ -103,7 +102,7 @@ async def translate(
                 translation=res,
             )
         )
-    except json.decoder.JSONDecodeError:
+    except TranslationError:
         await sent.delete()
         return await m.reply_text(strings("google_tr_err_string"))
 
@@ -139,7 +138,7 @@ async def tr_inline(
         )
     except IndexError:
         return
-    except json.decoder.JSONDecodeError:
+    except TranslationError:
         return await q.answer(
             [
                 InlineQueryResultArticle(
