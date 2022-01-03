@@ -233,7 +233,7 @@ async def kang_sticker(
                         ]
                     ),
                 )
-    except Exception as all_e:
+    except SyntaxError as all_e:
         await prog_msg.edit_text(f"{all_e.__class__.__name__} : {all_e}")
     else:
         markup = InlineKeyboardMarkup(
