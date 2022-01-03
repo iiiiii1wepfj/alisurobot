@@ -146,7 +146,8 @@ async def kang_sticker(
             try:
                 stickerset = await c.send(
                     GetStickerSet(
-                        stickerset=InputStickerSetShortName(short_name=packname)
+                        stickerset=InputStickerSetShortName(short_name=packname),
+                        access_hash=InputStickerSetShortName(short_name=packname)[0][1]
                     )
                 )
                 if stickerset.set.count >= max_stickers:
