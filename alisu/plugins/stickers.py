@@ -143,11 +143,11 @@ async def kang_sticker(
             filename = resize_image(filename)
         max_stickers = 50 if animated else 120
         while not packname_found:
+            await m.reply(InputStickerSetShortName(short_name=packname))
             try:
                 stickerset = await c.send(
                     GetStickerSet(
-                        stickerset=InputStickerSetShortName(short_name=packname),
-                        access_hash=InputStickerSetShortName(short_name=packname)[0][1]
+                        stickerset=InputStickerSetShortName(short_name=packname)
                     )
                 )
                 if stickerset.set.count >= max_stickers:
