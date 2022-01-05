@@ -41,12 +41,13 @@ from threading import Thread
 prefix: Union[list, str] = "!"
 
 
-def restartbot(c: Client):
+def restartbot(c: Client, m: Message):
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=RuntimeWarning)
         c.stop()
     args = [sys.executable, "-m", "alisu"]
     os.execv(sys.executable, args)
+    m.reply_text("Done")
 
 
 @Client.on_message(filters.command("sudos", prefix) & sudofilter)
@@ -96,8 +97,7 @@ async def upgrade(c: Client, m: Message, strings):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text(strings("restarting"))
-            Thread(target=restartbot, args=(c,)).start()
-            await sm.edit_text("done")
+            Thread(target=restartbot, args=(c, sm,)).start()
     else:
         await sm.edit_text(
             f"Upgrade failed (process exited with {proc.returncode}):\n{stdout.decode()}"
@@ -203,8 +203,7 @@ async def test_speed(c: Client, m: Message, strings):
 @use_chat_lang()
 async def restart(c: Client, m: Message, strings):
     sent = await m.reply_text(strings("restarting"))
-    Thread(target=restartbot, args=(c,)).start()
-    await sent.edit_text("done")
+    Thread(target=restartbot, args=(c, sent,)).start()
 
 
 @Client.on_message(filters.command("leave", prefix) & sudofilter)
