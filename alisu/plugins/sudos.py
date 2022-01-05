@@ -42,9 +42,9 @@ prefix: Union[list, str] = "!"
 
 
 async def restartbot(c: Client, m: Message):
-    from __main__ import main
     await c.stop()
-    await main()
+    args = [sys.executable, "-m", "alisu"]
+    os.execv(sys.executable, args)
     await m.edit_text("Done")
 
 
