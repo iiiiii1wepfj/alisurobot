@@ -41,11 +41,10 @@ from threading import Thread
 prefix: Union[list, str] = "!"
 
 
-async def restartbot(c: Client, m: Message):
+async def restartbot(c: Client):
     await c.stop()
     args = [sys.executable, "-m", "alisu"]
     os.execv(sys.executable, args)
-    await m.edit_text("Done")
 
 
 @Client.on_message(filters.command("sudos", prefix) & sudofilter)
@@ -95,7 +94,7 @@ async def upgrade(c: Client, m: Message, strings):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text(strings("restarting"))
-            asyncio.get_event_loop().create_task(restartbot(c, sm))
+            asyncio.get_event_loop().create_task(restartbot(c))
     else:
         await sm.edit_text(
             f"Upgrade failed (process exited with {proc.returncode}):\n{stdout.decode()}"
@@ -201,7 +200,7 @@ async def test_speed(c: Client, m: Message, strings):
 @use_chat_lang()
 async def restart(c: Client, m: Message, strings):
     sent = await m.reply_text(strings("restarting"))
-    asyncio.get_event_loop().create_task(restartbot(c, sent))
+    asyncio.get_event_loop().create_task(restartbot(c))
 
 
 @Client.on_message(filters.command("leave", prefix) & sudofilter)
