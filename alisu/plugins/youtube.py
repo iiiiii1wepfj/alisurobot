@@ -7,7 +7,7 @@ import shutil
 import tempfile
 import time
 
-import youtube_dl
+import yt_dlp
 from pyrogram import Client, filters
 from pyrogram.errors import BadRequest
 from pyromod.helpers import ikb
@@ -83,7 +83,7 @@ async def ytdlcmd(c: Client, m: Message, strings):
         await m.reply_text(strings("ytdl_missing_argument"))
         return
 
-    ydl = youtube_dl.YoutubeDL(
+    ydl = yt_dlp.YoutubeDL(
         {"outtmpl": "dls/%(title)s-%(id)s.%(ext)s", "format": "mp4", "noplaylist": True}
     )
     rege = re.match(
@@ -177,7 +177,7 @@ async def cli_ytdl(
         ttemp = f"⏰ {datetime.timedelta(seconds=int(temp))} | "
 
     if "vid" in data:
-        ydl = youtube_dl.YoutubeDL(
+        ydl = yt_dlp.YoutubeDL(
             {
                 "outtmpl": f"{path}/%(title)s-%(id)s.%(ext)s",
                 "format": vformat,
@@ -185,7 +185,7 @@ async def cli_ytdl(
             }
         )
     else:
-        ydl = youtube_dl.YoutubeDL(
+        ydl = yt_dlp.YoutubeDL(
             {
                 "outtmpl": f"{path}/%(title)s-%(id)s.%(ext)s",
                 "format": "140",
