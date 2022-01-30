@@ -10,7 +10,7 @@ httpx[http2]
 regex
 telegraph
 pytio
-youtube-dl
+yt-dlp
 humanfriendly
 Pillow
 qrcode[pil]
