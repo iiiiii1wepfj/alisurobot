@@ -69,6 +69,7 @@ async def check_for_filters(chat_id: int, trigger):
         ],
         prefix,
     )
+    & ~filters.edited
 )
 @require_admin(allow_in_private=True)
 @use_chat_lang()
@@ -167,6 +168,7 @@ async def save_filter(c: Client, m: Message, strings):
         ],
         prefix,
     )
+    & ~filters.edited
 )
 @require_admin(allow_in_private=True)
 @use_chat_lang()
@@ -196,7 +198,7 @@ async def delete_filter(c: Client, m: Message, strings):
         )
 
 
-@Client.on_message(filters.command("filters", prefix))
+@Client.on_message(filters.command("filters", prefix) & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def get_all_filter(c: Client, m: Message, strings):
@@ -214,7 +216,11 @@ async def get_all_filter(c: Client, m: Message, strings):
 
 
 @Client.on_message(
-    (filters.group | filters.private) & filters.text & filters.incoming, group=1
+    (filters.group | filters.private)
+    & filters.text
+    & filters.incoming
+    & ~filters.edited,
+    group=1,
 )
 @logging_errors
 async def serve_filter(c: Client, m: Message):
