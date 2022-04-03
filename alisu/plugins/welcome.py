@@ -92,9 +92,8 @@ async def disable_del_old_welcome_message(c: Client, m: Message, strings):
 
 
 @Client.on_message(
-    filters.command(
-        ["welcomeformat", "start welcome_format_help"], prefix & ~filters.edited
-    )
+    filters.command(["welcomeformat", "start welcome_format_help"], prefix)
+    & ~filters.edited
 )
 @use_chat_lang()
 async def welcome_format_message_help(c: Client, m: Message, strings):
