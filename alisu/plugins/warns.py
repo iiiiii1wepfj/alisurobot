@@ -162,7 +162,7 @@ async def set_warns_limit(chat_id: int, warns_limit: int):
     await groups.filter(chat_id=chat_id).update(warns_limit=warns_limit)
 
 
-@Client.on_message(filters.command("warn", prefix) & filters.group)
+@Client.on_message(filters.command("warn", prefix) & filters.group & ~filters.edited)
 @require_admin(permissions=["can_restrict_members"])
 @bot_require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
@@ -282,7 +282,9 @@ async def remwarncallbackfunc(c: Client, m: CallbackQuery, strings):
         return await the_msg_obj.edit("¯\\_(ツ)_/¯")
 
 
-@Client.on_message(filters.command("setwarnslimit", prefix) & filters.group)
+@Client.on_message(
+    filters.command("setwarnslimit", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
@@ -302,7 +304,9 @@ async def on_set_warns_limit(
         await m.reply(strings("warn_limit_changed").format(warn_limit=warns_limit))
 
 
-@Client.on_message(filters.command(["resetwarns", "unwarn"], prefix) & filters.group)
+@Client.on_message(
+    filters.command(["resetwarns", "unwarn"], prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
 @logging_errors
@@ -319,7 +323,7 @@ async def unwarn_user(
     await m.reply_text(strings("warn_reset").format(target_user=target_user.mention))
 
 
-@Client.on_message(filters.command("warns", prefix) & filters.group)
+@Client.on_message(filters.command("warns", prefix) & filters.group & ~filters.edited)
 @require_admin()
 @use_chat_lang()
 @logging_errors
@@ -341,7 +345,9 @@ async def get_user_warns_cmd(
 
 
 @Client.on_message(
-    filters.command(["setwarnsaction", "warnsaction"], prefix) & filters.group
+    filters.command(["setwarnsaction", "warnsaction"], prefix)
+    & filters.group
+    & ~filters.edited
 )
 @require_admin(permissions=["can_restrict_members"])
 @use_chat_lang()
