@@ -157,7 +157,7 @@ async def get_target_user_and_time_and_reason(
     return target_user, the_time, the_time_string, reason, time_unix_now
 
 
-@Client.on_message(filters.command("echo", prefix))
+@Client.on_message(filters.command("echo", prefix) & ~filters.edited)
 @require_admin(allow_in_private=True)
 async def admin_echo_cmd(c: Client, m: Message):
     if len(m.text.split()) > 1:
@@ -167,7 +167,7 @@ async def admin_echo_cmd(c: Client, m: Message):
             await m.reply_text(m.text.split(None, 1)[1], quote=False)
 
 
-@Client.on_message(filters.command("del", prefix))
+@Client.on_message(filters.command("del", prefix) & ~filters.edited)
 @require_admin(
     permissions=["can_delete_messages"],
     allow_in_private=True,
@@ -190,7 +190,7 @@ async def del_message(c: Client, m: Message):
         pass
 
 
-@Client.on_message(filters.command("pin", prefix))
+@Client.on_message(filters.command("pin", prefix) & ~filters.edited)
 @require_admin(
     permissions=["can_pin_messages"],
     allow_in_private=True,
@@ -210,7 +210,7 @@ async def pin(c: Client, m: Message):
         )
 
 
-@Client.on_message(filters.command("pin loud", prefix))
+@Client.on_message(filters.command("pin loud", prefix) & ~filters.edited)
 @require_admin(
     permissions=["can_pin_messages"],
     allow_in_private=True,
@@ -230,7 +230,7 @@ async def pinloud(c: Client, m: Message):
         )
 
 
-@Client.on_message(filters.command("unpin", prefix))
+@Client.on_message(filters.command("unpin", prefix) & ~filters.edited)
 @require_admin(
     permissions=["can_pin_messages"],
     allow_in_private=True,
@@ -245,7 +245,7 @@ async def unpin(c: Client, m: Message):
         await c.unpin_chat_message(m.chat.id, m.reply_to_message.message_id)
 
 
-@Client.on_message(filters.command(["unpinall", "unpin all"], prefix))
+@Client.on_message(filters.command(["unpinall", "unpin all"], prefix) & ~filters.edited)
 @require_admin(
     permissions=["can_pin_messages"],
     allow_in_private=True,
@@ -259,7 +259,7 @@ async def unpinall(c: Client, m: Message):
     await c.unpin_all_chat_messages(m.chat.id)
 
 
-@Client.on_message(filters.command("ban", prefix))
+@Client.on_message(filters.command("ban", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
 @bot_require_admin(permissions=["can_restrict_members"])
@@ -288,7 +288,7 @@ async def ban(c: Client, m: Message, strings):
         await m.reply_text(strings("i_cant_ban_admins"))
 
 
-@Client.on_message(filters.command("dban", prefix))
+@Client.on_message(filters.command("dban", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(
     permissions=["can_restrict_members", "can_delete_messages"],
@@ -315,7 +315,7 @@ async def dban(c: Client, m: Message, strings):
             await m.reply_text(strings("i_cant_ban_admins"))
 
 
-@Client.on_message(filters.command("kick", prefix))
+@Client.on_message(filters.command("kick", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
 @bot_require_admin(permissions=["can_restrict_members"])
@@ -345,7 +345,7 @@ async def kick(c: Client, m: Message, strings):
         await m.reply_text(strings("i_cant_kick_admins"))
 
 
-@Client.on_message(filters.command("dkick", prefix))
+@Client.on_message(filters.command("dkick", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(
     permissions=[
@@ -379,7 +379,7 @@ async def dkick(c: Client, m: Message, strings):
             await m.reply_text(strings("i_cant_kick_admins"))
 
 
-@Client.on_message(filters.command("unban", prefix))
+@Client.on_message(filters.command("unban", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
 @bot_require_admin(permissions=["can_restrict_members"])
@@ -404,7 +404,7 @@ async def unban(c: Client, m: Message, strings):
         await m.reply_text(text)
 
 
-@Client.on_message(filters.command("mute", prefix))
+@Client.on_message(filters.command("mute", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
 @bot_require_admin(permissions=["can_restrict_members"])
@@ -437,7 +437,7 @@ async def mute(c: Client, m: Message, strings):
         await m.reply_text(strings("i_cant_mute_admins"))
 
 
-@Client.on_message(filters.command("dmute", prefix))
+@Client.on_message(filters.command("dmute", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(
     permissions=[
@@ -473,7 +473,7 @@ async def dmute(c: Client, m: Message, strings):
             await m.reply_text(strings("i_cant_mute_admins"))
 
 
-@Client.on_message(filters.command("unmute", prefix))
+@Client.on_message(filters.command("unmute", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
 @bot_require_admin(permissions=["can_restrict_members"])
@@ -498,7 +498,7 @@ async def unmute(c: Client, m: Message, strings):
         await m.reply_text(text)
 
 
-@Client.on_message(filters.command("tmute", prefix))
+@Client.on_message(filters.command("tmute", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
 @bot_require_admin(permissions=["can_restrict_members"])
@@ -540,7 +540,7 @@ async def tmute(c: Client, m: Message, strings):
         await m.reply_text(the_tmute_message_text)
 
 
-@Client.on_message(filters.command("tban", prefix))
+@Client.on_message(filters.command("tban", prefix) & ~filters.edited)
 @use_chat_lang()
 @require_admin(permissions=["can_restrict_members"])
 @bot_require_admin(permissions=["can_restrict_members"])
@@ -571,7 +571,7 @@ async def tban(c: Client, m: Message, strings):
         await m.reply_text(the_tban_message_text)
 
 
-@Client.on_message(filters.command("purge", prefix))
+@Client.on_message(filters.command("purge", prefix) & ~filters.edited)
 @require_admin(
     permissions=["can_delete_messages"],
     allow_in_private=True,
@@ -613,7 +613,7 @@ async def purge(c: Client, m: Message, strings):
     await status_message.delete()
 
 
-@Client.on_message(filters.command("antichannelpin", prefix))
+@Client.on_message(filters.command("antichannelpin", prefix) & ~filters.edited)
 @require_admin(permissions=["can_pin_messages"])
 @use_chat_lang()
 @logging_errors
@@ -648,7 +648,7 @@ async def acp_action(c: Client, m: Message):
         pass
 
 
-@Client.on_message(filters.command("cleanservice", prefix))
+@Client.on_message(filters.command("cleanservice", prefix) & ~filters.edited)
 @require_admin(permissions=["can_delete_messages"])
 @use_chat_lang()
 @logging_errors
@@ -683,7 +683,7 @@ async def delservice_action(c: Client, m: Message):
         pass
 
 
-@Client.on_message(filters.command("clear_anon_channel", prefix))
+@Client.on_message(filters.command("clear_anon_channel", prefix) & ~filters.edited)
 @require_admin(permissions=["can_delete_messages"])
 @use_chat_lang()
 @logging_errors
