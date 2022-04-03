@@ -55,6 +55,7 @@ def gen_langs_kb():
         prefix,
     )
     & filters.group
+    & ~filters.edited
 )
 @require_admin(allow_in_private=True)
 @use_chat_lang()
