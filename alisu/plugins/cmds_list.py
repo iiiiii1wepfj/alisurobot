@@ -58,6 +58,7 @@ async def cmds_list(
             "start help",
         ]
     )
+    & ~filters.edited
 )
 @use_chat_lang()
 @logging_errors
