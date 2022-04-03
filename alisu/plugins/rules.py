@@ -37,7 +37,9 @@ async def check_private_rules_status(chat_id: int):
     return True if res is True else False
 
 
-@Client.on_message(filters.command("setrules", prefix) & filters.group)
+@Client.on_message(
+    filters.command("setrules", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -49,7 +51,9 @@ async def settherules(c: Client, m: Message, strings):
         await m.reply_text(strings("rules_set_empty"))
 
 
-@Client.on_message(filters.command("set_pvt_rules", prefix) & filters.group)
+@Client.on_message(
+    filters.command("set_pvt_rules", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -68,7 +72,9 @@ async def set_pvt_rules_cmd(c: Client, m: Message, strings):
         await m.reply_text(strings("set_pvt_rules_invalid_arg"))
 
 
-@Client.on_message(filters.command("check_pvt_rules", prefix) & filters.group)
+@Client.on_message(
+    filters.command("check_pvt_rules", prefix) & filters.group & ~filters.edited
+)
 @require_admin()
 @use_chat_lang()
 @logging_errors
@@ -80,7 +86,9 @@ async def check_pvt_rules_cmd(c: Client, m: Message, strings):
         await m.reply_text(strings("check_pvt_rules_mode_disabled"))
 
 
-@Client.on_message(filters.command("resetrules", prefix) & filters.group)
+@Client.on_message(
+    filters.command("resetrules", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -89,7 +97,7 @@ async def delete_rules(c: Client, m: Message, strings):
     await m.reply_text(strings("rules_deleted"))
 
 
-@Client.on_message(filters.command("rules", prefix) & filters.group)
+@Client.on_message(filters.command("rules", prefix) & filters.group & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def show_rules(c: Client, m: Message, strings):
@@ -126,7 +134,7 @@ async def show_rules(c: Client, m: Message, strings):
             await m.reply_text(strings("rules_empty"))
 
 
-@Client.on_message(filters.regex("^/start rules_") & filters.private)
+@Client.on_message(filters.regex("^/start rules_") & filters.private & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 @pass_index_error
