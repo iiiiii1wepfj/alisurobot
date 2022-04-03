@@ -14,7 +14,7 @@ from alisu.utils.bot_error_log import logging_errors
 from alisu.utils.passindexerr import pass_index_error
 
 
-@Client.on_message(filters.command("mark", prefix))
+@Client.on_message(filters.command("mark", prefix) & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def mark(c: Client, m: Message, strings):
@@ -29,7 +29,7 @@ async def mark(c: Client, m: Message, strings):
     )
 
 
-@Client.on_message(filters.command("html", prefix))
+@Client.on_message(filters.command("html", prefix) & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def html(c: Client, m: Message, strings):
@@ -44,7 +44,7 @@ async def html(c: Client, m: Message, strings):
     )
 
 
-@Client.on_message(filters.command("admins", prefix) & filters.group)
+@Client.on_message(filters.command("admins", prefix) & filters.group & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def mentionadmins(c: Client, m: Message, strings):
@@ -62,6 +62,7 @@ async def mentionadmins(c: Client, m: Message, strings):
     (filters.command("report", prefix) | filters.regex("^@admin"))
     & filters.group
     & filters.reply
+    & ~filters.edited
 )
 @use_chat_lang()
 @logging_errors
@@ -83,7 +84,7 @@ async def reportadmins(c: Client, m: Message, strings):
             )
 
 
-@Client.on_message(filters.command("token"))
+@Client.on_message(filters.command("token") & ~filters.edited)
 @use_chat_lang()
 async def getbotinfo(c: Client, m: Message, strings):
     if len(m.command) == 1:
@@ -107,7 +108,11 @@ async def getbotinfo(c: Client, m: Message, strings):
 
 
 @Client.on_message(
-    filters.reply & filters.group & filters.regex(r"(?i)^rt$") & filters.text
+    filters.reply
+    & filters.group
+    & filters.regex(r"(?i)^rt$")
+    & filters.text
+    & ~filters.edited
 )
 @logging_errors
 async def rtcommand(c: Client, m: Message):
@@ -143,21 +148,21 @@ async def rtcommand(c: Client, m: Message):
         )
 
 
-@Client.on_message(filters.command("urlencode", prefix))
+@Client.on_message(filters.command("urlencode", prefix) & ~filters.edited)
 @logging_errors
 @pass_index_error
 async def urlencodecmd(c: Client, m: Message):
     await m.reply_text(quote(m.text.split(None, 1)[1]))
 
 
-@Client.on_message(filters.command("urldecode", prefix))
+@Client.on_message(filters.command("urldecode", prefix) & ~filters.edited)
 @logging_errors
 @pass_index_error
 async def urldecodecmd(c: Client, m: Message):
     await m.reply_text(unquote(m.text.split(None, 1)[1]))
 
 
-@Client.on_message(filters.command("bug", prefix))
+@Client.on_message(filters.command("bug", prefix) & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def bug_report_cmd(c: Client, m: Message, strings):
@@ -184,7 +189,7 @@ async def bug_report_cmd(c: Client, m: Message, strings):
         await m.reply(strings("err_no_bug_to_report"))
 
 
-@Client.on_message(filters.command("request", prefix))
+@Client.on_message(filters.command("request", prefix) & ~filters.edited)
 @logging_errors
 async def request_cmd(c: Client, m: Message):
     if len(m.text.split()) > 1:
@@ -210,7 +215,7 @@ async def request_cmd(c: Client, m: Message):
         )
 
 
-@Client.on_message(filters.command("parsebutton"))
+@Client.on_message(filters.command("parsebutton") & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def button_parse_helper(c: Client, m: Message, strings):
@@ -222,7 +227,7 @@ async def button_parse_helper(c: Client, m: Message, strings):
         await m.reply_text(strings("parsebtn_err"))
 
 
-@Client.on_message(filters.command("donate"))
+@Client.on_message(filters.command("donate") & ~filters.edited)
 @logging_errors
 async def donate_to_owner_cmd(c: Client, m: Message):
     await m.reply_text("https://paypal.me/itayki")
