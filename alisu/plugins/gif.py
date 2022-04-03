@@ -15,7 +15,7 @@ if not TENOR_API_KEY:
     )
 
 
-@Client.on_message(filters.command("gif", prefix))
+@Client.on_message(filters.command("gif", prefix) & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def gif(c: Client, m: Message, strings):
