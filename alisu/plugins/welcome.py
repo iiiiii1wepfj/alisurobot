@@ -56,6 +56,7 @@ async def set_last_welcome_message_id(chat_id: int, msg_id: int):
         & ~filters.command(["del_old_welcome on", "del_old_welcome off"])
     )
     & filters.group
+    & ~filters.edited
 )
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
@@ -64,7 +65,9 @@ async def invalid_del_old_welcome_status_arg(c: Client, m: Message, strings):
     await m.reply_text(strings("del_old_welcome_mode_invalid"))
 
 
-@Client.on_message(filters.command("del_old_welcome on", prefix) & filters.group)
+@Client.on_message(
+    filters.command("del_old_welcome on", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -75,7 +78,9 @@ async def enable_del_old_welcome_message(c: Client, m: Message, strings):
     )
 
 
-@Client.on_message(filters.command("del_old_welcome off", prefix) & filters.group)
+@Client.on_message(
+    filters.command("del_old_welcome off", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -87,7 +92,9 @@ async def disable_del_old_welcome_message(c: Client, m: Message, strings):
 
 
 @Client.on_message(
-    filters.command(["welcomeformat", "start welcome_format_help"], prefix)
+    filters.command(
+        ["welcomeformat", "start welcome_format_help"], prefix & ~filters.edited
+    )
 )
 @use_chat_lang()
 async def welcome_format_message_help(c: Client, m: Message, strings):
@@ -96,7 +103,9 @@ async def welcome_format_message_help(c: Client, m: Message, strings):
     await m.stop_propagation()
 
 
-@Client.on_message(filters.command("setwelcome", prefix) & filters.group)
+@Client.on_message(
+    filters.command("setwelcome", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -144,6 +153,7 @@ async def set_welcome_message(c: Client, m: Message, strings):
 @Client.on_message(
     (filters.command("welcome") & ~filters.command(["welcome on", "welcome off"]))
     & filters.group
+    & ~filters.edited
 )
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
@@ -152,7 +162,9 @@ async def invalid_welcome_status_arg(c: Client, m: Message, strings):
     await m.reply_text(strings("welcome_mode_invalid"))
 
 
-@Client.on_message(filters.command("getwelcome", prefix) & filters.group)
+@Client.on_message(
+    filters.command("getwelcome", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -167,7 +179,9 @@ async def getwelcomemsg(c: Client, m: Message, strings):
         await m.reply_text("None")
 
 
-@Client.on_message(filters.command("welcome on", prefix) & filters.group)
+@Client.on_message(
+    filters.command("welcome on", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -176,7 +190,9 @@ async def enable_welcome_message(c: Client, m: Message, strings):
     await m.reply_text(strings("welcome_mode_enable").format(chat_title=m.chat.title))
 
 
-@Client.on_message(filters.command("welcome off", prefix) & filters.group)
+@Client.on_message(
+    filters.command("welcome off", prefix) & filters.group & ~filters.edited
+)
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
 @logging_errors
@@ -186,7 +202,9 @@ async def disable_welcome_message(c: Client, m: Message, strings):
 
 
 @Client.on_message(
-    filters.command(["resetwelcome", "clearwelcome"], prefix) & filters.group
+    filters.command(["resetwelcome", "clearwelcome"], prefix)
+    & filters.group
+    & ~filters.edited
 )
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
