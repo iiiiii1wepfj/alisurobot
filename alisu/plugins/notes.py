@@ -69,6 +69,7 @@ async def check_for_notes(chat_id: int, trigger):
         ],
         prefix,
     )
+    & ~filters.edited
 )
 @require_admin(allow_in_private=True)
 @use_chat_lang()
@@ -163,6 +164,7 @@ async def save_note(c: Client, m: Message, strings):
         ],
         prefix,
     )
+    & ~filters.edited
 )
 @require_admin(allow_in_private=True)
 @use_chat_lang()
@@ -186,7 +188,7 @@ async def delete_note(c: Client, m: Message, strings):
         )
 
 
-@Client.on_message(filters.command("notes", prefix))
+@Client.on_message(filters.command("notes", prefix) & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def get_all_chat_note(
@@ -294,6 +296,7 @@ async def serve_note(
     (filters.group | filters.private)
     & filters.text
     & filters.incoming
+    & ~filters.edited
     & filters.regex(r"^#[^\s]+"),
     group=2,
 )
@@ -315,7 +318,8 @@ async def note_by_hashtag(
     (filters.group | filters.private)
     & filters.text
     & filters.incoming
-    & filters.command("get", prefix),
+    & filters.command("get", prefix)
+    & ~filters.edited,
     group=2,
 )
 @logging_errors
