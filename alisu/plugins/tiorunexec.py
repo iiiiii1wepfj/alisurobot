@@ -21,7 +21,7 @@ langslist = tio.query_languages()
 langs_list_link: str = "https://iiiiii1wepfj.github.io/alisurobot_website/tiolangs.html"
 
 
-@Client.on_message(filters.command("exec_code", prefix))
+@Client.on_message(filters.command("exec_code", prefix) & ~filters.edited)
 @use_chat_lang()
 @logging_errors
 async def exec_tio_run_code(
