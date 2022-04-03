@@ -47,12 +47,12 @@ async def restartbot(c: Client):
     os.execv(sys.executable, args)
 
 
-@Client.on_message(filters.command("sudos", prefix) & sudofilter)
+@Client.on_message(filters.command("sudos", prefix) & sudofilter & ~filters.edited)
 async def sudos(c: Client, m: Message):
     await m.reply_text("Test")
 
 
-@Client.on_message(filters.command("cmd", prefix) & sudofilter)
+@Client.on_message(filters.command("cmd", prefix) & sudofilter & ~filters.edited)
 @use_chat_lang()
 async def run_cmd(c: Client, m: Message, strings):
     cmd = m.text.split(maxsplit=1)[1]
@@ -79,7 +79,7 @@ async def run_cmd(c: Client, m: Message, strings):
     await m.reply_text(res)
 
 
-@Client.on_message(filters.command("upgrade", prefix) & sudofilter)
+@Client.on_message(filters.command("upgrade", prefix) & sudofilter & ~filters.edited)
 @use_chat_lang()
 async def upgrade(c: Client, m: Message, strings):
     sm = await m.reply_text("Upgrading sources...")
@@ -103,7 +103,7 @@ async def upgrade(c: Client, m: Message, strings):
         await proc.communicate()
 
 
-@Client.on_message(filters.command("eval", prefix) & sudofilter)
+@Client.on_message(filters.command("eval", prefix) & sudofilter & ~filters.edited)
 async def evals(c: Client, m: Message):
     text = m.text.split(maxsplit=1)[1]
     try:
@@ -136,7 +136,7 @@ async def evals(c: Client, m: Message):
                 await m.reply_text(output_eval_e)
 
 
-@Client.on_message(filters.command("exec", prefix) & sudofilter)
+@Client.on_message(filters.command("exec", prefix) & sudofilter & ~filters.edited)
 async def execs(c: Client, m: Message):
     strio = io.StringIO()
     code = m.text.split(maxsplit=1)[1]
@@ -170,7 +170,7 @@ async def execs(c: Client, m: Message):
         await m.reply_text(out)
 
 
-@Client.on_message(filters.command("speedtest", prefix) & sudofilter)
+@Client.on_message(filters.command("speedtest", prefix) & sudofilter & ~filters.edited)
 @use_chat_lang()
 async def test_speed(c: Client, m: Message, strings):
     string = strings("speedtest")
@@ -196,14 +196,14 @@ async def test_speed(c: Client, m: Message, strings):
     )
 
 
-@Client.on_message(filters.command("restart", prefix) & sudofilter)
+@Client.on_message(filters.command("restart", prefix) & sudofilter & ~filters.edited)
 @use_chat_lang()
 async def restart(c: Client, m: Message, strings):
     sent = await m.reply_text(strings("restarting"))
     asyncio.get_event_loop().create_task(restartbot(c))
 
 
-@Client.on_message(filters.command("leave", prefix) & sudofilter)
+@Client.on_message(filters.command("leave", prefix) & sudofilter & ~filters.edited)
 async def leave_chat(c: Client, m: Message):
     if len(m.command) == 1:
         try:
@@ -218,7 +218,9 @@ async def leave_chat(c: Client, m: Message):
             print(e)
 
 
-@Client.on_message(filters.command(["bot_stats", "stats"], prefix) & sudofilter)
+@Client.on_message(
+    filters.command(["bot_stats", "stats"], prefix) & sudofilter & ~filters.edited
+)
 async def getbotstats(c: Client, m: Message):
     users_count = await users.all().count()
     groups_count = await groups.all().count()
