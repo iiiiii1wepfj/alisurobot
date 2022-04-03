@@ -8,7 +8,7 @@ from alisu.utils import commands
 from alisu.utils.bot_error_log import logging_errors
 
 
-@Client.on_message(filters.command("ping", prefix))
+@Client.on_message(filters.command("ping", prefix) & ~filters.edited)
 @logging_errors
 async def ping(c: Client, m: Message):
     first = datetime.now()
