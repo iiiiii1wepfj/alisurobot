@@ -45,6 +45,7 @@ from alisu.utils.bot_error_log import logging_errors
         ],
         prefix,
     )
+    & ~filters.edited
 )
 @use_chat_lang()
 @logging_errors
@@ -273,7 +274,9 @@ def resize_image(filename: str) -> str:
     return png_image
 
 
-@Client.on_message(filters.command("stickerid", prefix) & filters.reply)
+@Client.on_message(
+    filters.command("stickerid", prefix) & filters.reply & ~filters.edited
+)
 @use_chat_lang()
 @logging_errors
 async def getstickerid(
@@ -289,7 +292,9 @@ async def getstickerid(
         )
 
 
-@Client.on_message(filters.command("getsticker", prefix) & filters.reply)
+@Client.on_message(
+    filters.command("getsticker", prefix) & filters.reply & ~filters.edited
+)
 @use_chat_lang()
 @logging_errors
 async def getstickeraspng(
