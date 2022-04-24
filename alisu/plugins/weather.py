@@ -16,7 +16,7 @@ url: str = "https://api.weather.com/v3/aggcommon/v3-wx-observations-current"
 headers: dict = {"User-Agent": "curl/7.72.0"}
 
 
-@Client.on_message(filters.command(["clima", "weather"], prefix) & ~filters.edited)
+@Client.on_message(filters.command(["clima", "weather"], prefix))
 @use_chat_lang()
 @logging_errors
 async def weather(c: Client, m: Message, strings):
