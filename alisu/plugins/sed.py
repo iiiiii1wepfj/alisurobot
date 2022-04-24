@@ -53,7 +53,7 @@ async def sed(c: Client, m: Message, strings):
             await c.send_message(
                 m.chat.id,
                 f"<pre>{html.escape(res)}</pre>",
-                reply_to_message_id=m.reply_to_message.message_id,
+                reply_to_message_id=m.reply_to_message.id,
             )
         except (MessageTooLong, MessageEmpty):
             pass
