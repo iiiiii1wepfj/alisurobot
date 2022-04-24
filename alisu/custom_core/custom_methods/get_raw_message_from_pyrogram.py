@@ -2,6 +2,7 @@ from pyrogram.scaffold import Scaffold
 from pyrogram.types import Message
 from pyrogram.raw import functions
 from pyrogram.raw.types import InputMessageID
+from pyrogram import enums
 from alisu.utils.bot_custom_exceptions import invalid_chat_type_custom_exception
 
 
@@ -11,7 +12,7 @@ class GetRawMessageFromPyrogram(Scaffold):
         message: Message,
     ):
         messageid = message.id
-        if message.chat.type in ["supergroup", "channel"]:
+        if message.chat.type in [enums.ChatType.SUPERGROUP, enums.ChatType.CHANNEL]:
             the_peer = await self.resolve_peer(message.chat.id)
             r = await self.invoke(
                 functions.channels.GetMessages(
@@ -19,7 +20,7 @@ class GetRawMessageFromPyrogram(Scaffold):
                     id=[InputMessageID(id=messageid)],
                 )
             )
-        elif message.chat.type in ["private", "bot", "group"]:
+        elif message.chat.type in [enums.ChatType.PRIVATE, enums.ChatType.BOT, enums.ChatType.GROUP]:
             r = await self.invoke(
                 functions.messages.GetMessages(id=[InputMessageID(id=messageid)])
             )
