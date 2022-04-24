@@ -220,7 +220,7 @@ def isArgInt(txt) -> list:
         return [False, 0]
 
 
-@Client.on_message(filters.command("q", prefix) & filters.reply & ~filters.edited)
+@Client.on_message(filters.command("q", prefix) & filters.reply)
 @use_chat_lang()
 @logging_errors
 async def msg_quotly_cmd(c: Client, m: Message, strings):
