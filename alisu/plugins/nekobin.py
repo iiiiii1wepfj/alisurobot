@@ -8,7 +8,7 @@ from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
 
-@Client.on_message(filters.command("paste", prefix) & ~filters.edited)
+@Client.on_message(filters.command("paste", prefix))
 @use_chat_lang(context="pastes")
 @logging_errors
 async def nekobin(c: Client, m: Message, strings):
