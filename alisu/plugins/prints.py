@@ -16,7 +16,7 @@ from alisu.utils.bot_error_log import logging_errors
 async def prints(c: Client, m: Message, strings):
     if len(m.command) == 1:
         return await m.reply_text(
-            strings("print_usage"), reply_to_message_id=m.message_id
+            strings("print_usage"), reply_to_message_id=m.id
         )
     sent = await m.reply_text(strings("taking_screenshot"))
     text = m.text.split(maxsplit=1)[1]
