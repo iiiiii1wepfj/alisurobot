@@ -15,7 +15,6 @@ from alisu.utils.bot_error_log import logging_errors
         ],
         prefix,
     )
-    & ~filters.edited
 )
 @use_chat_lang()
 @logging_errors
