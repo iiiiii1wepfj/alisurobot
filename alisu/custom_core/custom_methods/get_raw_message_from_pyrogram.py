@@ -10,7 +10,7 @@ class GetRawMessageFromPyrogram(Scaffold):
         self,
         message: Message,
     ):
-        messageid = message.message_id
+        messageid = message.id
         if message.chat.type in ["supergroup", "channel"]:
             the_peer = await self.resolve_peer(message.chat.id)
             r = await self.invoke(
