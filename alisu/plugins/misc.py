@@ -2,7 +2,7 @@ import re
 from html import escape
 from urllib.parse import quote, unquote
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import BadRequest
 from pyrogram.types import InlineKeyboardMarkup, Message
 
@@ -24,7 +24,7 @@ async def mark(c: Client, m: Message, strings):
     msgtxt, buttons = button_parser(txt)
     await m.reply(
         msgtxt,
-        parse_mode="markdown",
+        parse_mode=enums.ParseMode.MARKDOWN,
         reply_markup=(InlineKeyboardMarkup(buttons) if len(buttons) != 0 else None),
     )
 
@@ -39,7 +39,7 @@ async def html(c: Client, m: Message, strings):
     msgtxt, buttons = button_parser(txt)
     await m.reply(
         msgtxt,
-        parse_mode="html",
+        parse_mode=enums.ParseMode.HTML,
         reply_markup=(InlineKeyboardMarkup(buttons) if len(buttons) != 0 else None),
     )
 
@@ -203,7 +203,7 @@ async def request_cmd(c: Client, m: Message):
             "<b>{}:</b> <code>{}</code>".format(x.title(), escape(req.headers[x]))
             for x in req.headers
         )
-        await m.reply_text(f"<b>Headers:</b>\n{headers}", parse_mode="html")
+        await m.reply_text(f"<b>Headers:</b>\n{headers}", parse_mode=enums.ParseMode.HTML)
     else:
         await m.reply_text(
             "You must specify the url, E.g.: <code>/request https://example.com</code>"
