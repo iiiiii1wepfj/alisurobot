@@ -1,7 +1,7 @@
 import re
 from typing import Optional
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 from alisu.config import prefix
@@ -225,7 +225,7 @@ async def serve_note(
                 await m.reply_text(
                     data,
                     quote=True,
-                    parse_mode="md",
+                    parse_mode=enums.ParseMode.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup(button)
                     if len(button) != 0
                     else None,
@@ -235,7 +235,7 @@ async def serve_note(
                     note_s.file_id,
                     quote=True,
                     caption=data if not None else None,
-                    parse_mode="md",
+                    parse_mode=enums.ParseMode.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup(button)
                     if len(button) != 0
                     else None,
@@ -245,7 +245,7 @@ async def serve_note(
                     note_s.file_id,
                     quote=True,
                     caption=data if not None else None,
-                    parse_mode="md",
+                    parse_mode=enums.ParseMode.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup(button)
                     if len(button) != 0
                     else None,
@@ -255,7 +255,7 @@ async def serve_note(
                     note_s.file_id,
                     quote=True,
                     caption=data if not None else None,
-                    parse_mode="md",
+                    parse_mode=enums.ParseMode.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup(button)
                     if len(button) != 0
                     else None,
@@ -265,7 +265,7 @@ async def serve_note(
                     note_s.file_id,
                     quote=True,
                     caption=data if not None else None,
-                    parse_mode="md",
+                    parse_mode=enums.ParseMode.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup(button)
                     if len(button) != 0
                     else None,
@@ -275,7 +275,7 @@ async def serve_note(
                     note_s.file_id,
                     quote=True,
                     caption=data if not None else None,
-                    parse_mode="md",
+                    parse_mode=enums.ParseMode.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup(button)
                     if len(button) != 0
                     else None,
