@@ -15,7 +15,7 @@ from typing import (
     Union,
 )
 
-from pyrogram import Client, emoji, filters
+from pyrogram import Client, emoji, filters, enums
 from pyrogram.types import (
     CallbackQuery,
     InlineKeyboardMarkup,
@@ -73,7 +73,7 @@ def aiowrap(func: Callable) -> Coroutine:
 
 
 async def add_chat(chat_id, chat_type):
-    if chat_type == "private":
+    if chat_type == enums.ChatType.PRIVATE:
         await users.create(user_id=chat_id)
     elif chat_type in group_types:  # groups and supergroups share the same table
         await groups.create(
@@ -85,7 +85,7 @@ async def add_chat(chat_id, chat_type):
             delservicemsgs=False,
             antichannelpin=False,
         )
-    elif chat_type == "channel":
+    elif chat_type == enums.ChatType.CHANNEL:
         await channels.create(chat_id=chat_id)
     else:
         raise TypeError("Unknown chat type '%s'." % chat_type)
@@ -93,11 +93,11 @@ async def add_chat(chat_id, chat_type):
 
 
 async def chat_exists(chat_id, chat_type):
-    if chat_type == "private":
+    if chat_type == enums.ChatType.PRIVATE:
         return await users.exists(user_id=chat_id)
     if chat_type in group_types:  # groups and supergroups share the same table
         return await groups.exists(chat_id=chat_id)
-    if chat_type == "channels":
+    if chat_type == enums.ChatType.CHANNEL:
         return await channels.exists(chat_id=chat_id)
     raise TypeError("Unknown chat type '%s'." % chat_type)
 
