@@ -1,6 +1,6 @@
 import re
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import (
     InlineQuery,
     InlineQueryResultArticle,
@@ -29,7 +29,7 @@ async def ip_cmd(c: Client, m: Message, strings):
         x: str = ""
         for i in req:
             x += "<b>{}</b>: <code>{}</code>\n".format(i.title(), req[i])
-        await m.reply_text(x, parse_mode="html")
+        await m.reply_text(x, parse_mode=enums.ParseMode.HTML)
     else:
         await m.reply_text(strings("ip_err_no_ip"))
 
@@ -51,7 +51,7 @@ async def ip_inline(c: Client, q: InlineQuery):
             [
                 InlineQueryResultArticle(
                     title=f"click here to see the ip of {text}",
-                    input_message_content=InputTextMessageContent(x, parse_mode="html"),
+                    input_message_content=InputTextMessageContent(x, parse_mode=enums.ParseMode.HTML),
                 )
             ]
         )
@@ -62,7 +62,7 @@ async def ip_inline(c: Client, q: InlineQuery):
                     title="You must specify the url",
                     input_message_content=InputTextMessageContent(
                         f"You must specify the url, E.g.: <code>@{c.me.username} ip example.com</code>",
-                        parse_mode="html",
+                        parse_mode=enums.ParseMode.HTML,
                     ),
                 )
             ]
