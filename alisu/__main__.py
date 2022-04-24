@@ -29,7 +29,7 @@ from alisu.database.database_handler import init_database
 class botclient(custom_methods, Client):
     def __init__(self):
         super().__init__(
-            session_name="bot",
+            name="bot",
             app_version=f"v{alisu.__version__}",
             api_id=API_ID,
             api_hash=API_HASH,
