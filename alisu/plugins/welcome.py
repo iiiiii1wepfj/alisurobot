@@ -264,7 +264,7 @@ async def greet_new_members(c: Client, m: Message, strings):
                     except:
                         pass
             await set_last_welcome_message_id(
-                m.chat.id, the_last_welcome_msg.message_id
+                m.chat.id, the_last_welcome_msg.id
             )
 
 
