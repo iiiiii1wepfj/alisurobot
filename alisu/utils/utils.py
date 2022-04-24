@@ -202,11 +202,11 @@ def require_admin(
             msg_to_check_perm = message
 
             # We don't actually check private and channel chats.
-            if msg.chat.type == "private":
+            if msg.chat.type == enums.ChatType.PRIVATE:
                 if allow_in_private:
                     return await func(client, message, *args, *kwargs)
                 return await sender(strings("private_not_allowed"))
-            if msg.chat.type == "channel":
+            if msg.chat.type == enums.ChatType.CHANNEL:
                 return await func(client, message, *args, *kwargs)
             anon_admin_check = await check_if_is_from_anon_admin(msg)
             check_anon_perms_msg_send = None
@@ -331,7 +331,7 @@ def bot_require_admin(
                 )
 
             # We don't actually check private and channel chats.
-            if msg.chat.type == "private":
+            if msg.chat.type == enums.ChatType.PRIVATE:
                 if allow_in_private:
                     return await func(client, message, *args, *kwargs)
                 return await sender(strings("private_not_allowed"))
