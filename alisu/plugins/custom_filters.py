@@ -216,7 +216,7 @@ async def get_all_filter(c: Client, m: Message, strings):
 @Client.on_message(
     (filters.group | filters.private)
     & filters.text
-    & filters.incoming
+    & filters.incoming,
     group=1,
 )
 @logging_errors
