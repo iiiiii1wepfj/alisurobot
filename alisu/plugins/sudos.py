@@ -16,6 +16,7 @@ from meval import meval
 from pyrogram import (
     Client,
     filters,
+    enums,
     __version__ as pyrogram_version,
 )
 from pyrogram.errors import RPCError
@@ -243,7 +244,7 @@ async def getbotstats(c: Client, m: Message):
 async def getchatcmd(c: Client, m: Message):
     if len(m.text.split()) > 1:
         targetchat = await c.get_chat(m.command[1])
-        if targetchat.type != "private":
+        if targetchat.type != enums.ChatType.PRIVATE:
             await m.reply_text(
                 f"<b>Title:</b> {targetchat.title}\n<b>Username:</b> {targetchat.username}\n<b>Link:</b> {targetchat.invite_link}\n<b>Members:</b> {targetchat.members_count}"
             )
