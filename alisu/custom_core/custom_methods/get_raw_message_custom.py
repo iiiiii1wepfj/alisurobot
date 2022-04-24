@@ -1,11 +1,10 @@
 from typing import Union
-from pyrogram.scaffold import Scaffold
 from pyrogram.raw import functions
 from pyrogram.raw.types import InputMessageID
 from alisu.utils.bot_custom_exceptions import invalid_chat_type_custom_exception
 
 
-class GetRawMessageCustom(Scaffold):
+class GetRawMessageCustom:
     async def get_raw_message_custom(
         self,
         chat_id: Union[int, str],
