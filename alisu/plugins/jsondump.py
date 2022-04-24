@@ -10,7 +10,7 @@ from alisu.utils import commands
 from alisu.utils.bot_error_log import logging_errors
 
 
-@Client.on_message(filters.command("jsondump", prefix) & ~filters.edited)
+@Client.on_message(filters.command("jsondump", prefix))
 @logging_errors
 async def jsondump(c: Client, m: Message):
     params = m.text.split()
