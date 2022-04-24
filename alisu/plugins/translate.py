@@ -75,12 +75,12 @@ async def translate(
 
     if not text:
         return await m.reply_text(
-            strings("translate_usage"), reply_to_message_id=m.message_id
+            strings("translate_usage"), reply_to_message_id=m.id
         )
 
     sent = await m.reply_text(
         strings("translating"),
-        reply_to_message_id=m.message_id,
+        reply_to_message_id=m.id,
     )
     try:
         langs = {}
