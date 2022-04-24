@@ -236,8 +236,8 @@ async def msg_quotly_cmd(c: Client, m: Message, strings):
                         for i in await c.get_messages(
                             chat_id=m.chat.id,
                             message_ids=range(
-                                m.reply_to_message.message_id,
-                                m.reply_to_message.message_id + (check_arg[1] + 5),
+                                m.reply_to_message.id,
+                                m.reply_to_message.id + (check_arg[1] + 5),
                             ),
                             replies=-1,
                         )
@@ -256,7 +256,7 @@ async def msg_quotly_cmd(c: Client, m: Message, strings):
             pass
     try:
         messages_one = await c.get_messages(
-            chat_id=m.chat.id, message_ids=m.reply_to_message.message_id, replies=-1
+            chat_id=m.chat.id, message_ids=m.reply_to_message.id, replies=-1
         )
         messages = [messages_one]
     except:

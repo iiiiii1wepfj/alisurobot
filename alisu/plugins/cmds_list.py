@@ -1,4 +1,4 @@
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import (
     CallbackQuery,
     InlineKeyboardButton,
@@ -67,7 +67,7 @@ async def show_help(
     m: Message,
     strings,
 ):
-    if m.chat.type == "private":
+    if m.chat.type == enums.ChatType.PRIVATE:
         keyboard = InlineKeyboardMarkup(
             inline_keyboard=[
                 *gen_categories_kb(strings),

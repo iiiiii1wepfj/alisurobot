@@ -15,7 +15,7 @@ from typing import (
     Union,
 )
 
-from pyrogram import Client, emoji, filters
+from pyrogram import Client, emoji, filters, enums
 from pyrogram.types import (
     CallbackQuery,
     InlineKeyboardMarkup,
@@ -73,7 +73,7 @@ def aiowrap(func: Callable) -> Coroutine:
 
 
 async def add_chat(chat_id, chat_type):
-    if chat_type == "private":
+    if chat_type == enums.ChatType.PRIVATE:
         await users.create(user_id=chat_id)
     elif chat_type in group_types:  # groups and supergroups share the same table
         await groups.create(
@@ -85,7 +85,7 @@ async def add_chat(chat_id, chat_type):
             delservicemsgs=False,
             antichannelpin=False,
         )
-    elif chat_type == "channel":
+    elif chat_type == enums.ChatType.CHANNEL:
         await channels.create(chat_id=chat_id)
     else:
         raise TypeError("Unknown chat type '%s'." % chat_type)
@@ -93,11 +93,11 @@ async def add_chat(chat_id, chat_type):
 
 
 async def chat_exists(chat_id, chat_type):
-    if chat_type == "private":
+    if chat_type == enums.ChatType.PRIVATE:
         return await users.exists(user_id=chat_id)
     if chat_type in group_types:  # groups and supergroups share the same table
         return await groups.exists(chat_id=chat_id)
-    if chat_type == "channels":
+    if chat_type == enums.ChatType.CHANNEL:
         return await channels.exists(chat_id=chat_id)
     raise TypeError("Unknown chat type '%s'." % chat_type)
 
@@ -202,11 +202,11 @@ def require_admin(
             msg_to_check_perm = message
 
             # We don't actually check private and channel chats.
-            if msg.chat.type == "private":
+            if msg.chat.type == enums.ChatType.PRIVATE:
                 if allow_in_private:
                     return await func(client, message, *args, *kwargs)
                 return await sender(strings("private_not_allowed"))
-            if msg.chat.type == "channel":
+            if msg.chat.type == enums.ChatType.CHANNEL:
                 return await func(client, message, *args, *kwargs)
             anon_admin_check = await check_if_is_from_anon_admin(msg)
             check_anon_perms_msg_send = None
@@ -215,7 +215,7 @@ def require_admin(
                 if get_my_chat_member.status not in pyro_admin_types_chat_member:
                     await message.reply_text(strings("bot_not_admin_error"))
                     return
-                the_callback_data = f"{msg.chat.id}|{msg.message_id}"
+                the_callback_data = f"{msg.chat.id}|{msg.id}"
                 check_anon_perms_msg_send = await send_anon_admin_button(
                     msg, the_callback_data, strings
                 )
@@ -331,7 +331,7 @@ def bot_require_admin(
                 )
 
             # We don't actually check private and channel chats.
-            if msg.chat.type == "private":
+            if msg.chat.type == enums.ChatType.PRIVATE:
                 if allow_in_private:
                     return await func(client, message, *args, *kwargs)
                 return await sender(strings("private_not_allowed"))

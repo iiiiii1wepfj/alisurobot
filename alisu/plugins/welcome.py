@@ -1,6 +1,6 @@
 from typing import Optional, Tuple
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import BadRequest
 from pyrogram.types import InlineKeyboardMarkup, Message
 
@@ -172,7 +172,7 @@ async def getwelcomemsg(c: Client, m: Message, strings):
     if welcome_enabled:
         welcome = await get_welcome(m.chat.id)
         await m.reply_text(
-            strings("welcome_default") if welcome is None else welcome, parse_mode=None
+            strings("welcome_default") if welcome is None else welcome, parse_mode=enums.ParseMode.DISABLED
         )
     else:
         await m.reply_text("None")
@@ -281,7 +281,7 @@ async def greet_new_members(c: Client, m: Message, strings):
                     except:
                         pass
             await set_last_welcome_message_id(
-                m.chat.id, the_last_welcome_msg.message_id
+                m.chat.id, the_last_welcome_msg.id
             )
 
 

@@ -5,7 +5,7 @@ import sys
 import time
 
 import pyrogram
-from pyrogram import Client, idle
+from pyrogram import Client, idle, enums
 from pyrogram.errors import BadRequest
 from pyrogram.raw.functions.help import (
     GetConfig as pyrogetclientconfraw,
@@ -35,7 +35,7 @@ class botclient(custom_methods, Client):
             api_hash=API_HASH,
             bot_token=TOKEN,
             workers=24,
-            parse_mode="html",
+            parse_mode=enums.ParseMode.HTML,
             plugins=dict(
                 root="alisu.plugins",
                 exclude=disabled_plugins,
@@ -62,7 +62,7 @@ async def main() -> None:
 
     client.start_time = time.time()
     try:
-        getpyroclientconfraw = await client.send(pyrogetclientconfraw())
+        getpyroclientconfraw = await client.invoke(pyrogetclientconfraw())
         client.tg_max_text_msg_len = int(getpyroclientconfraw.message_length_max)
         client.tg_max_caption_msg_len = int(getpyroclientconfraw.caption_length_max)
     except:

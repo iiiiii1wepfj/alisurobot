@@ -22,7 +22,7 @@ from alisu.utils.bot_error_log import logging_errors
 async def dice(c: Client, m: Message, strings):
     dicen = await c.send_dice(
         m.chat.id,
-        reply_to_message_id=m.message_id,
+        reply_to_message_id=m.id,
     )
     await dicen.reply_text(
         strings("result").format(

@@ -14,14 +14,14 @@ class GetRawMessageCustom(Scaffold):
     ):
         if chat_type in ["supergroup", "channel"]:
             the_peer = await self.resolve_peer(chat_id)
-            r = await self.send(
+            r = await self.invoke(
                 functions.channels.GetMessages(
                     channel=the_peer,
                     id=[InputMessageID(id=message_id)],
                 )
             )
         elif chat_type in ["private", "bot", "group"]:
-            r = await self.send(
+            r = await self.invoke(
                 functions.messages.GetMessages(id=[InputMessageID(id=message_id)])
             )
         else:

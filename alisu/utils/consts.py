@@ -1,10 +1,12 @@
 from typing import List
 
+from pyrogram import enums
+
 import httpx
 
 group_types: List[str] = (
-    "group",
-    "supergroup",
+    enums.ChatType.GROUP,
+    enums.ChatType.SUPERGROUP,
 )
 
 admin_status: List[str] = [

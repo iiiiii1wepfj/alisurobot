@@ -1,6 +1,6 @@
 from typing import Dict, List
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import (
     PeerIdInvalid,
     UserIdInvalid,
@@ -84,7 +84,7 @@ async def markdown_inline(
             InlineQueryResultArticle(
                 title=strings("markdown_send_inline"),
                 input_message_content=InputTextMessageContent(
-                    querytxt, parse_mode="markdown"
+                    querytxt, parse_mode=enums.ParseMode.MARKDOWN
                 ),
                 reply_markup=(
                     InlineKeyboardMarkup(querybuttons)
@@ -110,7 +110,7 @@ async def html_inline(
             InlineQueryResultArticle(
                 title=strings("html_send_inline"),
                 input_message_content=InputTextMessageContent(
-                    querytxt, parse_mode="html"
+                    querytxt, parse_mode=enums.ParseMode.HTML
                 ),
                 reply_markup=(
                     InlineKeyboardMarkup(querybuttons)

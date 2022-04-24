@@ -1,5 +1,6 @@
 import asyncio
 from typing import Optional
+from datetime import datetime
 
 from pyrogram import Client, filters
 from pyrogram.types import ChatPermissions, Message, User
@@ -180,12 +181,12 @@ async def del_message(c: Client, m: Message):
     try:
         await c.delete_messages(
             m.chat.id,
-            m.reply_to_message.message_id,
+            m.reply_to_message.id,
         )
     except:
         pass
     try:
-        await c.delete_messages(m.chat.id, m.message_id)
+        await c.delete_messages(m.chat.id, m.id)
     except:
         pass
 
@@ -204,7 +205,7 @@ async def pin(c: Client, m: Message):
     if m.reply_to_message:
         await c.pin_chat_message(
             m.chat.id,
-            m.reply_to_message.message_id,
+            m.reply_to_message.id,
             disable_notification=True,
             both_sides=True,
         )
@@ -224,7 +225,7 @@ async def pinloud(c: Client, m: Message):
     if m.reply_to_message:
         await c.pin_chat_message(
             m.chat.id,
-            m.reply_to_message.message_id,
+            m.reply_to_message.id,
             disable_notification=False,
             both_sides=True,
         )
@@ -242,7 +243,7 @@ async def pinloud(c: Client, m: Message):
 @logging_errors
 async def unpin(c: Client, m: Message):
     if m.reply_to_message:
-        await c.unpin_chat_message(m.chat.id, m.reply_to_message.message_id)
+        await c.unpin_chat_message(m.chat.id, m.reply_to_message.id)
 
 
 @Client.on_message(filters.command(["unpinall", "unpin all"], prefix) & ~filters.edited)
@@ -518,11 +519,12 @@ async def tmute(c: Client, m: Message, strings):
         check_if_valid_tmute_range = check_if_ban_time_range(mute_time, time_unix_now)
         if not check_if_valid_tmute_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
+    the_mute_time_datetime_obj = datetime.utcfromtimestamp(mute_time)
     await c.restrict_chat_member(
         m.chat.id,
         target_user.id,
         ChatPermissions(can_send_messages=False),
-        until_date=mute_time,
+        until_date=the_mute_time_datetime_obj,
     )
     mentionadm = await mention_or_unknowen(m)
     the_tmute_message_text = strings("tmute_success").format(
@@ -554,7 +556,8 @@ async def tban(c: Client, m: Message, strings):
         check_if_valid_tban_range = check_if_ban_time_range(ban_time, time_unix_now)
         if not check_if_valid_tban_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
-    await c.ban_chat_member(m.chat.id, target_user.id, until_date=ban_time)
+    the_ban_time_datetime_obj = datetime.utcfromtimestamp(ban_time)
+    await c.ban_chat_member(m.chat.id, target_user.id, until_date=the_ban_time_datetime_obj)
     mentionadm = await mention_or_unknowen(m)
     the_tban_message_text = strings("tban_success").format(
         user=target_user.mention,
@@ -589,7 +592,7 @@ async def purge(c: Client, m: Message, strings):
     message_ids = []
     count_del_etion_s = 0
     if m.reply_to_message:
-        for a_s_message_id in range(m.reply_to_message.message_id, m.message_id):
+        for a_s_message_id in range(m.reply_to_message.id, m.id):
             message_ids.append(a_s_message_id)
             if len(message_ids) == 100:
                 await c.delete_messages(
