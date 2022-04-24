@@ -1,9 +1,8 @@
 from typing import Union
 from pyrogram.raw.functions.channels import GetParticipant
-from pyrogram.scaffold import Scaffold
 
 
-class GetChatMemberRaw(Scaffold):
+class GetChatMemberRaw:
     async def get_chat_member_raw(
         self,
         chat_id: Union[int, str],
