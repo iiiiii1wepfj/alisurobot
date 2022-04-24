@@ -8,7 +8,7 @@ from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
 
-@Client.on_message(filters.command("dog", prefix) & ~filters.edited)
+@Client.on_message(filters.command("dog", prefix))
 @use_chat_lang()
 @logging_errors
 async def dog(c: Client, m: Message, strings):
