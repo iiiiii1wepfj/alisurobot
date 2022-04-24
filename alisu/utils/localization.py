@@ -6,6 +6,7 @@ from glob import glob
 from typing import Dict, List
 from pathlib import Path as pypathlibpath
 
+from pyrogram import enums
 from pyrogram.types import CallbackQuery, InlineQuery, Message
 
 from alisu.database import groups, users, channels
@@ -29,22 +30,22 @@ async def set_db_lang(
     chat_type: str,
     lang_code: str,
 ):
-    if chat_type == "private":
+    if chat_type == enums.ChatType.PRIVATE:
         await users.filter(user_id=chat_id).update(chat_lang=lang_code)
     elif chat_type in group_types:  # groups and supergroups share the same table
         await groups.filter(chat_id=chat_id).update(chat_lang=lang_code)
-    elif chat_type == "channel":
+    elif chat_type == enums.ChatType.CHANNEL:
         await channels.filter(chat_id=chat_id).update(chat_lang=lang_code)
     else:
         raise TypeError("Unknown chat type '%s'." % chat_type)
 
 
 async def get_db_lang(chat_id: int, chat_type: str) -> str:
-    if chat_type == "private":
+    if chat_type == enums.ChatType.PRIVATE:
         ul = (await users.get(user_id=chat_id)).chat_lang
     elif chat_type in group_types:  # groups and supergroups share the same table
         ul = (await groups.get(chat_id=chat_id)).chat_lang
-    elif chat_type == "channel":
+    elif chat_type == enums.ChatType.CHANNEL:
         ul = (await channels.get(chat_id=chat_id)).chat_lang
     else:
         raise TypeError("Unknown chat type '%s'." % chat_type)
@@ -98,13 +99,13 @@ async def get_lang(message) -> str:
     elif isinstance(message, Message):
         chat = message.chat
     elif isinstance(message, InlineQuery):
-        chat, chat.type = message.from_user, "private"
+        chat, chat.type = message.from_user, enums.ChatType.PRIVATE
     else:
         raise TypeError(f"Update type '{message.__name__}' is not supported.")
 
     lang = await get_db_lang(chat.id, chat.type)
 
-    if chat.type == "private":
+    if chat.type == enums.ChatType.PRIVATE:
         lang = lang or message.from_user.language_code or default_language
     else:
         lang = lang or default_language
