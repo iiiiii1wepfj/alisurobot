@@ -9,7 +9,7 @@ from io import BytesIO
 import qrcode
 
 
-@Client.on_message(filters.command("gen_qr", prefix) & ~filters.edited)
+@Client.on_message(filters.command("gen_qr", prefix))
 async def genqrcodecmd(c: Client, m: Message):
     if m.reply_to_message:
         if m.reply_to_message.caption:
