@@ -14,7 +14,7 @@ from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors
 
 
-@Client.on_message(filters.command("ip", prefix) & ~filters.edited)
+@Client.on_message(filters.command("ip", prefix))
 @use_chat_lang()
 @logging_errors
 async def ip_cmd(c: Client, m: Message, strings):
