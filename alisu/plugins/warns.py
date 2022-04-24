@@ -1,5 +1,7 @@
 from typing import Optional, Tuple
 
+from datetime import datetime
+
 from pyrogram import Client, filters
 from pyrogram.types import (
     CallbackQuery,
@@ -206,7 +208,9 @@ async def warn_user(
                 await c.ban_chat_member(
                     m.chat.id,
                     target_user.id,
-                    until_date=(round(time.time()) + warn_time),
+                    until_date=datetime.utcfromtimestamp(
+                        round(time.time()) + warn_time
+                    ),
                 )
                 warn_string = strings("warn_tbanned")
             elif warn_action == "tmute":
@@ -214,7 +218,9 @@ async def warn_user(
                     m.chat.id,
                     target_user.id,
                     ChatPermissions(can_send_messages=False),
-                    until_date=(round(time.time()) + warn_time),
+                    until_date=datetime.utcfromtimestamp(
+                        round(time.time()) + warn_time
+                    ),
                 )
                 warn_string = strings("warn_tmuted")
             else:
