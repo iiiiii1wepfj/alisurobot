@@ -181,12 +181,12 @@ async def del_message(c: Client, m: Message):
     try:
         await c.delete_messages(
             m.chat.id,
-            m.reply_to_message.message_id,
+            m.reply_to_message.id,
         )
     except:
         pass
     try:
-        await c.delete_messages(m.chat.id, m.message_id)
+        await c.delete_messages(m.chat.id, m.id)
     except:
         pass
 
@@ -205,7 +205,7 @@ async def pin(c: Client, m: Message):
     if m.reply_to_message:
         await c.pin_chat_message(
             m.chat.id,
-            m.reply_to_message.message_id,
+            m.reply_to_message.id,
             disable_notification=True,
             both_sides=True,
         )
@@ -225,7 +225,7 @@ async def pinloud(c: Client, m: Message):
     if m.reply_to_message:
         await c.pin_chat_message(
             m.chat.id,
-            m.reply_to_message.message_id,
+            m.reply_to_message.id,
             disable_notification=False,
             both_sides=True,
         )
@@ -243,7 +243,7 @@ async def pinloud(c: Client, m: Message):
 @logging_errors
 async def unpin(c: Client, m: Message):
     if m.reply_to_message:
-        await c.unpin_chat_message(m.chat.id, m.reply_to_message.message_id)
+        await c.unpin_chat_message(m.chat.id, m.reply_to_message.id)
 
 
 @Client.on_message(filters.command(["unpinall", "unpin all"], prefix))
@@ -592,7 +592,7 @@ async def purge(c: Client, m: Message, strings):
     message_ids = []
     count_del_etion_s = 0
     if m.reply_to_message:
-        for a_s_message_id in range(m.reply_to_message.message_id, m.message_id):
+        for a_s_message_id in range(m.reply_to_message.id, m.id):
             message_ids.append(a_s_message_id)
             if len(message_ids) == 100:
                 await c.delete_messages(
