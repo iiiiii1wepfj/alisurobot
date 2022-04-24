@@ -1,9 +1,8 @@
 from typing import Union
 from pyrogram.raw.functions.channels import GetParticipant
-from pyrogram.scaffold import Scaffold
 
 
-class GetAdminPermissionsRaw(Scaffold):
+class GetAdminPermissionsRaw:
     async def get_admin_permissions_raw(
         self,
         chat_id: Union[int, str],
