@@ -62,7 +62,7 @@ async def main() -> None:
 
     client.start_time = time.time()
     try:
-        getpyroclientconfraw = await client.send(pyrogetclientconfraw())
+        getpyroclientconfraw = await client.invoke(pyrogetclientconfraw())
         client.tg_max_text_msg_len = int(getpyroclientconfraw.message_length_max)
         client.tg_max_caption_msg_len = int(getpyroclientconfraw.caption_length_max)
     except:
