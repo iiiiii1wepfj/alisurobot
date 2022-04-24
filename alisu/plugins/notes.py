@@ -315,7 +315,7 @@ async def note_by_hashtag(
     (filters.group | filters.private)
     & filters.text
     & filters.incoming
-    & filters.command("get", prefix)
+    & filters.command("get", prefix),
     group=2,
 )
 @logging_errors
