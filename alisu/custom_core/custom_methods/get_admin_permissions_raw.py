@@ -13,7 +13,7 @@ class GetAdminPermissionsRaw(Scaffold):
         user = await self.resolve_peer(user_id)
 
         r = (
-            await self.send(
+            await self.invoke(
                 GetParticipant(
                     channel=chat,
                     participant=user,
