@@ -20,8 +20,7 @@ bot_chat: str = "@AlisuChat"
 # Using a low priority group so deeplinks will run before this and stop the propagation.
 @Client.on_message(
     filters.command("start", prefix)
-    & ~filters.regex("^/start rules_")
-    & ~filters.edited,
+    & ~filters.regex("^/start rules_"),
     group=2,
 )
 @Client.on_callback_query(filters.regex("^start_back$"))
