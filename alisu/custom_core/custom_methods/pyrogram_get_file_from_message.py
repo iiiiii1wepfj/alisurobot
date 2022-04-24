@@ -1,9 +1,8 @@
 from pyrogram.types import Message
 from pyrogram.file_id import FileId
-from pyrogram.scaffold import Scaffold
 
 
-class PyrogramGetFileFromMessage(Scaffold):
+class PyrogramGetFileFromMessage:
     async def pyrogram_get_file_from_message(self, message: Message):
         media_list_support = (
             "audio",
