@@ -200,7 +200,6 @@ async def disable_welcome_message(c: Client, m: Message, strings):
 @Client.on_message(
     filters.command(["resetwelcome", "clearwelcome"], prefix)
     & filters.group
-    & ~filters.edited
 )
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
