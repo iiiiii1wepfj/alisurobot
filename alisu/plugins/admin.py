@@ -1,5 +1,6 @@
 import asyncio
 from typing import Optional
+from datetime import datetime
 
 from pyrogram import Client, filters
 from pyrogram.types import ChatPermissions, Message, User
@@ -518,11 +519,12 @@ async def tmute(c: Client, m: Message, strings):
         check_if_valid_tmute_range = check_if_ban_time_range(mute_time, time_unix_now)
         if not check_if_valid_tmute_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
+    the_mute_time_datetime_obj = datetime.utcfromtimestamp(mute_time)
     await c.restrict_chat_member(
         m.chat.id,
         target_user.id,
         ChatPermissions(can_send_messages=False),
-        until_date=mute_time,
+        until_date=the_mute_time_datetime_obj,
     )
     mentionadm = await mention_or_unknowen(m)
     the_tmute_message_text = strings("tmute_success").format(
@@ -554,7 +556,8 @@ async def tban(c: Client, m: Message, strings):
         check_if_valid_tban_range = check_if_ban_time_range(ban_time, time_unix_now)
         if not check_if_valid_tban_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
-    await c.ban_chat_member(m.chat.id, target_user.id, until_date=ban_time)
+    the_ban_time_datetime_obj = datetime.utcfromtimestamp(ban_time)
+    await c.ban_chat_member(m.chat.id, target_user.id, until_date=the_ban_time_datetime_obj)
     mentionadm = await mention_or_unknowen(m)
     the_tban_message_text = strings("tban_success").format(
         user=target_user.mention,
