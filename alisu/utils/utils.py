@@ -215,7 +215,7 @@ def require_admin(
                 if get_my_chat_member.status not in pyro_admin_types_chat_member:
                     await message.reply_text(strings("bot_not_admin_error"))
                     return
-                the_callback_data = f"{msg.chat.id}|{msg.message_id}"
+                the_callback_data = f"{msg.chat.id}|{msg.id}"
                 check_anon_perms_msg_send = await send_anon_admin_button(
                     msg, the_callback_data, strings
                 )
