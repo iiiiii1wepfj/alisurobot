@@ -38,7 +38,7 @@ async def check_private_rules_status(chat_id: int):
 
 
 @Client.on_message(
-    filters.command("setrules", prefix) & filters.group & ~filters.edited
+    filters.command("setrules", prefix) & filters.group
 )
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
@@ -52,7 +52,7 @@ async def settherules(c: Client, m: Message, strings):
 
 
 @Client.on_message(
-    filters.command("set_pvt_rules", prefix) & filters.group & ~filters.edited
+    filters.command("set_pvt_rules", prefix) & filters.group
 )
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
@@ -73,7 +73,7 @@ async def set_pvt_rules_cmd(c: Client, m: Message, strings):
 
 
 @Client.on_message(
-    filters.command("check_pvt_rules", prefix) & filters.group & ~filters.edited
+    filters.command("check_pvt_rules", prefix) & filters.group
 )
 @require_admin()
 @use_chat_lang()
@@ -87,7 +87,7 @@ async def check_pvt_rules_cmd(c: Client, m: Message, strings):
 
 
 @Client.on_message(
-    filters.command("resetrules", prefix) & filters.group & ~filters.edited
+    filters.command("resetrules", prefix) & filters.group
 )
 @require_admin(permissions=["can_change_info"])
 @use_chat_lang()
@@ -97,7 +97,7 @@ async def delete_rules(c: Client, m: Message, strings):
     await m.reply_text(strings("rules_deleted"))
 
 
-@Client.on_message(filters.command("rules", prefix) & filters.group & ~filters.edited)
+@Client.on_message(filters.command("rules", prefix) & filters.group)
 @use_chat_lang()
 @logging_errors
 async def show_rules(c: Client, m: Message, strings):
@@ -134,7 +134,7 @@ async def show_rules(c: Client, m: Message, strings):
             await m.reply_text(strings("rules_empty"))
 
 
-@Client.on_message(filters.regex("^/start rules_") & filters.private & ~filters.edited)
+@Client.on_message(filters.regex("^/start rules_") & filters.private)
 @use_chat_lang()
 @logging_errors
 @pass_index_error
