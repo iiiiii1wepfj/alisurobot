@@ -1,4 +1,3 @@
-from pyrogram.scaffold import Scaffold
 from pyrogram.types import Message
 from pyrogram.raw import functions
 from pyrogram.raw.types import InputMessageID
@@ -6,7 +5,7 @@ from pyrogram import enums
 from alisu.utils.bot_custom_exceptions import invalid_chat_type_custom_exception
 
 
-class GetRawMessageFromPyrogram(Scaffold):
+class GetRawMessageFromPyrogram:
     async def get_raw_message_from_pyrogram(
         self,
         message: Message,
