@@ -22,7 +22,6 @@ import cv2
         prefix,
     )
     & filters.reply
-    & ~filters.edited
 )
 @use_chat_lang()
 async def get_qr_code(
