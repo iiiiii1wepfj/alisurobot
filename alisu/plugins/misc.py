@@ -216,7 +216,7 @@ async def request_cmd(c: Client, m: Message):
 async def button_parse_helper(c: Client, m: Message, strings):
     if len(m.text.split()) > 2:
         await m.reply_text(
-            f"[{m.text.split(None, 2)[2]}](buttonurl:{m.command[1]})", parse_mode=None
+            f"[{m.text.split(None, 2)[2]}](buttonurl:{m.command[1]})", parse_mode=enums.ParseMode.DISABLED
         )
     else:
         await m.reply_text(strings("parsebtn_err"))
