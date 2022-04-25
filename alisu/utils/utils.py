@@ -139,15 +139,15 @@ async def check_perms(
         user = await client.get_chat_member(chat.id, message.from_user.id)
     except PyroUserNotParticipantError:
         return False
-    if user.status == "creator":
+    if user.status == enums.ChatMemberStatus.OWNER:
         return True
 
     missing_perms = []
 
     # No permissions specified, accept being an admin.
-    if not permissions and user.status == "administrator":
+    if not permissions and user.status == enums.ChatMemberStatus.ADMINISTRATOR:
         return True
-    if user.status != "administrator":
+    if user.status != enums.ChatMemberStatus.ADMINISTRATOR:
         if complain_missing_perms:
             await sender(strings("no_admin_error"))
         return False
@@ -156,7 +156,7 @@ async def check_perms(
         permissions = [permissions]
 
     for permission in permissions:
-        if not user.__getattribute__(permission):
+        if not getattr(user.privileges, permission):
             missing_perms.append(permission)
 
     if not missing_perms:
@@ -267,15 +267,15 @@ async def bot_check_perms(
         chat = message.chat
 
     user = await client.get_chat_member(chat.id, "me")
-    if user.status == "creator":
+    if user.status == enums.ChatMemberStatus.OWNER:
         return True
 
     missing_perms = []
 
     # No permissions specified, accept being an admin.
-    if not permissions and user.status == "administrator":
+    if not permissions and user.status == enums.ChatMemberStatus.ADMINISTRATOR:
         return True
-    if user.status != "administrator":
+    if user.status != enums.ChatMemberStatus.ADMINISTRATOR:
         if complain_missing_perms:
             await sender(strings("bot_not_admin_error"))
         return False
@@ -284,7 +284,7 @@ async def bot_check_perms(
         permissions = [permissions]
 
     for permission in permissions:
-        if not user.__getattribute__(permission):
+        if not getattr(user.privileges, permission):
             missing_perms.append(permission)
 
     if not missing_perms:
