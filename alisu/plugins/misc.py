@@ -49,7 +49,7 @@ async def html(c: Client, m: Message, strings):
 @logging_errors
 async def mentionadmins(c: Client, m: Message, strings):
     mention: str = ""
-    async for i in c.iter_chat_members(m.chat.id, filter="administrators"):
+    async for i in m.chat.get_members(m.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if not (i.user.is_deleted or i.is_anonymous):
             mention += f"{i.user.mention}\n"
     await c.send_message(
@@ -72,7 +72,7 @@ async def reportadmins(c: Client, m: Message, strings):
         )
         if check_admin.status not in admin_status:
             mention = ""
-            async for i in c.iter_chat_members(m.chat.id, filter="administrators"):
+            async for i in m.chat.get_members(filter=enums.ChatMembersFilter.ADMINISTRATORS):
                 if not (i.user.is_deleted or i.is_anonymous or i.user.is_bot):
                     mention += f"<a href='tg://user?id={i.user.id}'>\u2063</a>"
             await m.reply_to_message.reply_text(
