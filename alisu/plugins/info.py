@@ -1,6 +1,6 @@
 import html
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import BadRequest, UserNotParticipant
 from pyrogram.types import Message
 
@@ -43,9 +43,9 @@ async def user_info(c: Client, m: Message, strings):
 
     try:
         member = await c.get_chat_member(chat_id=m.chat.id, user_id=user.id)
-        if member.status in ["administrator"]:
+        if member.status == enums.ChatMemberStatus.ADMINISTRATOR:
             text += strings("info_chat_admin")
-        elif member.status in ["creator"]:
+        elif member.status == enums.ChatMemberStatus.OWNER:
             text += strings("info_chat_creator")
     except (UserNotParticipant, ValueError):
         pass
