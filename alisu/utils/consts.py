@@ -10,8 +10,8 @@ group_types: List[str] = (
 )
 
 admin_status: List[str] = [
-    "creator",
-    "administrator",
+    enums.ChatMemberStatus.OWNER,
+    enums.ChatMemberStatus.ADMINISTRATOR,
 ]
 
 timeout = httpx.Timeout(
