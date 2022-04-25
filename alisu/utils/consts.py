@@ -1,18 +1,19 @@
-from typing import List
+from typing import Iterable
 
 from pyrogram import enums
 
 import httpx
 
-group_types: List[str] = (
+group_types: Iterable[enums.ChatType] = (
     enums.ChatType.GROUP,
     enums.ChatType.SUPERGROUP,
 )
 
-admin_status: List[str] = [
+admin_status: Iterable[enums.ChatMemberStatus] = (
     enums.ChatMemberStatus.OWNER,
     enums.ChatMemberStatus.ADMINISTRATOR,
-]
+)
+
 
 timeout = httpx.Timeout(
     40,
