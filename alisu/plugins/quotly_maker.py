@@ -163,7 +163,7 @@ async def pyrogram_to_quotly(messages):
         if message.entities:
             the_message_dict_to_append["entities"] = [
                 {
-                    "type": entity.type,
+                    "type": entity.type.name.lower(),
                     "offset": entity.offset,
                     "length": entity.length,
                 }
@@ -172,7 +172,7 @@ async def pyrogram_to_quotly(messages):
         elif message.caption_entities:
             the_message_dict_to_append["entities"] = [
                 {
-                    "type": entity.type,
+                    "type": entity.type.name.lower(),
                     "offset": entity.offset,
                     "length": entity.length,
                 }
