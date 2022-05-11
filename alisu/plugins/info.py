@@ -39,7 +39,7 @@ async def user_info(c: Client, m: Message, strings):
     if user.username:
         text += strings("info_username").format(username=html.escape(user.username))
 
-    text += strings("info_userlink").format(link=user.mention("link", style="html"))
+    text += strings("info_userlink").format(link=user.mention("link"))
 
     try:
         member = await c.get_chat_member(chat_id=m.chat.id, user_id=user.id)
