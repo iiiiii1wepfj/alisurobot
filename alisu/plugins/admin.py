@@ -2,7 +2,7 @@ import asyncio
 from typing import Optional
 from datetime import datetime
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import ChatPermissions, Message, User
 
 from alisu.config import prefix
@@ -92,7 +92,7 @@ async def get_target_user(
             msg_entities = m.entities[1] if m.text.startswith("/") else m.entities[0]
             target_user = await c.get_users(
                 msg_entities.user.id
-                if msg_entities.type == "text_mention"
+                if msg_entities.type == enums.MessageEntityType.TEXT_MENTION
                 else int(m.command[1])
                 if m.command[1].isdecimal()
                 else m.command[1]
@@ -132,7 +132,7 @@ async def get_target_user_and_time_and_reason(
             return
         target_user = await c.get_users(
             msg_entities.user.id
-            if msg_entities.type == "text_mention"
+            if msg_entities.type == enums.MessageEntityType.TEXT_MENTION
             else int(m.command[1])
             if m.command[1].isdecimal()
             else m.command[1]
@@ -557,7 +557,9 @@ async def tban(c: Client, m: Message, strings):
         if not check_if_valid_tban_range:
             return await m.reply_text(strings("invalid_punish_time_specified_msg"))
     the_ban_time_datetime_obj = datetime.utcfromtimestamp(ban_time)
-    await c.ban_chat_member(m.chat.id, target_user.id, until_date=the_ban_time_datetime_obj)
+    await c.ban_chat_member(
+        m.chat.id, target_user.id, until_date=the_ban_time_datetime_obj
+    )
     mentionadm = await mention_or_unknowen(m)
     the_tban_message_text = strings("tban_success").format(
         user=target_user.mention,
