@@ -3,7 +3,7 @@ import shutil
 import tempfile
 
 from PIL import Image
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import (
     PeerIdInvalid,
     StickersetInvalid,
@@ -112,7 +112,7 @@ async def kang_sticker(
         img_url = None
         filename: str = "sticker.png"
         for y in m.entities:
-            if y.type == "url":
+            if y.type == enums.MessageEntityType.URL:
                 img_url = m.text[y.offset : (y.offset + y.length)]
                 break
         if not img_url:
@@ -273,9 +273,7 @@ def resize_image(filename: str) -> str:
     return png_image
 
 
-@Client.on_message(
-    filters.command("stickerid", prefix) & filters.reply
-)
+@Client.on_message(filters.command("stickerid", prefix) & filters.reply)
 @use_chat_lang()
 @logging_errors
 async def getstickerid(
@@ -291,9 +289,7 @@ async def getstickerid(
         )
 
 
-@Client.on_message(
-    filters.command("getsticker", prefix) & filters.reply
-)
+@Client.on_message(filters.command("getsticker", prefix) & filters.reply)
 @use_chat_lang()
 @logging_errors
 async def getstickeraspng(
