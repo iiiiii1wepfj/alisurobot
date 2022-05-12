@@ -1,4 +1,0 @@
-{
-  "qr_decoder_string": "<b>הטקסט בקוד הqr הזה:</b>\n\n<code>{qr_data}</code>",
-  "decode_qr_description": "מפענח קוד qr על ידי השבה לתמונה של קוד qr."
-}
