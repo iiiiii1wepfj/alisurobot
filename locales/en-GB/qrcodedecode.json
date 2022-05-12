@@ -1,4 +1,0 @@
-{
-  "qr_decoder_string": "<b>the text from the qr code:</b>\n\n<code>{qr_data}</code>",
-  "decode_qr_description": "Decode qr code by reply to qr code image."
-}
