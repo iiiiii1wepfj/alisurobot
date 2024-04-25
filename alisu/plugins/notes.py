@@ -1,8 +1,8 @@
 import re
 from typing import Optional
 
-from pyrogram import Client, filters, enums
-from pyrogram.types import InlineKeyboardMarkup, Message
+from hydrogram import Client, filters, enums
+from hydrogram.types import InlineKeyboardMarkup, Message
 
 from alisu.config import prefix
 from alisu.database import notes
