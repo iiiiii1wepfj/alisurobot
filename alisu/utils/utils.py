@@ -15,14 +15,14 @@ from typing import (
     Union,
 )
 
-from pyrogram import Client, emoji, filters, enums
-from pyrogram.types import (
+from hydrogram import Client, emoji, filters, enums
+from hydrogram.types import (
     CallbackQuery,
     InlineKeyboardMarkup,
     InlineKeyboardButton,
     Message,
 )
-from pyrogram.errors.exceptions.bad_request_400 import (
+from hydrogram.errors.exceptions.bad_request_400 import (
     UserNotParticipant as PyroUserNotParticipantError,
 )
 
