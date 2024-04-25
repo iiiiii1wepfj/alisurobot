@@ -1,5 +1,5 @@
-from pyrogram import Client, filters
-from pyrogram.types import Message
+from hydrogram import Client, filters
+from hydrogram.types import Message
 
 from alisu.config import prefix
 from alisu.utils.consts import http
@@ -148,7 +148,7 @@ async def get_text_or_caption(m: Message):
         return ""
 
 
-async def pyrogram_to_quotly(messages):
+async def hydrogram_to_quotly(messages):
     if not isinstance(messages, list):
         messages = [messages]
     payload = {
@@ -246,7 +246,7 @@ async def msg_quotly_cmd(c: Client, m: Message, strings):
                 except:
                     return await m.reply_text("¯\\_(ツ)_/¯")
                 try:
-                    make_quotly = await pyrogram_to_quotly(messages)
+                    make_quotly = await hydrogram_to_quotly(messages)
                     bio_sticker = BytesIO(make_quotly)
                     bio_sticker.name = "biosticker.webp"
                     return await m.reply_sticker(bio_sticker)
@@ -262,7 +262,7 @@ async def msg_quotly_cmd(c: Client, m: Message, strings):
     except:
         return await m.reply_text("¯\\_(ツ)_/¯")
     try:
-        make_quotly = await pyrogram_to_quotly(messages)
+        make_quotly = await hydrogram_to_quotly(messages)
         bio_sticker = BytesIO(make_quotly)
         bio_sticker.name = "biosticker.webp"
         return await m.reply_sticker(bio_sticker)
