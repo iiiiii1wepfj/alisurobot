@@ -2,8 +2,8 @@ import html
 import io
 import json
 
-from pyrogram import Client, filters
-from pyrogram.types import Message
+from hydrogram import Client, filters
+from hydrogram.types import Message
 
 from alisu.config import prefix
 from alisu.utils import commands
