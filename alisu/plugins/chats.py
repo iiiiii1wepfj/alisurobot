@@ -16,4 +16,4 @@ async def check_chat(c: Client, m: Message):
 
     if not check_the_chat:
         await add_chat(chat_id, chat_type)
-        await set_db_lang(m.chat.id, m.message.chat.type, default_language)
+        await set_db_lang(m.chat.id, m.chat.type, default_language)
