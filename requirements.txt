@@ -1,4 +1,4 @@
-git+https://github.com/pyrogram/pyrogram.git
+hydrogram
 git+https://github.com/aio-libs/async-lru.git#egg=async_lru
 tgcrypto
 pyromod
