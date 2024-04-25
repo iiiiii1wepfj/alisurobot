@@ -13,17 +13,17 @@ from typing import Union
 
 import speedtest
 from meval import meval
-from pyrogram import (
+from hydrogram import (
     Client,
     filters,
     enums,
-    __version__ as pyrogram_version,
+    __version__ as hydrogram_version,
 )
-from pyrogram.errors import RPCError
-from pyrogram.raw.all import (
-    layer as pyrogram_layer,
+from hydrogram.errors import RPCError
+from hydrogram.raw.all import (
+    layer as hydrogram_layer,
 )
-from pyrogram.types import Message
+from hydrogram.types import Message
 
 from alisu import (
     __version__ as alisu_version,
@@ -236,7 +236,7 @@ async def getbotstats(c: Client, m: Message):
         f"<b>Groups:</b> {groups_count}\n"
         f"<b>Filters:</b> {filters_count}\n"
         f"<b>Notes:</b> {notes_count}\n"
-        f"<b>Pyrogram Version:</b> {pyrogram_version} (Layer {pyrogram_layer})\n"
+        f"<b>Hydrogram Version:</b> {hydrogram_version} (Layer {hydrogram_layer})\n"
         f"<b>Bot Version:</b> {alisu_version} ({c.version_code})\n"
         f"<b>Uptime:</b> {bot_uptime}"
     )
