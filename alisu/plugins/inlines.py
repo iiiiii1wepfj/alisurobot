@@ -1,12 +1,12 @@
 from typing import Dict, List
 
-from pyrogram import Client, filters, enums
-from pyrogram.errors import (
+from hydrogram import Client, filters, enums
+from hydrogram.errors import (
     PeerIdInvalid,
     UserIdInvalid,
     UsernameInvalid,
 )
-from pyrogram.types import (
+from hydrogram.types import (
     InlineKeyboardMarkup,
     InlineQuery,
     InlineQueryResultArticle,
