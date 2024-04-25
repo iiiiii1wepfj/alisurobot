@@ -1,6 +1,6 @@
 from typing import Iterable
 
-from pyrogram import enums
+from hydrogram import enums
 
 import httpx
 
