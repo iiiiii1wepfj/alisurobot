@@ -4,11 +4,11 @@ import platform
 import sys
 import time
 
-import pyrogram
-from pyrogram import Client, idle, enums
-from pyrogram.errors import BadRequest
-from pyrogram.raw.functions.help import (
-    GetConfig as pyrogetclientconfraw,
+import hydrogram
+from hydrogram import Client, idle, enums
+from hydrogram.errors import BadRequest
+from hydrogram.raw.functions.help import (
+    GetConfig as hydrogetclientconfraw,
 )
 
 import alisu
@@ -62,7 +62,7 @@ async def main() -> None:
 
     client.start_time = time.time()
     try:
-        getpyroclientconfraw = await client.invoke(pyrogetclientconfraw())
+        getpyroclientconfraw = await client.invoke(hydrogetclientconfraw())
         client.tg_max_text_msg_len = int(getpyroclientconfraw.message_length_max)
         client.tg_max_caption_msg_len = int(getpyroclientconfraw.caption_length_max)
     except:
