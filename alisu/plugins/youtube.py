@@ -8,7 +8,7 @@ import tempfile
 import yt_dlp
 from hydrogram import Client, filters
 from hydrogram.errors import BadRequest
-from hydrogram.helpers import ikb
+from pyromod.helpers import ikb
 from hydrogram.types import CallbackQuery, Message
 
 from alisu.config import prefix
