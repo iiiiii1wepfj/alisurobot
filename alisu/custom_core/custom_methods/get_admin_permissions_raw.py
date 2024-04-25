@@ -1,5 +1,5 @@
 from typing import Union
-from pyrogram.raw.functions.channels import GetParticipant
+from hydrogram.raw.functions.channels import GetParticipant
 
 
 class GetAdminPermissionsRaw:
