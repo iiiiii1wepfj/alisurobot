@@ -74,7 +74,7 @@ async def main() -> None:
         start_message = (
             "<b>The bot was started!</b>\n\n"
             f"<b>Version:</b> <code>v{alisu.__version__} ({client.version_code})</code>\n"
-            f"<b>Pyrogram:</b> <code>v{hydrogram.__version__}</code>"
+            f"<b>Hydrogram:</b> <code>v{hydrogram.__version__}</code>"
         )
 
         try:
