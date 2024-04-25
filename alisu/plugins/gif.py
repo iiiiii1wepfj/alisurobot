@@ -1,7 +1,7 @@
 import logging
 
-from pyrogram import Client, filters
-from pyrogram.types import Message
+from hydrogram import Client, filters
+from hydrogram.types import Message
 
 from alisu.config import TENOR_API_KEY, prefix
 from alisu.utils import commands
