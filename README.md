@@ -14,32 +14,40 @@ git clone https://github.com/iiiiii1wepfj/alisurobot.git
 cd alisurobot
 ```
 
-3. Install the requirements
+3. Create virtual environment
+```
+python3 -m venv .venv
+```
+```
+source .venv/bin/activate
+```
+
+4. Install the requirements
 
 ```
 pip3 install -U -r requirements.txt
 ```
 
-4. move to the bot directory in the repo
+5. move to the bot directory in the repo
 
 ```
 cd alisu
 ```
 
-5. change the config.py.example file name to config.py
+6. change the config.py.example file name to config.py
 
 ```
 cp config.py.example config.py
 ```
 
-6. edit the config vars in config.py
+7. edit the config vars in config.py
 
-7. back to the repo folder
+8. back to the repo folder
 
 ```
 cd ..
 ```
-8. run the bot
+9. run the bot
 
 ```
 python3 -m alisu
