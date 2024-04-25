@@ -2,8 +2,8 @@ from typing import Optional, Tuple
 
 from datetime import datetime
 
-from pyrogram import Client, filters
-from pyrogram.types import (
+from hydrogram import Client, filters
+from hydrogram.types import (
     CallbackQuery,
     ChatPermissions,
     Message,
