@@ -1,7 +1,8 @@
-from pyrogram import Client
-from pyrogram.types import Message
+from hydrogram import Client
+from hydrogram.types import Message
 
 from alisu.utils import add_chat, chat_exists
+from alisu.utils.localization import set_db_lang, default_language
 
 # This is the first plugin run to guarantee
 # that the actual chat is initialized in the DB.
@@ -15,3 +16,4 @@ async def check_chat(c: Client, m: Message):
 
     if not check_the_chat:
         await add_chat(chat_id, chat_type)
+        await set_db_lang(m.chat.id, m.chat.type, default_language)

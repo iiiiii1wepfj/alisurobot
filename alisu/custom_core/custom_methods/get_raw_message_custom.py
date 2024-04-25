@@ -1,6 +1,6 @@
 from typing import Union
-from pyrogram.raw import functions
-from pyrogram.raw.types import InputMessageID
+from hydrogram.raw import functions
+from hydrogram.raw.types import InputMessageID
 from alisu.utils.bot_custom_exceptions import invalid_chat_type_custom_exception
 
 

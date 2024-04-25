@@ -2,8 +2,8 @@ import asyncio
 from typing import Optional
 from datetime import datetime
 
-from pyrogram import Client, filters, enums
-from pyrogram.types import ChatPermissions, Message, User
+from hydrogram import Client, filters, enums
+from hydrogram.types import ChatPermissions, Message, User
 
 from alisu.config import prefix
 from alisu.database import groups

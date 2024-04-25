@@ -1,8 +1,8 @@
 import html
 
-from pyrogram import Client, filters
-from pyrogram.errors.exceptions import BadRequest
-from pyrogram.types import Message
+from hydrogram import Client, filters
+from hydrogram.errors.exceptions import BadRequest
+from hydrogram.types import Message
 
 from alisu.config import prefix
 from alisu.utils import commands

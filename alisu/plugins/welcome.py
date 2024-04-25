@@ -1,8 +1,8 @@
 from typing import Optional, Tuple
 
-from pyrogram import Client, filters, enums
-from pyrogram.errors import BadRequest
-from pyrogram.types import InlineKeyboardMarkup, Message
+from hydrogram import Client, filters, enums
+from hydrogram.errors import BadRequest
+from hydrogram.types import InlineKeyboardMarkup, Message
 
 from alisu.config import prefix
 from alisu.database import groups

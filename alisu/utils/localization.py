@@ -6,8 +6,8 @@ from glob import glob
 from typing import Dict, List
 from pathlib import Path as pypathlibpath
 
-from pyrogram import enums
-from pyrogram.types import CallbackQuery, InlineQuery, Message
+from hydrogram import enums
+from hydrogram.types import CallbackQuery, InlineQuery, Message
 
 from alisu.database import groups, users, channels
 from alisu.utils.consts import group_types

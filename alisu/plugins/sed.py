@@ -1,9 +1,9 @@
 import html
 
 import regex
-from pyrogram import Client, filters
-from pyrogram.types import Message
-from pyrogram.errors.exceptions.bad_request_400 import MessageTooLong, MessageEmpty
+from hydrogram import Client, filters
+from hydrogram.types import Message
+from hydrogram.errors.exceptions.bad_request_400 import MessageTooLong, MessageEmpty
 
 from alisu.utils.localization import use_chat_lang
 from alisu.utils.bot_error_log import logging_errors

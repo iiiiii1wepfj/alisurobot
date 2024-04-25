@@ -3,27 +3,27 @@ import shutil
 import tempfile
 
 from PIL import Image
-from pyrogram import Client, filters, enums
-from pyrogram.errors import (
+from hydrogram import Client, filters, enums
+from hydrogram.errors import (
     PeerIdInvalid,
     StickersetInvalid,
 )
-from pyrogram.raw.functions.messages import (
+from hydrogram.raw.functions.messages import (
     GetStickerSet,
     SendMedia,
 )
-from pyrogram.raw.functions.stickers import (
+from hydrogram.raw.functions.stickers import (
     AddStickerToSet,
     CreateStickerSet,
 )
-from pyrogram.raw.types import (
+from hydrogram.raw.types import (
     DocumentAttributeFilename,
     InputDocument,
     InputMediaUploadedDocument,
     InputStickerSetItem,
     InputStickerSetShortName,
 )
-from pyrogram.types import (
+from hydrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message,

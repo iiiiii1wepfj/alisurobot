@@ -15,22 +15,22 @@ from typing import (
     Union,
 )
 
-from pyrogram import Client, emoji, filters, enums
-from pyrogram.types import (
+from hydrogram import Client, emoji, filters, enums
+from hydrogram.types import (
     CallbackQuery,
     InlineKeyboardMarkup,
     InlineKeyboardButton,
     Message,
 )
-from pyrogram.errors.exceptions.bad_request_400 import (
-    UserNotParticipant as PyroUserNotParticipantError,
+from hydrogram.errors.exceptions.bad_request_400 import (
+    UserNotParticipant as HydroUserNotParticipantError,
 )
 
 from alisu.config import sudoers
 from alisu.database import groups, users, channels
 from alisu.utils.consts import (
     group_types,
-    admin_status as pyro_admin_types_chat_member,
+    admin_status as hydro_admin_types_chat_member,
 )
 from alisu.utils.localization import (
     default_language,
@@ -137,7 +137,7 @@ async def check_perms(
         chat = message.chat
     try:
         user = await client.get_chat_member(chat.id, message.from_user.id)
-    except PyroUserNotParticipantError:
+    except HydroUserNotParticipantError:
         return False
     if user.status == enums.ChatMemberStatus.OWNER:
         return True
@@ -212,7 +212,7 @@ def require_admin(
             check_anon_perms_msg_send = None
             if anon_admin_check:
                 get_my_chat_member = await client.get_chat_member(msg.chat.id, "me")
-                if get_my_chat_member.status not in pyro_admin_types_chat_member:
+                if get_my_chat_member.status not in hydro_admin_types_chat_member:
                     await message.reply_text(strings("bot_not_admin_error"))
                     return
                 the_callback_data = f"{msg.chat.id}|{msg.id}"

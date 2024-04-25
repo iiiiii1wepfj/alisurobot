@@ -4,11 +4,11 @@ import platform
 import sys
 import time
 
-import pyrogram
-from pyrogram import Client, idle, enums
-from pyrogram.errors import BadRequest
-from pyrogram.raw.functions.help import (
-    GetConfig as pyrogetclientconfraw,
+import hydrogram
+from hydrogram import Client, idle, enums
+from hydrogram.errors import BadRequest
+from hydrogram.raw.functions.help import (
+    GetConfig as hydrogetclientconfraw,
 )
 
 import alisu
@@ -62,9 +62,9 @@ async def main() -> None:
 
     client.start_time = time.time()
     try:
-        getpyroclientconfraw = await client.invoke(pyrogetclientconfraw())
-        client.tg_max_text_msg_len = int(getpyroclientconfraw.message_length_max)
-        client.tg_max_caption_msg_len = int(getpyroclientconfraw.caption_length_max)
+        gethydroclientconfraw = await client.invoke(hydrogetclientconfraw())
+        client.tg_max_text_msg_len = int(gethydroclientconfraw.message_length_max)
+        client.tg_max_caption_msg_len = int(gethydroclientconfraw.caption_length_max)
     except:
         client.tg_max_text_msg_len = 4096
         client.tg_max_caption_msg_len = 1024
@@ -74,7 +74,7 @@ async def main() -> None:
         start_message = (
             "<b>The bot was started!</b>\n\n"
             f"<b>Version:</b> <code>v{alisu.__version__} ({client.version_code})</code>\n"
-            f"<b>Pyrogram:</b> <code>v{pyrogram.__version__}</code>"
+            f"<b>Hydrogram:</b> <code>v{hydrogram.__version__}</code>"
         )
 
         try:

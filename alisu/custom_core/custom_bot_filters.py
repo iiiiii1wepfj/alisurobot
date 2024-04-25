@@ -1,5 +1,5 @@
-from pyrogram import filters
-from pyrogram.types import Message, Update
+from hydrogram import filters
+from hydrogram.types import Message, Update
 from typing import Union, Pattern
 import re
 

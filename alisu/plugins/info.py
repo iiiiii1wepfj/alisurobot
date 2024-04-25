@@ -1,8 +1,8 @@
 import html
 
-from pyrogram import Client, filters, enums
-from pyrogram.errors import BadRequest, UserNotParticipant
-from pyrogram.types import Message
+from hydrogram import Client, filters, enums
+from hydrogram.errors import BadRequest, UserNotParticipant
+from hydrogram.types import Message
 
 from alisu.config import prefix
 from alisu.utils import commands
