@@ -2,14 +2,14 @@
 
 
 from collections import OrderedDict
-import pyrogram, asyncio
+import hydrogram, asyncio
 
 
 class Conversation:
     """
-    A conversation plugin class for pyrogram using inbuild Update Handlers.
+    A conversation plugin class for hydrogram using inbuild Update Handlers.
     Complete list of handlers to be used without `Handlers` postfix :-
-            https://docs.pyrogram.org/api/handlers#index
+            https://docs.hydrogram.org/en/latest/api/handlers.html#index
 
 
     Usage:
@@ -27,16 +27,16 @@ class Conversation:
     Method client.listen.Message(or any other types)
             Parameters:
                     filters:
-                            Single or combined filters like https://docs.pyrogram.org/topics/use-filters.
+                            Single or combined filters like https://docs.hydrogram.org/en/latest/topics/use-filters.html.
                             Default is `None` but either filter or id is required.
 
                     id:
                             An id for uniquely identify each listen only required if you want to Cancel() manually.
                             You can pass any of the three types here:
-                                    -> pyrogram.filters.user
-                                    -> pyrogram.filters.chat
+                                    -> hydrogram.filters.user
+                                    -> hydrogram.filters.chat
                                     -> str
-                            if pyrogram filter's `user` or `chat` is passed as `id` then it gets combined with rest `filters`.
+                            if hydrogram filter's `user` or `chat` is passed as `id` then it gets combined with rest `filters`.
 
                             Default is `None` but either filter or id is required.
 
@@ -44,7 +44,7 @@ class Conversation:
                             In seconds (int) for waiting time of getting a response.
 
             Returns:
-                    `update` (like pyrogram.types.Message ...etc) if user reponded within given conditions.
+                    `update` (like hydrogram.types.Message ...etc) if user reponded within given conditions.
                     `None`  if listen cancelled using `listen.Cancel`
                     `Exception` An asyncio.TimeoutError is raise if waiting timeout occurs.
     Example:
@@ -61,8 +61,8 @@ class Conversation:
                     id:
                             An id for uniquely identify the listen you want to Cancel() manually.
                             You can pass any of the three types here:
-                                    -> pyrogram.filters.user
-                                    -> pyrogram.filters.chat
+                                    -> hydrogram.filters.user
+                                    -> hydrogram.filters.chat
                                     -> str
             Returns:
                     `Boolean` True if `id` was present and listen was Cancelped or False if `id` was invalid.
@@ -73,7 +73,7 @@ class Conversation:
                             await client.listen.Cancel(message.from_user.id)
     """
 
-    def __init__(self, client: pyrogram.Client):
+    def __init__(self, client: hydrogram.Client):
         client.listen = self
         self.client = client
         self.handlers = {}
@@ -83,15 +83,15 @@ class Conversation:
         _id = id
 
         if type(_id) in [
-            pyrogram.filters.InvertFilter,
-            pyrogram.filters.OrFilter,
-            pyrogram.filters.AndFilter,
+            hydrogram.filters.InvertFilter,
+            hydrogram.filters.OrFilter,
+            hydrogram.filters.AndFilter,
         ]:
             raise ValueError("Combined filters are not allowed as unique id .")
 
-        if _id and type(_id) not in [pyrogram.filters.user, pyrogram.filters.chat, str]:
+        if _id and type(_id) not in [hydrogram.filters.user, hydrogram.filters.chat, str]:
             raise TypeError(
-                "Unique (id) has to be one of pyrogram's filters user/chat or a string."
+                "Unique (id) has to be one of hydrogram's filters user/chat or a string."
             )
 
         if not (_id or filters):
@@ -152,7 +152,7 @@ class Conversation:
     def __getattr__(self, name):
         async def wrapper(*args, **kwargs):
             return await self.__add(
-                getattr(pyrogram.handlers, f"{name}Handler"), *args, **kwargs
+                getattr(hydrogram.handlers, f"{name}Handler"), *args, **kwargs
             )
 
         return wrapper
