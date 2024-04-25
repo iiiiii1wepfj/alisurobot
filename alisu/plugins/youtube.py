@@ -6,10 +6,10 @@ import shutil
 import tempfile
 
 import yt_dlp
-from pyrogram import Client, filters
-from pyrogram.errors import BadRequest
-from pyromod.helpers import ikb
-from pyrogram.types import CallbackQuery, Message
+from hydrogram import Client, filters
+from hydrogram.errors import BadRequest
+from hydrogram.helpers import ikb
+from hydrogram.types import CallbackQuery, Message
 
 from alisu.config import prefix
 from alisu.utils import aiowrap, pretty_size
