@@ -1,8 +1,8 @@
-from pyrogram import Client
-from pyrogram.types import Message
-from pyrogram import StopPropagation
-from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
-from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
+from hydrogram import Client
+from hydrogram.types import Message
+from hydrogram import StopPropagation
+from hydrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
+from hydrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from alisu.config import nekobin_error_paste_url, log_chat
 from alisu.utils.consts import http
 from tortoise.exceptions import DoesNotExist
