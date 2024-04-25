@@ -62,9 +62,9 @@ async def main() -> None:
 
     client.start_time = time.time()
     try:
-        getpyroclientconfraw = await client.invoke(hydrogetclientconfraw())
-        client.tg_max_text_msg_len = int(getpyroclientconfraw.message_length_max)
-        client.tg_max_caption_msg_len = int(getpyroclientconfraw.caption_length_max)
+        gethydroclientconfraw = await client.invoke(hydrogetclientconfraw())
+        client.tg_max_text_msg_len = int(gethydroclientconfraw.message_length_max)
+        client.tg_max_caption_msg_len = int(gethydroclientconfraw.caption_length_max)
     except:
         client.tg_max_text_msg_len = 4096
         client.tg_max_caption_msg_len = 1024
@@ -74,7 +74,7 @@ async def main() -> None:
         start_message = (
             "<b>The bot was started!</b>\n\n"
             f"<b>Version:</b> <code>v{alisu.__version__} ({client.version_code})</code>\n"
-            f"<b>Pyrogram:</b> <code>v{pyrogram.__version__}</code>"
+            f"<b>Pyrogram:</b> <code>v{hydrogram.__version__}</code>"
         )
 
         try:
